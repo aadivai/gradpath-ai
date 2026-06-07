@@ -1,6 +1,6 @@
 // src/app/(dashboard)/profile/page.tsx
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'

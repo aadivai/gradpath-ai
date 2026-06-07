@@ -47,7 +47,7 @@ export default function SavedUniversitiesPage() {
         .from('saved_universities')
         .select('id, status, notes, universities(*)')
         .eq('profile_id', profileId)
-      setSaved((data ?? []) as SavedUni[])
+      setSaved((data || []) as unknown as SavedUni[])
       setLoading(false)
     })()
   }, [user])
