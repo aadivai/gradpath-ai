@@ -1,4 +1,3 @@
-// src/app/(dashboard)/timeline/page.tsx  (replace entirely)
 'use client'
 import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'

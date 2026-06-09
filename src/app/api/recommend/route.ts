@@ -1,4 +1,3 @@
-// src/app/api/recommend/route.ts
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'

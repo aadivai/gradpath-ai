@@ -1,4 +1,3 @@
-// src/app/(dashboard)/sop-assistant/page.tsx
 'use client'
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'

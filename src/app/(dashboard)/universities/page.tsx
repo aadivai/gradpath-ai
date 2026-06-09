@@ -1,4 +1,3 @@
-// src/app/(dashboard)/universities/page.tsx
 'use client'
 import { useState } from 'react'
 import type { University, RecommendResult } from '@/types'

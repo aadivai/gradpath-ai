@@ -1,4 +1,3 @@
-// src/lib/recommender.ts
 import type { University, Profile } from '@/types'
 
 export function scoreAndFilter(universities: University[], profile: Profile) {

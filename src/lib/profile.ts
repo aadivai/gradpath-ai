@@ -1,4 +1,3 @@
-// src/lib/profile.ts
 import { supabase } from './supabase'
 
 export async function getProfileId(clerkUserId: string): Promise<string | null> {

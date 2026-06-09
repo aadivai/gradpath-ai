@@ -1,4 +1,3 @@
-// src/lib/gemini.ts
 export async function askGemini(prompt: string): Promise<string> {
   const key = process.env.GEMINI_API_KEY
   if (!key) return 'Add GEMINI_API_KEY to .env.local to enable AI insights.'

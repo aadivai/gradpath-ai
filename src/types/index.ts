@@ -1,4 +1,3 @@
-// src/types/index.ts
 export type Profile = {
   id: string
   clerk_user_id: string

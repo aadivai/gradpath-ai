@@ -1,4 +1,3 @@
-// src/app/(dashboard)/saved-universities/page.tsx
 'use client'
 import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
