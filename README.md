@@ -1,72 +1,46 @@
 # 🎓 GradPath AI
 
 > **AI-Powered Study Abroad Planning Platform**
-> Helping students discover universities, scholarships, generate Statements of Purpose, and manage their entire application journey in one place.
+> Discover universities, explore scholarships, generate AI-powered Statements of Purpose, and manage your complete study abroad journey in one place.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![React](https://img.shields.io/badge/React-19-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.0-38BDF8)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8)
 ![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E)
 ![Clerk](https://img.shields.io/badge/Clerk-Authentication-purple)
 ![Gemini AI](https://img.shields.io/badge/Gemini-AI-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
+![Vercel](https://img.shields.io/badge/Deployment-Vercel-black)
+
+## 🌐 Live Demo
+
+**Live Application:** https://gradpath-ai.vercel.app
+
+**GitHub Repository:** https://github.com/aadivai/gradpath-ai
 
 ---
 
 # 📖 Overview
 
-GradPath AI is a full-stack AI-powered web application designed to simplify the study abroad process for students.
+GradPath AI is a modern full-stack web application designed to simplify the entire study abroad planning process.
 
-Instead of using multiple websites for university research, scholarship search, SOP writing, and application tracking, GradPath AI brings everything together into one intelligent platform.
-
-Users can:
-
-* 🎯 Get personalized university recommendations
-* 💰 Discover scholarships matching their profile
-* ✍️ Generate AI-powered Statements of Purpose
-* 📅 Track application timelines
-* ❤️ Save and organize universities
-* 👤 Maintain an academic profile for smarter recommendations
+Instead of switching between multiple websites for university research, scholarship discovery, SOP writing, and application tracking, students can manage everything from a single AI-powered platform.
 
 ---
 
-# ✨ Features
+# ✨ Key Features
 
-## 🔐 Authentication
+### 🎯 AI University Recommendations
 
-* Secure Clerk Authentication
-* Sign In / Sign Up
-* Protected Dashboard Routes
-* Session Management
+Receive personalized university suggestions based on:
 
----
-
-## 👤 Student Profile
-
-Store and update:
-
-* Full Name
-* Branch
 * CGPA
-* IELTS / TOEFL / GRE Scores
+* Test Scores (IELTS/GRE/TOEFL)
 * Budget
 * Preferred Countries
-* Work Experience
-* Target Intake
+* Academic Background
 
----
-
-## 🏛 AI University Recommendation System
-
-Personalized recommendations based on:
-
-* Academic Performance
-* Budget
-* Test Scores
-* Preferred Countries
-
-Universities are classified into:
+Recommendations are categorized into:
 
 * ✅ Safe
 * ⚡ Moderate
@@ -74,59 +48,66 @@ Universities are classified into:
 
 ---
 
-## 💰 Scholarship Explorer
+### 💰 Scholarship Explorer
 
-Browse scholarships using filters:
+Search scholarships using intelligent filters:
 
 * Country
 * Scholarship Type
-* Degree Eligibility
+* Degree Level
 * Minimum CGPA
 * Funding Amount
 
 ---
 
-## ✍️ AI SOP Generator
+### ✍️ AI SOP Generator
 
-Generate professional Statements of Purpose using Google Gemini AI.
+Generate personalized Statements of Purpose using **Google Gemini AI**.
 
-Features:
+Features include:
 
-* Country-specific SOPs
-* University-specific customization
+* University-specific SOPs
+* Country-specific customization
 * Academic background integration
-* Career goals alignment
+* Career goal alignment
 
 ---
 
-## 📅 Application Timeline
+### 📅 Application Timeline
 
-Track important milestones:
+Track every important milestone:
 
 * IELTS Preparation
-* SOP Draft
+* SOP Writing
 * Recommendation Letters
-* Applications
+* University Applications
 * Visa Process
 * Accommodation
 * Flight Booking
 
-Includes:
-
-* Progress Tracking
-* Category-wise Completion
-* Timeline Visualization
+Includes progress tracking and timeline visualization.
 
 ---
 
-## ❤️ Saved Universities
+### ❤️ Saved Universities
 
 Users can:
 
 * Save universities
 * Track application status
-* Add notes
-* Estimate yearly costs
+* Add personal notes
+* Estimate yearly expenses
+
+---
+
+### 🔐 Secure Authentication
+
+Powered by Clerk Authentication.
+
+* Sign Up
+* Sign In
+* Protected Dashboard
+* Secure Session Management
 
 ---
 
@@ -143,25 +124,28 @@ Users can:
 ## Backend
 
 * Next.js API Routes
-* Supabase
-
-## Authentication
-
-* Clerk
-
-## AI
-
-* Google Gemini API
 
 ## Database
 
 * Supabase PostgreSQL
 
+## Authentication
+
+* Clerk
+
+## AI Integration
+
+* Google Gemini API
+
+## Deployment
+
+* Vercel
+
 ---
 
 # 📂 Project Structure
 
-```text
+```
 src/
 │
 ├── app/
@@ -171,15 +155,8 @@ src/
 │   └── layout.tsx
 │
 ├── components/
-│
 ├── lib/
-│   ├── gemini.ts
-│   ├── supabase.ts
-│   ├── profile.ts
-│   └── recommender.ts
-│
 ├── types/
-│
 └── public/
 ```
 
@@ -190,7 +167,7 @@ src/
 Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/gradpath-ai.git
+git clone https://github.com/aadivai/gradpath-ai.git
 
 cd gradpath-ai
 ```
@@ -207,7 +184,7 @@ Run locally
 npm run dev
 ```
 
-Open
+Open:
 
 ```
 http://localhost:3000
@@ -233,55 +210,59 @@ GEMINI_API_KEY=
 
 ---
 
-# 🗄 Database
+# 📸 Screenshots
 
-Powered by Supabase PostgreSQL.
+Add screenshots here for a better portfolio presentation.
 
-Main Tables:
-
-* profiles
-* universities
-* scholarships
-* saved_universities
-* timeline_tasks
-
----
-
-# 🎯 Future Improvements
-
-* Resume Analyzer
-* AI Chat Study Abroad Assistant
-* Visa Document Generator
-* Email Notifications
-* Multi-language Support
-* University Comparison Tool
-* Analytics Dashboard
-* Mobile Responsive Enhancements
+```
+screenshots/
+│
+├── landing-page.png
+├── dashboard.png
+├── universities.png
+├── scholarships.png
+├── sop-generator.png
+└── timeline.png
+```
 
 ---
 
-# 📈 Learning Outcomes
+# 🎯 Learning Outcomes
 
 This project demonstrates:
 
 * Full Stack Development
 * Authentication & Authorization
-* Database Design
 * AI Integration
 * REST API Development
+* Database Design
 * TypeScript
-* Modern React Patterns
+* Modern React
 * Next.js App Router
 * Production Deployment
+* Responsive UI Design
+
+---
+
+# 🚀 Future Enhancements
+
+* Resume Analyzer
+* AI Study Abroad Chatbot
+* University Comparison Tool
+* Email Notifications
+* Cost Calculator
+* Dark Mode
+* Mobile App Support
+* Analytics Dashboard
 
 ---
 
 # 🤝 Contributing
 
-Contributions, feature requests, and suggestions are welcome.
+Contributions are welcome.
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a new feature branch
 3. Commit your changes
 4. Open a Pull Request
 
@@ -294,17 +275,25 @@ Contributions, feature requests, and suggestions are welcome.
 B.Tech Information Technology
 Madan Mohan Malaviya University of Technology, Gorakhpur
 
-**Interests**
+### Interests
 
 * Full Stack Development
 * Artificial Intelligence
-* Cloud Technologies
+* Cloud Computing
 * Software Engineering
+
+GitHub: https://github.com/aadivai
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
 # ⭐ Support
 
-If you found this project helpful, consider giving it a ⭐ on GitHub.
+If you found this project useful, consider giving it a ⭐ on GitHub.
 
-It motivates continued development and helps others discover the project.
+Your support helps improve the project and motivates future development.
