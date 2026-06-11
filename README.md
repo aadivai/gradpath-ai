@@ -1,36 +1,310 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 GradPath AI
 
-## Getting Started
+> **AI-Powered Study Abroad Planning Platform**
+> Helping students discover universities, scholarships, generate Statements of Purpose, and manage their entire application journey in one place.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![React](https://img.shields.io/badge/React-19-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.0-38BDF8)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E)
+![Clerk](https://img.shields.io/badge/Clerk-Authentication-purple)
+![Gemini AI](https://img.shields.io/badge/Gemini-AI-orange)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+# 📖 Overview
+
+GradPath AI is a full-stack AI-powered web application designed to simplify the study abroad process for students.
+
+Instead of using multiple websites for university research, scholarship search, SOP writing, and application tracking, GradPath AI brings everything together into one intelligent platform.
+
+Users can:
+
+* 🎯 Get personalized university recommendations
+* 💰 Discover scholarships matching their profile
+* ✍️ Generate AI-powered Statements of Purpose
+* 📅 Track application timelines
+* ❤️ Save and organize universities
+* 👤 Maintain an academic profile for smarter recommendations
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+
+* Secure Clerk Authentication
+* Sign In / Sign Up
+* Protected Dashboard Routes
+* Session Management
+
+---
+
+## 👤 Student Profile
+
+Store and update:
+
+* Full Name
+* Branch
+* CGPA
+* IELTS / TOEFL / GRE Scores
+* Budget
+* Preferred Countries
+* Work Experience
+* Target Intake
+
+---
+
+## 🏛 AI University Recommendation System
+
+Personalized recommendations based on:
+
+* Academic Performance
+* Budget
+* Test Scores
+* Preferred Countries
+
+Universities are classified into:
+
+* ✅ Safe
+* ⚡ Moderate
+* 🚀 Ambitious
+
+---
+
+## 💰 Scholarship Explorer
+
+Browse scholarships using filters:
+
+* Country
+* Scholarship Type
+* Degree Eligibility
+* Minimum CGPA
+* Funding Amount
+
+---
+
+## ✍️ AI SOP Generator
+
+Generate professional Statements of Purpose using Google Gemini AI.
+
+Features:
+
+* Country-specific SOPs
+* University-specific customization
+* Academic background integration
+* Career goals alignment
+
+---
+
+## 📅 Application Timeline
+
+Track important milestones:
+
+* IELTS Preparation
+* SOP Draft
+* Recommendation Letters
+* Applications
+* Visa Process
+* Accommodation
+* Flight Booking
+
+Includes:
+
+* Progress Tracking
+* Category-wise Completion
+* Timeline Visualization
+
+---
+
+## ❤️ Saved Universities
+
+Users can:
+
+* Save universities
+* Track application status
+* Add notes
+* Estimate yearly costs
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+* Next.js 16 (App Router)
+* React 19
+* TypeScript
+* Tailwind CSS 4
+* shadcn/ui
+
+## Backend
+
+* Next.js API Routes
+* Supabase
+
+## Authentication
+
+* Clerk
+
+## AI
+
+* Google Gemini API
+
+## Database
+
+* Supabase PostgreSQL
+
+---
+
+# 📂 Project Structure
+
+```text
+src/
+│
+├── app/
+│   ├── (auth)/
+│   ├── (dashboard)/
+│   ├── api/
+│   └── layout.tsx
+│
+├── components/
+│
+├── lib/
+│   ├── gemini.ts
+│   ├── supabase.ts
+│   ├── profile.ts
+│   └── recommender.ts
+│
+├── types/
+│
+└── public/
+```
+
+---
+
+# 🚀 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/gradpath-ai.git
+
+cd gradpath-ai
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# 🔑 Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+CLERK_SECRET_KEY=
 
-## Deploy on Vercel
+NEXT_PUBLIC_SUPABASE_URL=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GEMINI_API_KEY=
+```
+
+---
+
+# 🗄 Database
+
+Powered by Supabase PostgreSQL.
+
+Main Tables:
+
+* profiles
+* universities
+* scholarships
+* saved_universities
+* timeline_tasks
+
+---
+
+# 🎯 Future Improvements
+
+* Resume Analyzer
+* AI Chat Study Abroad Assistant
+* Visa Document Generator
+* Email Notifications
+* Multi-language Support
+* University Comparison Tool
+* Analytics Dashboard
+* Mobile Responsive Enhancements
+
+---
+
+# 📈 Learning Outcomes
+
+This project demonstrates:
+
+* Full Stack Development
+* Authentication & Authorization
+* Database Design
+* AI Integration
+* REST API Development
+* TypeScript
+* Modern React Patterns
+* Next.js App Router
+* Production Deployment
+
+---
+
+# 🤝 Contributing
+
+Contributions, feature requests, and suggestions are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+# 👨‍💻 Author
+
+**Aditya Kumar**
+
+B.Tech Information Technology
+Madan Mohan Malaviya University of Technology, Gorakhpur
+
+**Interests**
+
+* Full Stack Development
+* Artificial Intelligence
+* Cloud Technologies
+* Software Engineering
+
+---
+
+# ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
+
+It motivates continued development and helps others discover the project.
