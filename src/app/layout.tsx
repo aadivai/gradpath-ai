@@ -3,6 +3,8 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -15,7 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ClerkProvider afterSignOutUrl="/">
       <html lang="en">
-        <body>{children}</body>
+        <body className="min-h-full flex flex-col">
+          {children}
+          <SpeedInsights />
+        </body>
       </html>
     </ClerkProvider>
   )
