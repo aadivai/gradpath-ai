@@ -10,7 +10,7 @@ export default function SignInPage() {
           </span>
           <p className="text-sm text-gray-500 mt-1">Welcome back</p>
         </div>
-        <SignIn />
+        <SignIn fallbackRedirectUrl="/dashboard" />
       </div>
     </div>
   )

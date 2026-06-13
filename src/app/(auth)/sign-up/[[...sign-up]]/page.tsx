@@ -10,7 +10,7 @@ export default function SignUpPage() {
           </span>
           <p className="text-sm text-gray-500 mt-1">Create your free account</p>
         </div>
-        <SignUp />
+        <SignUp fallbackRedirectUrl="/profile" />
       </div>
     </div>
   )
