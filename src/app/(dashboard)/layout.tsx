@@ -170,12 +170,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </span>
           </button>
           
-          <div className="flex items-center gap-4">
-            <div className="text-[10px] text-muted-foreground font-medium">
-              Beta Sandbox Access
-            </div>
-            <ThemeSwitchFlowGlass intensity={1.0} className="scale-90" />
-          </div>
+          <ThemeSwitchFlowGlass intensity={1.0} className="scale-90" />
         </header>
 
         {/* Content main body */}
