@@ -34,10 +34,10 @@ type StatCardProps = {
 
 function StatCard({ label, value, icon: Icon, iconBg, iconColor }: StatCardProps) {
   return (
-    <div className="glass-card rounded-2xl p-5 flex items-center justify-between group cursor-pointer border border-stone-200/50">
+    <div className="glass-card rounded-2xl p-5 flex items-center justify-between group cursor-pointer border border-border bg-card">
       <div>
-        <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">{label}</p>
-        <p className="text-2xl font-bold text-stone-900 tracking-tight">{value}</p>
+        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mb-1">{label}</p>
+        <p className="text-2xl font-bold text-foreground tracking-tight">{value}</p>
       </div>
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${iconBg} ${iconColor} transition-all duration-300 group-hover:scale-110`}>
         <Icon className="w-5 h-5" />
@@ -48,12 +48,12 @@ function StatCard({ label, value, icon: Icon, iconBg, iconColor }: StatCardProps
 
 function SkeletonCard() {
   return (
-    <div className="bg-white border border-stone-100 rounded-2xl p-5 animate-pulse flex items-center justify-between">
+    <div className="bg-card border border-border rounded-2xl p-5 animate-pulse flex items-center justify-between">
       <div className="flex-1">
-        <div className="h-3 bg-stone-100 rounded w-1/2 mb-2" />
-        <div className="h-7 bg-stone-100 rounded w-1/3" />
+        <div className="h-3 bg-muted rounded w-1/2 mb-2" />
+        <div className="h-7 bg-muted rounded w-1/3" />
       </div>
-      <div className="w-10 h-10 bg-stone-100 rounded-lg" />
+      <div className="w-10 h-10 bg-muted rounded-lg" />
     </div>
   )
 }
@@ -66,10 +66,10 @@ const ROADMAP_STEPS = [
 ]
 
 const QUICK_ACTIONS = [
-  { label: 'Browse universities', href: '/universities', icon: Compass, colorBg: 'bg-blue-50 text-blue-600 group-hover:bg-blue-100 group-hover:text-blue-700', desc: 'Find your best matches' },
-  { label: 'Find scholarships',   href: '/scholarships', icon: Award, colorBg: 'bg-amber-50 text-amber-600 group-hover:bg-amber-100 group-hover:text-amber-700', desc: 'Funding opportunities' },
-  { label: 'Generate SOP',        href: '/sop-assistant',icon: Sparkles, colorBg: 'bg-purple-50 text-purple-600 group-hover:bg-purple-100 group-hover:text-purple-700', desc: 'AI-drafted statement' },
-  { label: 'Visa guidance',       href: '/visa',         icon: BookOpen, colorBg: 'bg-green-50 text-green-600 group-hover:bg-green-100 group-hover:text-green-700', desc: 'Country-wise process' },
+  { label: 'Browse universities', href: '/universities', icon: Compass, colorBg: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 group-hover:text-blue-700 dark:group-hover:text-blue-300', desc: 'Find your best matches' },
+  { label: 'Find scholarships',   href: '/scholarships', icon: Award, colorBg: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/40 group-hover:text-amber-700 dark:group-hover:text-amber-300', desc: 'Funding opportunities' },
+  { label: 'Generate SOP',        href: '/sop-assistant',icon: Sparkles, colorBg: 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/40 group-hover:text-purple-700 dark:group-hover:text-purple-300', desc: 'AI-drafted statement' },
+  { label: 'Visa guidance',       href: '/visa',         icon: BookOpen, colorBg: 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 group-hover:bg-green-100 dark:group-hover:bg-green-900/40 group-hover:text-green-700 dark:group-hover:text-green-300', desc: 'Country-wise process' },
 ]
 
 function completionPercent(p: Profile): number {
@@ -152,9 +152,9 @@ export default function DashboardPage() {
   }
 
   const getStrengthLabel = (score: number) => {
-    if (score >= 80) return { text: 'Strong', color: 'text-emerald-700 bg-emerald-50 border-emerald-100', dot: 'bg-emerald-500' }
-    if (score >= 50) return { text: 'Moderate', color: 'text-amber-700 bg-amber-50 border-amber-100', dot: 'bg-amber-500' }
-    return { text: 'Needs Info', color: 'text-rose-700 bg-rose-50 border-rose-100', dot: 'bg-rose-500' }
+    if (score >= 80) return { text: 'Strong', color: 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/20 dark:border-emerald-500/20 border-emerald-100', dot: 'bg-emerald-500' }
+    if (score >= 50) return { text: 'Moderate', color: 'text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/20 dark:border-amber-500/20 border-amber-100', dot: 'bg-amber-500' }
+    return { text: 'Needs Info', color: 'text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-950/20 dark:border-rose-500/20 border-rose-100', dot: 'bg-rose-500' }
   }
 
   const strengthLabel = getStrengthLabel(strength)
@@ -165,15 +165,15 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         {loading ? (
           <div className="animate-pulse">
-            <div className="h-6 bg-stone-200 rounded w-48 mb-2" />
-            <div className="h-4 bg-stone-100 rounded w-72" />
+            <div className="h-6 bg-muted rounded w-48 mb-2" />
+            <div className="h-4 bg-muted rounded w-72" />
           </div>
         ) : (
           <div>
-            <h1 className="text-2xl font-bold text-stone-900 tracking-tight">
-              Welcome back, <span className="text-indigo-600">{name}</span> 👋
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+              Welcome back, <span className="text-indigo-600 dark:text-indigo-400">{name}</span> 👋
             </h1>
-            <p className="text-xs text-stone-500 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {completion < 100
                 ? 'Fill your profile details to unlock smart matches.'
                 : 'Your student profile is active. Check your recommended universities.'}
@@ -196,22 +196,22 @@ export default function DashboardPage() {
               label="Profile progress" 
               value={`${completion}%`} 
               icon={TrendingUp} 
-              iconBg="bg-indigo-50" 
-              iconColor="text-indigo-600" 
+              iconBg="bg-indigo-50 dark:bg-indigo-950/30" 
+              iconColor="text-indigo-600 dark:text-indigo-450" 
             />
             <StatCard 
               label="Saved universities" 
               value={String(savedCount)} 
               icon={Heart} 
-              iconBg="bg-rose-50" 
-              iconColor="text-rose-600" 
+              iconBg="bg-rose-50 dark:bg-rose-950/30" 
+              iconColor="text-rose-600 dark:text-rose-450" 
             />
             <StatCard
               label="Timeline tasks"
               value={tasksTotal ? `${tasksDone}/${tasksTotal}` : '0/0'}
               icon={ListTodo}
-              iconBg="bg-emerald-50"
-              iconColor="text-emerald-600"
+              iconBg="bg-emerald-50 dark:bg-emerald-950/30"
+              iconColor="text-emerald-600 dark:text-emerald-450"
             />
           </>
         )}
@@ -219,14 +219,14 @@ export default function DashboardPage() {
 
       {/* Profile Strength & Improvement Recommendation Meter */}
       {!loading && profile && (
-        <div className="glass-card rounded-2xl p-6 border border-stone-200/50 space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-200/30 pb-3">
+        <div className="glass-card rounded-2xl p-6 border border-border bg-card space-y-4">
+          <div className="flex items-center justify-between border-b border-border/40 pb-3">
             <div>
-              <h3 className="text-sm font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
-                <ShieldCheck className="w-4.5 h-4.5 text-indigo-600" />
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="w-4.5 h-4.5 text-indigo-600 dark:text-indigo-400" />
                 AI Profile Strength Analyzer
               </h3>
-              <p className="text-[11px] text-stone-400 mt-0.5 font-medium">Evaluation based on admissions probability algorithms</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5 font-medium">Evaluation based on admissions probability algorithms</p>
             </div>
             <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${strengthLabel.color}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${strengthLabel.dot}`} />
@@ -236,35 +236,35 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
             {/* Visual Circular/Radial Meter */}
-            <div className="flex flex-col items-center justify-center py-2 border-r border-stone-200/40">
+            <div className="flex flex-col items-center justify-center py-2 border-r border-border/40">
               <div className="relative w-28 h-28 flex items-center justify-center">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <circle className="text-stone-100" strokeWidth="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
-                  <circle className="text-indigo-600 transition-all duration-1000 ease-out" strokeWidth="8" strokeDasharray={251.2} strokeDashoffset={251.2 - (251.2 * strength) / 100} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                  <circle className="text-muted/20" strokeWidth="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                  <circle className="text-indigo-600 dark:text-indigo-400 transition-all duration-1000 ease-out" strokeWidth="8" strokeDasharray={251.2} strokeDashoffset={251.2 - (251.2 * strength) / 100} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
                 </svg>
-                <span className="absolute text-xl font-black text-stone-900 tracking-tight">{strength}%</span>
+                <span className="absolute text-xl font-black text-foreground tracking-tight">{strength}%</span>
               </div>
-              <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mt-2">Overall Score</p>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-2">Overall Score</p>
             </div>
 
             {/* List details & Recommendations */}
             <div className="md:col-span-2 space-y-3 pl-2">
-              <p className="text-xs font-semibold text-stone-700">How to strengthen your profile:</p>
+              <p className="text-xs font-semibold text-foreground">How to strengthen your profile:</p>
               <ul className="space-y-2 text-xs">
-                <li className="flex items-center gap-2 text-stone-600 font-medium">
-                  {profile.cgpa ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                <li className="flex items-center gap-2 text-muted-foreground font-medium">
+                  {profile.cgpa ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-rose-450 shrink-0" />}
                   <span>Academic Standing: CGPA {profile.cgpa ? `${profile.cgpa}/10 (Verified)` : 'Missing (Add GPA for +20% score)'}</span>
                 </li>
-                <li className="flex items-center gap-2 text-stone-600 font-medium">
+                <li className="flex items-center gap-2 text-muted-foreground font-medium">
                   {profile.ielts_score || profile.toefl_score ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />}
                   <span>Language Proficiency: {profile.ielts_score ? `IELTS ${profile.ielts_score} (Verified)` : 'Standardized test score missing (+15% score)'}</span>
                 </li>
-                <li className="flex items-center gap-2 text-stone-600 font-medium">
-                  {profile.gre_score ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-stone-300 shrink-0" />}
+                <li className="flex items-center gap-2 text-muted-foreground font-medium">
+                  {profile.gre_score ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-muted shrink-0" />}
                   <span>Standardized Tests: {profile.gre_score ? `GRE ${profile.gre_score} (Verified)` : 'Optional GRE not provided (+15% score)'}</span>
                 </li>
-                <li className="flex items-center gap-2 text-stone-600 font-medium">
-                  {(profile.research_experience_months ?? 0) > 0 || (profile.projects_count ?? 0) > 0 ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-stone-300 shrink-0" />}
+                <li className="flex items-center gap-2 text-muted-foreground font-medium">
+                  {(profile.research_experience_months ?? 0) > 0 || (profile.projects_count ?? 0) > 0 ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <AlertCircle className="w-4 h-4 text-muted shrink-0" />}
                   <span>Academic Achievements: Research/Projects added (+15% to +30% score)</span>
                 </li>
               </ul>
@@ -275,18 +275,18 @@ export default function DashboardPage() {
 
       {/* Profile incomplete CTA Banner */}
       {!loading && completion < 100 && (
-        <div className="bg-gradient-to-r from-indigo-50/70 to-purple-50/70 border border-indigo-100/80 rounded-2xl p-5 flex items-start gap-4 shadow-sm animate-fade-in">
-          <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+        <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-5 flex items-start gap-4 shadow-sm animate-fade-in">
+          <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-500 dark:text-indigo-400 shrink-0">
             <AlertCircle className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-bold text-indigo-900">Finish your study profile</p>
-            <p className="text-xs text-indigo-600/90 mt-0.5 leading-relaxed">
+            <p className="text-sm font-bold text-indigo-900 dark:text-indigo-400">Finish your study profile</p>
+            <p className="text-xs text-indigo-600/90 dark:text-indigo-400/80 mt-0.5 leading-relaxed">
               We require your academic GPA, test scores (IELTS/GRE), and budget preference to calculate your safe, moderate, and ambitious university matches.
             </p>
             <Link
               href="/profile"
-              className="inline-flex items-center gap-1.5 mt-3 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow-indigo-100 hover:shadow-md transition-all duration-200"
+              className="inline-flex items-center gap-1.5 mt-3 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-750 text-white text-xs font-semibold rounded-lg shadow-sm transition-all duration-200"
             >
               Complete profile <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -295,12 +295,12 @@ export default function DashboardPage() {
       )}
 
       {/* Dynamic Roadmap Timeline Widget */}
-      <div className="glass-card rounded-2xl p-6 border border-stone-200/50">
+      <div className="glass-card rounded-2xl p-6 border border-border bg-card">
         <div className="mb-6">
-          <h2 className="text-sm font-bold text-stone-800 uppercase tracking-wider">
+          <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
             Admissions Roadmap
           </h2>
-          <p className="text-[11px] text-stone-400 mt-0.5 font-medium">Track your progressive journey milestones</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5 font-medium">Track your progressive journey milestones</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
@@ -313,7 +313,7 @@ export default function DashboardPage() {
               <div key={step.label} className="flex flex-col items-center text-center relative group">
                 {/* Node connector line */}
                 {i < ROADMAP_STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-5 left-[60%] right-[-40%] h-0.5 bg-stone-100 z-0">
+                  <div className="hidden md:block absolute top-5 left-[60%] right-[-40%] h-0.5 bg-muted z-0">
                     <div 
                       className={`h-full bg-emerald-500 transition-all duration-500 ${
                         done ? 'w-full' : 'w-0'
@@ -328,8 +328,8 @@ export default function DashboardPage() {
                     done
                       ? 'bg-emerald-500 border-emerald-500 text-white shadow-sm shadow-emerald-100'
                       : active
-                      ? 'bg-indigo-600 border-indigo-600 text-white ring-4 ring-indigo-100'
-                      : 'bg-white border-stone-200 text-stone-400'
+                      ? 'bg-indigo-600 border-indigo-600 text-white ring-4 ring-indigo-500/20'
+                      : 'bg-card border-border text-muted-foreground'
                   }`}
                 >
                   {done ? (
@@ -342,12 +342,12 @@ export default function DashboardPage() {
                 {/* Text Labels */}
                 <span
                   className={`text-xs font-bold mt-3 ${
-                    done ? 'text-emerald-600' : active ? 'text-indigo-600' : 'text-stone-500'
+                    done ? 'text-emerald-600 dark:text-emerald-400' : active ? 'text-indigo-600 dark:text-indigo-400' : 'text-muted-foreground'
                   }`}
                 >
                   {step.label}
                 </span>
-                <span className="text-[10px] text-stone-400 mt-1 max-w-[140px] leading-relaxed">
+                <span className="text-[10px] text-muted-foreground mt-1 max-w-[140px] leading-relaxed">
                   {step.desc}
                 </span>
               </div>
@@ -359,10 +359,10 @@ export default function DashboardPage() {
       {/* Quick Actions Panel */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-sm font-bold text-stone-800 uppercase tracking-wider">
+          <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
             Quick actions
           </h2>
-          <p className="text-[11px] text-stone-400 mt-0.5 font-medium">Jump directly to tool modules</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5 font-medium">Jump directly to tool modules</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -372,16 +372,16 @@ export default function DashboardPage() {
               <Link
                 key={action.href}
                 href={action.href}
-                className="glass-card rounded-2xl p-5 flex items-start gap-4 group border border-stone-200/50"
+                className="glass-card rounded-2xl p-5 flex items-start gap-4 group border border-border bg-card"
               >
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${action.colorBg}`}>
                   <Icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-bold text-stone-900 group-hover:text-indigo-600 transition-colors duration-200">
+                  <p className="text-sm font-bold text-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                     {action.label}
                   </p>
-                  <p className="text-xs text-stone-400 mt-1 leading-relaxed">{action.desc}</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{action.desc}</p>
                 </div>
               </Link>
             )
@@ -391,4 +391,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-
