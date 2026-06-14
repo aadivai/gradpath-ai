@@ -13,6 +13,12 @@ export type Profile = {
   preferred_countries: string[]
   target_intake: string | null
   email: string | null
+  research_experience_months?: number
+  projects_count?: number
+  weather_preference?: 'warm' | 'cold' | 'moderate' | 'any'
+  language_preference?: string[]
+  career_goals?: string | null
+  role?: 'student' | 'mentor' | 'moderator' | 'admin' | 'super_admin'
 }
 
 export type University = {
@@ -28,9 +34,14 @@ export type University = {
   annual_fee_usd: number | null
   living_cost_usd: number | null
   programs: string[]
-  tier: 'safe' | 'moderate' | 'ambitious'
+  tier: 'safe' | 'moderate' | 'ambitious' | 'dream'
   application_deadline: string | null
   website_url: string | null
+  the_ranking?: number | null
+  employment_rate?: number | null
+  visa_success_rate?: number | null
+  roi_score?: number | null
+  climate?: string | null
 }
 
 export type Scholarship = {

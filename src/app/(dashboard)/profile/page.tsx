@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { parseProfile, serializeFullName } from '@/utils/profileMetadata'
 
 type FormData = {
   full_name: string
@@ -16,6 +17,11 @@ type FormData = {
   budget_inr: string
   target_intake: string
   preferred_countries: string[]
+  research_experience_months: string
+  projects_count: string
+  weather_preference: 'warm' | 'cold' | 'moderate' | 'any'
+  language_preference: string[]
+  career_goals: string
 }
 
 const EMPTY_FORM: FormData = {
@@ -23,18 +29,25 @@ const EMPTY_FORM: FormData = {
   work_experience_months: '0', ielts_score: '', gre_score: '',
   toefl_score: '', budget_inr: '', target_intake: '',
   preferred_countries: [],
+  research_experience_months: '0',
+  projects_count: '0',
+  weather_preference: 'any',
+  language_preference: ['English'],
+  career_goals: '',
 }
 
-const COUNTRIES = ['USA', 'UK', 'Canada', 'Germany', 'Australia', 'Ireland', 'Netherlands', 'France']
+const COUNTRIES = ['USA', 'UK', 'Canada', 'Germany', 'Australia', 'Ireland', 'Netherlands', 'France', 'Singapore', 'Japan', 'South Korea', 'UAE', 'Sweden', 'Finland', 'Norway', 'Denmark', 'Switzerland', 'Italy', 'Spain']
 const BRANCHES  = ['Computer Science', 'Information Technology', 'Electronics', 'Mechanical', 'Civil', 'Chemical', 'MBA', 'Other']
 const INTAKES   = ['Fall 2025', 'Spring 2026', 'Fall 2026', 'Spring 2027']
+const CLIMATES: ('any' | 'warm' | 'moderate' | 'cold')[] = ['any', 'warm', 'moderate', 'cold']
+const LANGUAGES = ['English', 'German', 'French', 'Japanese', 'Korean', 'Spanish', 'Dutch', 'Swedish']
 
 const inputCls = 'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide">{label}</label>
+      <label className="text-xs text-gray-500 font-semibold uppercase tracking-wide">{label}</label>
       {children}
     </div>
   )
@@ -51,14 +64,14 @@ function StepIndicator({ current }: { current: number }) {
         return (
           <div key={i} className="flex items-center gap-2">
             <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium
-                ${done   ? 'bg-green-500 text-white'   : ''}
-                ${active ? 'bg-indigo-600 text-white'  : ''}
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold
+                ${done   ? 'bg-green-500 text-white shadow-sm shadow-green-100'   : ''}
+                ${active ? 'bg-indigo-600 text-white ring-4 ring-indigo-50'  : ''}
                 ${!done && !active ? 'bg-gray-200 text-gray-500' : ''}`}
             >
               {done ? '✓' : num}
             </div>
-            <span className={`text-sm ${active ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>
+            <span className={`text-sm ${active ? 'text-gray-900 font-semibold' : 'text-gray-400'}`}>
               {label}
             </span>
             {i < steps.length - 1 && <div className="w-6 h-px bg-gray-200 mx-1" />}
@@ -69,7 +82,7 @@ function StepIndicator({ current }: { current: number }) {
   )
 }
 
-function Step1({ data, update }: { data: FormData; update: (k: keyof FormData, v: string) => void }) {
+function Step1({ data, update }: { data: FormData; update: (k: keyof FormData, any: any) => void }) {
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="col-span-2">
@@ -97,6 +110,16 @@ function Step1({ data, update }: { data: FormData; update: (k: keyof FormData, v
           value={data.work_experience_months}
           onChange={e => update('work_experience_months', e.target.value)} placeholder="0" />
       </Field>
+      <Field label="Research experience (months)">
+        <input className={inputCls} type="number" min="0"
+          value={data.research_experience_months}
+          onChange={e => update('research_experience_months', e.target.value)} placeholder="0" />
+      </Field>
+      <Field label="Projects built">
+        <input className={inputCls} type="number" min="0"
+          value={data.projects_count}
+          onChange={e => update('projects_count', e.target.value)} placeholder="2" />
+      </Field>
     </div>
   )
 }
@@ -104,7 +127,7 @@ function Step1({ data, update }: { data: FormData; update: (k: keyof FormData, v
 function Step2({ data, update }: { data: FormData; update: (k: keyof FormData, v: string) => void }) {
   return (
     <div>
-      <p className="text-sm text-gray-500 mb-4">Leave blank if you haven't taken the exam yet.</p>
+      <p className="text-sm text-gray-500 mb-4">Leave blank if you haven&apos;t taken the exam yet.</p>
       <div className="grid grid-cols-2 gap-4">
         <Field label="IELTS overall band">
           <input className={inputCls} type="number" step="0.5" min="0" max="9"
@@ -127,11 +150,12 @@ function Step2({ data, update }: { data: FormData; update: (k: keyof FormData, v
 }
 
 function Step3({
-  data, update, toggleCountry,
+  data, update, toggleCountry, toggleLanguage
 }: {
   data: FormData
-  update: (k: keyof FormData, v: string) => void
+  update: (k: keyof FormData, any: any) => void
   toggleCountry: (c: string) => void
+  toggleLanguage: (l: string) => void
 }) {
   const budgetNum = parseInt(data.budget_inr)
   return (
@@ -146,12 +170,40 @@ function Step3({
           </p>
         )}
       </Field>
-      <Field label="Target intake">
-        <select className={inputCls} value={data.target_intake}
-          onChange={e => update('target_intake', e.target.value)}>
-          <option value="">Select intake</option>
-          {INTAKES.map(i => <option key={i}>{i}</option>)}
-        </select>
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Target intake">
+          <select className={inputCls} value={data.target_intake}
+            onChange={e => update('target_intake', e.target.value)}>
+            <option value="">Select intake</option>
+            {INTAKES.map(i => <option key={i}>{i}</option>)}
+          </select>
+        </Field>
+        <Field label="Weather preference">
+          <select className={inputCls} value={data.weather_preference}
+            onChange={e => update('weather_preference', e.target.value)}>
+            {CLIMATES.map(c => <option key={c} value={c}>{c === 'any' ? 'Any Climate' : c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+          </select>
+        </Field>
+      </div>
+      <Field label="Preferred instruction languages">
+        <div className="flex flex-wrap gap-2 mt-1">
+          {LANGUAGES.map(lang => {
+            const selected = data.language_preference.includes(lang)
+            return (
+              <button key={lang} type="button" onClick={() => toggleLanguage(lang)}
+                className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors
+                  ${selected
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300'}`}>
+                {lang}
+              </button>
+            )
+          })}
+        </div>
+      </Field>
+      <Field label="Career goals / aspiration">
+        <input className={inputCls} value={data.career_goals}
+          onChange={e => update('career_goals', e.target.value)} placeholder="e.g. AI Research Scientist, Software Developer at Google" />
       </Field>
       <Field label="Preferred countries (select all that interest you)">
         <div className="flex flex-wrap gap-2 mt-1">
@@ -159,7 +211,7 @@ function Step3({
             const selected = data.preferred_countries.includes(country)
             return (
               <button key={country} type="button" onClick={() => toggleCountry(country)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors
                   ${selected
                     ? 'bg-indigo-600 text-white border-indigo-600'
                     : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300'}`}>
@@ -192,26 +244,32 @@ export default function ProfilePage() {
       .single()
       .then(({ data: profile }) => {
         if (profile) {
+          const parsed = parseProfile(profile)
           setIsEdit(true)
           setData({
-            full_name:              profile.full_name ?? '',
-            branch:                 profile.branch ?? '',
-            cgpa:                   profile.cgpa?.toString() ?? '',
-            backlogs:               profile.backlogs?.toString() ?? '0',
-            work_experience_months: profile.work_experience_months?.toString() ?? '0',
-            ielts_score:            profile.ielts_score?.toString() ?? '',
-            gre_score:              profile.gre_score?.toString() ?? '',
-            toefl_score:            profile.toefl_score?.toString() ?? '',
-            budget_inr:             profile.budget_inr?.toString() ?? '',
-            target_intake:          profile.target_intake ?? '',
-            preferred_countries:    profile.preferred_countries ?? [],
+            full_name:              parsed.full_name ?? '',
+            branch:                 parsed.branch ?? '',
+            cgpa:                   parsed.cgpa?.toString() ?? '',
+            backlogs:               parsed.backlogs?.toString() ?? '0',
+            work_experience_months: parsed.work_experience_months?.toString() ?? '0',
+            ielts_score:            parsed.ielts_score?.toString() ?? '',
+            gre_score:              parsed.gre_score?.toString() ?? '',
+            toefl_score:            parsed.toefl_score?.toString() ?? '',
+            budget_inr:             parsed.budget_inr?.toString() ?? '',
+            target_intake:          parsed.target_intake ?? '',
+            preferred_countries:    parsed.preferred_countries ?? [],
+            research_experience_months: parsed.research_experience_months?.toString() ?? '0',
+            projects_count:             parsed.projects_count?.toString() ?? '0',
+            weather_preference:         parsed.weather_preference ?? 'any',
+            language_preference:        parsed.language_preference ?? ['English'],
+            career_goals:               parsed.career_goals ?? '',
           })
         }
         setLoading(false)
       })
   }, [isLoaded, user])
 
-  function update(key: keyof FormData, value: string) {
+  function update(key: keyof FormData, value: any) {
     setData(prev => ({ ...prev, [key]: value }))
   }
 
@@ -224,31 +282,48 @@ export default function ProfilePage() {
     }))
   }
 
+  function toggleLanguage(lang: string) {
+    setData(prev => ({
+      ...prev,
+      language_preference: prev.language_preference.includes(lang)
+        ? prev.language_preference.filter(l => l !== lang)
+        : [...prev.language_preference, lang],
+    }))
+  }
+
   async function saveProfile() {
     if (!user) return
     setSaving(true)
     setError('')
     try {
-      const payload = {
-        clerk_user_id:          user.id,
-        full_name:              data.full_name || null,
-        email:                  user.emailAddresses[0]?.emailAddress ?? '',
-        branch:                 data.branch || null,
-        cgpa:                   data.cgpa       ? parseFloat(data.cgpa)      : null,
-        backlogs:               parseInt(data.backlogs)  || 0,
-        work_experience_months: parseInt(data.work_experience_months) || 0,
-        ielts_score:            data.ielts_score ? parseFloat(data.ielts_score) : null,
-        gre_score:              data.gre_score   ? parseInt(data.gre_score)    : null,
-        toefl_score:            data.toefl_score ? parseInt(data.toefl_score)  : null,
-        budget_inr:             data.budget_inr  ? parseInt(data.budget_inr)   : null,
-        target_intake:          data.target_intake || null,
-        preferred_countries:    data.preferred_countries,
-        updated_at:             new Date().toISOString(),
+      const res = await fetch('/api/profile/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name:                  data.full_name,
+          branch:                     data.branch,
+          cgpa:                       data.cgpa,
+          backlogs:                   data.backlogs,
+          work_experience_months:     data.work_experience_months,
+          ielts_score:                data.ielts_score,
+          gre_score:                  data.gre_score,
+          toefl_score:                data.toefl_score,
+          budget_inr:                 data.budget_inr,
+          target_intake:              data.target_intake,
+          preferred_countries:        data.preferred_countries,
+          research_experience_months: data.research_experience_months,
+          projects_count:             data.projects_count,
+          weather_preference:         data.weather_preference,
+          language_preference:        data.language_preference,
+          career_goals:               data.career_goals
+        })
+      })
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}))
+        throw new Error(errJson.error || 'Failed to save profile.')
       }
-      const { error: dbError } = await supabase
-        .from('profiles')
-        .upsert(payload, { onConflict: 'clerk_user_id' })
-      if (dbError) throw dbError
+
       router.push('/dashboard')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -282,10 +357,10 @@ export default function ProfilePage() {
 
       <StepIndicator current={step} />
 
-      <div className="bg-white border border-gray-100 rounded-xl p-6 mb-4">
+      <div className="bg-white border border-gray-100 rounded-xl p-6 mb-4 shadow-sm">
         {step === 1 && <Step1 data={data} update={update} />}
         {step === 2 && <Step2 data={data} update={update} />}
-        {step === 3 && <Step3 data={data} update={update} toggleCountry={toggleCountry} />}
+        {step === 3 && <Step3 data={data} update={update} toggleCountry={toggleCountry} toggleLanguage={toggleLanguage} />}
       </div>
 
       {error && (
@@ -297,18 +372,18 @@ export default function ProfilePage() {
       <div className="flex gap-3">
         {step > 1 && (
           <button onClick={() => setStep(s => s - 1)}
-            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer">
             ← Back
           </button>
         )}
         {step < 3 ? (
           <button onClick={() => setStep(s => s + 1)}
-            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors">
+            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors cursor-pointer">
             Next →
           </button>
         ) : (
           <button onClick={saveProfile} disabled={saving}
-            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-60 transition-colors">
+            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 disabled:opacity-60 transition-colors cursor-pointer">
             {saving ? 'Saving...' : isEdit ? 'Update profile' : 'Save & continue'}
           </button>
         )}

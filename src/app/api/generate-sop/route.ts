@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json()
-    const { targetCountry, targetUniversity, background } = body
+    const { targetCountry, targetUniversity, background, tone, professorName, focusArea } = body
 
     if (!background?.trim()) {
       return NextResponse.json({ error: 'Background is required.' }, { status: 400 })
@@ -27,22 +27,25 @@ export async function POST(req: Request) {
       : 'a university in ' + targetCountry
 
     const lines = [
-      'Write a 300-word Statement of Purpose for a student applying to ' + destination + '.',
+      `Write a 300-word Statement of Purpose for a student applying to ${destination}.`,
+      `The writing tone must be: ${tone || 'professional'} (e.g. academic, bold, professional, or narrative).`,
+      professorName ? `Briefly reference working under the research supervision of Professor ${professorName} at the department.` : '',
+      focusArea ? `Focus particularly on the student's technical interest and projects in the area of ${focusArea}.` : '',
       '',
-      'Student background: ' + background,
+      'Student background profile: ' + background,
       '',
-      'Structure:',
-      '1. Hook: open with a specific project or moment, not "Since childhood"',
-      '2. Academic achievements and technical work',
-      '3. Career goals',
-      '4. Why this specific university and country',
-      '5. Forward-looking closing sentence',
+      'SOP Structure:',
+      '1. Hook: open with a specific project, thesis, or technical challenge. Avoid clichés like "Since childhood..."',
+      '2. Academic highlights and practical technical competencies.',
+      '3. Long-term career goals.',
+      '4. Why this specific university and country matches their interests.',
+      '5. Strong forward-looking conclusion.',
       '',
-      'Rules: no cliches, active voice, first person, specific details.',
-      'Output only the SOP. Start with the first word immediately.',
+      'Rules: Use first-person active voice, maintain precise technical keywords, write naturally, and avoid overly generic templates.',
+      'Output ONLY the SOP text. Start with the first paragraph immediately with no preamble or intro comments.'
     ]
 
-    const sop = await askGemini(lines.join('\n'))
+    const sop = await askGemini(lines.filter(Boolean).join('\n'))
     return NextResponse.json({ sop })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'

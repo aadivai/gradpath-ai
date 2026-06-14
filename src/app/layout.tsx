@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="en">
-        <body className="min-h-full flex flex-col">
+      <html lang="en" className={geist.variable}>
+        <body className="min-h-full flex flex-col font-sans">
           {children}
           <SpeedInsights />
         </body>
