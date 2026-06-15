@@ -42,12 +42,12 @@ const INTAKES   = ['Fall 2025', 'Spring 2026', 'Fall 2026', 'Spring 2027']
 const CLIMATES: ('any' | 'warm' | 'moderate' | 'cold')[] = ['any', 'warm', 'moderate', 'cold']
 const LANGUAGES = ['English', 'German', 'French', 'Japanese', 'Korean', 'Spanish', 'Dutch', 'Swedish']
 
-const inputCls = 'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white'
+const inputCls = 'w-full border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-card'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs text-gray-500 font-semibold uppercase tracking-wide">{label}</label>
+      <label className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{label}</label>
       {children}
     </div>
   )
@@ -66,15 +66,15 @@ function StepIndicator({ current }: { current: number }) {
             <div
               className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold
                 ${done   ? 'bg-green-500 text-white shadow-sm shadow-green-100'   : ''}
-                ${active ? 'bg-indigo-600 text-white ring-4 ring-indigo-50'  : ''}
-                ${!done && !active ? 'bg-gray-200 text-gray-500' : ''}`}
+                ${active ? 'bg-indigo-600 text-white ring-4 ring-indigo-500/20'  : ''}
+                ${!done && !active ? 'bg-muted text-muted-foreground' : ''}`}
             >
               {done ? '✓' : num}
             </div>
-            <span className={`text-sm ${active ? 'text-gray-900 font-semibold' : 'text-gray-400'}`}>
+            <span className={`text-sm ${active ? 'text-foreground font-semibold' : 'text-muted-foreground'}`}>
               {label}
             </span>
-            {i < steps.length - 1 && <div className="w-6 h-px bg-gray-200 mx-1" />}
+            {i < steps.length - 1 && <div className="w-6 h-px bg-border mx-1" />}
           </div>
         )
       })}
@@ -127,7 +127,7 @@ function Step1({ data, update }: { data: FormData; update: (k: keyof FormData, a
 function Step2({ data, update }: { data: FormData; update: (k: keyof FormData, v: string) => void }) {
   return (
     <div>
-      <p className="text-sm text-gray-500 mb-4">Leave blank if you haven&apos;t taken the exam yet.</p>
+      <p className="text-sm text-muted-foreground mb-4">Leave blank if you haven&apos;t taken the exam yet.</p>
       <div className="grid grid-cols-2 gap-4">
         <Field label="IELTS overall band">
           <input className={inputCls} type="number" step="0.5" min="0" max="9"
@@ -142,7 +142,7 @@ function Step2({ data, update }: { data: FormData; update: (k: keyof FormData, v
             value={data.toefl_score} onChange={e => update('toefl_score', e.target.value)} placeholder="100" />
         </Field>
       </div>
-      <div className="mt-4 p-3 bg-indigo-50 rounded-lg text-xs text-indigo-700">
+      <div className="mt-4 p-3 bg-indigo-500/10 dark:bg-indigo-500/15 rounded-lg text-xs text-indigo-700 dark:text-indigo-300">
         💡 For Germany and most of Europe, IELTS is sufficient. GRE is mainly needed for US/Canada.
       </div>
     </div>
@@ -165,7 +165,7 @@ function Step3({
           value={data.budget_inr} onChange={e => update('budget_inr', e.target.value)}
           placeholder="3000000" />
         {!isNaN(budgetNum) && budgetNum > 0 && (
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             ≈ ${Math.round(budgetNum / 83).toLocaleString()} USD / year
           </p>
         )}
@@ -194,7 +194,7 @@ function Step3({
                 className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors
                   ${selected
                     ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300'}`}>
+                    : 'bg-card text-muted-foreground border-border hover:border-indigo-300'}`}>
                 {lang}
               </button>
             )
@@ -214,7 +214,7 @@ function Step3({
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors
                   ${selected
                     ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300'}`}>
+                    : 'bg-card text-muted-foreground border-border hover:border-indigo-300'}`}>
                 {country}
               </button>
             )
@@ -336,9 +336,9 @@ export default function ProfilePage() {
     return (
       <div className="max-w-xl mx-auto px-6 py-10">
         <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-100 rounded w-48" />
-          <div className="h-4 bg-gray-100 rounded w-72" />
-          <div className="h-48 bg-gray-100 rounded-xl" />
+          <div className="h-6 bg-muted rounded w-48" />
+          <div className="h-4 bg-muted rounded w-72" />
+          <div className="h-48 bg-muted rounded-xl" />
         </div>
       </div>
     )
@@ -346,10 +346,10 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-xl mx-auto px-6 py-10">
-      <h1 className="text-xl font-semibold text-gray-900 mb-1">
+      <h1 className="text-xl font-semibold text-foreground mb-1">
         {isEdit ? 'Edit your profile' : 'Complete your profile'}
       </h1>
-      <p className="text-sm text-gray-500 mb-6">
+      <p className="text-sm text-muted-foreground mb-6">
         {isEdit
           ? 'Update your details to refresh university recommendations.'
           : 'We use this to suggest universities, scholarships, and a roadmap.'}
@@ -357,14 +357,14 @@ export default function ProfilePage() {
 
       <StepIndicator current={step} />
 
-      <div className="bg-white border border-gray-100 rounded-xl p-6 mb-4 shadow-sm">
+      <div className="bg-card border border-border rounded-xl p-6 mb-4 shadow-sm">
         {step === 1 && <Step1 data={data} update={update} />}
         {step === 2 && <Step2 data={data} update={update} />}
         {step === 3 && <Step3 data={data} update={update} toggleCountry={toggleCountry} toggleLanguage={toggleLanguage} />}
       </div>
 
       {error && (
-        <div className="mb-4 px-4 py-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600">
+        <div className="mb-4 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-600 dark:text-red-400">
           {error}
         </div>
       )}
@@ -372,7 +372,7 @@ export default function ProfilePage() {
       <div className="flex gap-3">
         {step > 1 && (
           <button onClick={() => setStep(s => s - 1)}
-            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer">
+            className="flex-1 px-4 py-2.5 border border-border rounded-lg text-sm text-muted-foreground hover:bg-muted transition-colors cursor-pointer">
             ← Back
           </button>
         )}

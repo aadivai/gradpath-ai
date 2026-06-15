@@ -20,7 +20,13 @@ const ThemeSwitch = ({
   const handleCheckedChange = useCallback(
     (isChecked: boolean) => {
       setChecked(isChecked);
-      setTheme(isChecked ? "dark" : "light");
+      if (typeof document !== "undefined" && "startViewTransition" in document) {
+        (document as any).startViewTransition(() => {
+          setTheme(isChecked ? "dark" : "light");
+        });
+      } else {
+        setTheme(isChecked ? "dark" : "light");
+      }
     },
     [setTheme],
   );

@@ -15,6 +15,8 @@ export type Profile = {
   email: string | null
   research_experience_months?: number
   projects_count?: number
+  publications_count?: number
+  internships_count?: number
   weather_preference?: 'warm' | 'cold' | 'moderate' | 'any'
   language_preference?: string[]
   career_goals?: string | null
@@ -42,6 +44,13 @@ export type University = {
   visa_success_rate?: number | null
   roi_score?: number | null
   climate?: string | null
+  safety_index?: number | null
+  city_rating?: number | null
+  nearby_companies?: string | null
+  nearby_startups?: string | null
+  industry_connections?: string | null
+  research_labs?: string | null
+  faculty_ratio?: string | null
 }
 
 export type Scholarship = {

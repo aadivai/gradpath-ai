@@ -21,7 +21,9 @@ import {
   Wallet, 
   FileUser, 
   MessageSquare, 
-  Settings 
+  Settings,
+  Globe2,
+  Users
 } from 'lucide-react'
 
 const navItems = [
@@ -35,7 +37,10 @@ const navItems = [
   { href: '/timeline',           icon: Calendar,        label: 'Timeline' },
   { href: '/compare',            icon: ArrowLeftRight,  label: 'Compare' },
   { href: '/cost-calculator',    icon: Wallet,          label: 'Cost Calculator' },
-  { href: '/resume-builder',     icon: FileUser,        label: 'Resume Builder' },
+  { href: '/resume-builder',     icon: FileUser,        label: 'Resume & LOR Studio' },
+  { href: '/explorer',           icon: Globe2,          label: 'Interactive Explorer' },
+  { href: '/relocation',         icon: Wallet,          label: 'Relocation Guide' },
+  { href: '/alumni',             icon: Users,           label: 'Alumni Network' },
   { href: '/chat',               icon: MessageSquare,   label: 'AI Chat Counselor' },
   { href: '/admin',              icon: Settings,        label: 'Admin Panel' },
 ]
@@ -90,7 +95,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600" />
       </div>
     )
@@ -121,12 +126,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex h-screen bg-background text-foreground overflow-hidden relative">
       
       {/* Sidebar aside */}
-      <aside className="w-60 bg-card/75 backdrop-blur-md border-r border-border flex flex-col shrink-0">
-        <div className="px-6 py-4 border-b border-border/40 flex items-center justify-between">
-          <span className="font-bold text-foreground tracking-tight text-sm">
-            Grad<span className="text-indigo-400">Path</span> AI
+      <aside className="w-60 bg-background border-r border-border/40 flex flex-col shrink-0">
+        <div className="px-6 py-5 border-b border-border/40 flex items-center">
+          <span className="font-black text-foreground tracking-tight text-lg">
+            Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
           </span>
-          <span className="text-[9px] bg-indigo-50/10 text-indigo-400 border border-indigo-500/20 px-1.5 py-0.5 rounded-md font-bold tracking-wide">V2.0</span>
         </div>
         <nav className="flex-1 py-3 flex flex-col gap-0.5 overflow-y-auto px-3">
           {visibleNavItems.map((item) => {
@@ -155,17 +159,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Container */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header Bar */}
-        <header className="h-14 bg-card border-b border-border px-6 flex items-center justify-between shrink-0">
+        <header className="h-14 bg-background border-b border-border/40 px-6 flex items-center justify-between shrink-0">
           {/* Palette trigger button */}
           <button 
             onClick={() => setOpen(true)}
-            className="flex items-center justify-between w-64 bg-muted/40 hover:bg-muted/70 border border-border rounded-lg px-3 py-1.5 text-xs text-muted-foreground font-medium transition-all cursor-pointer"
+            className="flex items-center justify-between w-64 bg-muted/40 hover:bg-muted/70 border border-border/40 rounded-lg px-3 py-1.5 text-xs text-muted-foreground font-medium transition-all cursor-pointer"
           >
             <span className="flex items-center gap-1.5">
               <Search className="w-3.5 h-3.5 text-muted-foreground" />
               Search modules...
             </span>
-            <span className="flex items-center gap-0.5 font-mono text-[9px] bg-background border border-border px-1.5 py-0.5 rounded text-muted-foreground">
+            <span className="flex items-center gap-0.5 font-mono text-[9px] bg-background border border-border/40 px-1.5 py-0.5 rounded text-muted-foreground">
               <Command className="w-2.5 h-2.5" />K
             </span>
           </button>
@@ -174,7 +178,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </header>
 
         {/* Content main body */}
-        <main className="flex-1 overflow-y-auto bg-background/50 dark:bg-zinc-950/20">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-background">{children}</main>
       </div>
 
       {/* Search Palette Overlay Modal */}

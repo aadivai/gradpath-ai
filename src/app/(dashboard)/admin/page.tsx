@@ -450,19 +450,19 @@ export default function AdminPage() {
     return (
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-6">
         <div className="flex items-center gap-3 animate-pulse">
-          <div className="w-10 h-10 bg-slate-200 rounded-xl" />
+          <div className="w-10 h-10 bg-muted rounded-xl" />
           <div className="space-y-2">
-            <div className="h-6 bg-slate-200 w-48 rounded" />
-            <div className="h-4 bg-slate-100 w-72 rounded" />
+            <div className="h-6 bg-muted w-48 rounded" />
+            <div className="h-4 bg-muted/65 w-72 rounded" />
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="h-24 bg-slate-100 border border-slate-200 rounded-xl animate-pulse" />
-          <div className="h-24 bg-slate-100 border border-slate-200 rounded-xl animate-pulse" />
-          <div className="h-24 bg-slate-100 border border-slate-200 rounded-xl animate-pulse" />
-          <div className="h-24 bg-slate-100 border border-slate-200 rounded-xl animate-pulse" />
+          <div className="h-24 bg-muted/65 border border-border rounded-xl animate-pulse" />
+          <div className="h-24 bg-muted/65 border border-border rounded-xl animate-pulse" />
+          <div className="h-24 bg-muted/65 border border-border rounded-xl animate-pulse" />
+          <div className="h-24 bg-muted/65 border border-border rounded-xl animate-pulse" />
         </div>
-        <div className="h-96 bg-slate-100 rounded-xl border border-slate-200 animate-pulse" />
+        <div className="h-96 bg-muted/65 rounded-xl border border-border animate-pulse" />
       </div>
     )
   }
@@ -470,24 +470,24 @@ export default function AdminPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-6">
       {/* Header Banner */}
-      <div className="flex items-center justify-between border-b border-gray-100 pb-5">
+      <div className="flex items-center justify-between border-b border-border/40 pb-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-900/10">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
             <Shield className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900 tracking-tight">Admin Operations Studio</h1>
-            <p className="text-xs text-gray-400">Control system instruction prompts, student directories, audit logs, and global catalog databases</p>
+            <h1 className="text-xl font-bold text-foreground tracking-tight">Admin Operations Studio</h1>
+            <p className="text-xs text-muted-foreground">Control system instruction prompts, student directories, audit logs, and global catalog databases</p>
           </div>
         </div>
-        <button onClick={loadAdminData} className="p-2 border border-gray-200 hover:border-gray-300 bg-white rounded-lg text-gray-500 hover:text-gray-900 transition shadow-sm flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
+        <button onClick={loadAdminData} className="p-2 border border-border hover:border-border/80 bg-card rounded-lg text-muted-foreground hover:text-foreground transition shadow-xs flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
           <RefreshCw className="w-3.5 h-3.5" /> Refresh
         </button>
       </div>
 
       {/* Global Success / Error Banners */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 flex items-start gap-2.5 animate-fade-in">
+        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-600 dark:text-red-400 flex items-start gap-2.5 animate-fade-in">
           <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
           <div className="flex-1">
             <span className="font-bold">Execution Error: </span> {error}
@@ -497,14 +497,14 @@ export default function AdminPage() {
       )}
 
       {success && (
-        <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-xl text-sm text-emerald-700 flex items-center gap-2.5 animate-fade-in">
+        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-sm text-emerald-600 dark:text-emerald-400 flex items-center gap-2.5 animate-fade-in">
           <CheckCircle className="w-4 h-4 shrink-0" />
           <div>{success}</div>
         </div>
       )}
 
       {/* Dynamic Tab Navigation Row */}
-      <div className="flex border-b border-gray-100 gap-1 overflow-x-auto pb-px">
+      <div className="flex border-b border-border/40 gap-1 overflow-x-auto pb-px">
         {[
           { id: 'overview',     label: 'Overview',      icon: BarChart3 },
           { id: 'users',        label: 'Users Directory',icon: Users },
@@ -521,8 +521,8 @@ export default function AdminPage() {
               onClick={() => { setActiveTab(tab.id as TabType); setError(''); }}
               className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                 active
-                  ? 'border-indigo-600 text-indigo-600 font-bold bg-indigo-50/20'
-                  : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-200'
+                  ? 'border-indigo-600 text-indigo-600 font-bold bg-indigo-500/10 dark:bg-indigo-500/20'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border/60'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -539,40 +539,40 @@ export default function AdminPage() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+              <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
+                <div className="w-10 h-10 bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 rounded-lg flex items-center justify-center shrink-0">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total Students</p>
-                  <p className="text-xl font-bold text-gray-900 mt-0.5">{totalStudents}</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Total Students</p>
+                  <p className="text-xl font-bold text-foreground mt-0.5">{totalStudents}</p>
                 </div>
               </div>
-              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center shrink-0">
+              <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 rounded-lg flex items-center justify-center shrink-0">
                   <BarChart3 className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Avg CGPA</p>
-                  <p className="text-xl font-bold text-gray-900 mt-0.5">{avgCgpa} / 10</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Avg CGPA</p>
+                  <p className="text-xl font-bold text-foreground mt-0.5">{avgCgpa} / 10</p>
                 </div>
               </div>
-              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center shrink-0">
+              <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
+                <div className="w-10 h-10 bg-rose-500/10 text-rose-500 dark:text-rose-400 rounded-lg flex items-center justify-center shrink-0">
                   <Award className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Avg IELTS Band</p>
-                  <p className="text-xl font-bold text-gray-900 mt-0.5">{avgIelts}</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Avg IELTS Band</p>
+                  <p className="text-xl font-bold text-foreground mt-0.5">{avgIelts}</p>
                 </div>
               </div>
-              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center shrink-0">
+              <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-500/10 text-amber-500 dark:text-amber-400 rounded-lg flex items-center justify-center shrink-0">
                   <Database className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Catalog Universities</p>
-                  <p className="text-xl font-bold text-gray-900 mt-0.5">{unisList.length}</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Catalog Universities</p>
+                  <p className="text-xl font-bold text-foreground mt-0.5">{unisList.length}</p>
                 </div>
               </div>
             </div>
@@ -580,27 +580,27 @@ export default function AdminPage() {
             {/* Quick Summary Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Audit feed snapshot */}
-              <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-                <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Recent System Events</h3>
+              <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Recent System Events</h3>
                 <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
                   {auditLogs.slice(0, 5).map((log, idx) => (
-                    <div key={idx} className="text-xs flex items-start gap-2.5 border-b border-slate-50 pb-2 last:border-0 last:pb-0">
+                    <div key={idx} className="text-xs flex items-start gap-2.5 border-b border-border/30 pb-2 last:border-0 last:pb-0">
                       <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 shrink-0" />
                       <div className="flex-1">
-                        <p className="text-gray-700 leading-normal">{log.detail}</p>
-                        <p className="text-[10px] text-gray-400 mt-0.5 font-medium">{new Date(log.timestamp).toLocaleString()} • {log.actor}</p>
+                        <p className="text-foreground/80 leading-normal">{log.detail}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 font-medium">{new Date(log.timestamp).toLocaleString()} • {log.actor}</p>
                       </div>
                     </div>
                   ))}
                   {auditLogs.length === 0 && (
-                    <div className="text-center text-gray-400 py-6">No audit log records found.</div>
+                    <div className="text-center text-muted-foreground py-6">No audit log records found.</div>
                   )}
                 </div>
               </div>
 
               {/* Popular countries breakdown */}
-              <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-                <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Popular Country Preferences</h3>
+              <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Popular Country Preferences</h3>
                 <div className="space-y-3">
                   {(() => {
                     const countries: Record<string, number> = {}
@@ -616,18 +616,18 @@ export default function AdminPage() {
                       const pct = Math.round((count / total) * 100)
                       return (
                         <div key={country} className="space-y-1">
-                          <div className="flex justify-between text-xs font-semibold text-gray-700">
+                          <div className="flex justify-between text-xs font-semibold text-foreground/80">
                             <span>{country}</span>
                             <span>{count} votes ({pct}%)</span>
                           </div>
-                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
                             <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${pct}%` }} />
                           </div>
                         </div>
                       )
                     })
                   })()}
-                  {usersList.length === 0 && <div className="text-center text-gray-400 py-6">No student data compiled.</div>}
+                  {usersList.length === 0 && <div className="text-center text-muted-foreground py-6">No student data compiled.</div>}
                 </div>
               </div>
             </div>
@@ -636,22 +636,22 @@ export default function AdminPage() {
 
         {/* --- Tab 2: Users Directory & Role Management --- */}
         {activeTab === 'users' && (
-          <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
+          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
             {/* Filter Tools */}
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="flex-1 relative">
-                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
                 <input
                   value={userQuery}
                   onChange={e => setUserQuery(e.target.value)}
                   placeholder="Search students by name, email, or branch..."
-                  className="w-full bg-slate-50 border border-gray-200 pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
               <select
                 value={userRoleFilter}
                 onChange={e => setUserRoleFilter(e.target.value)}
-                className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                className="bg-card border border-border px-3 py-2 rounded-lg text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
               >
                 <option value="">All Roles</option>
                 <option value="student">Student</option>
@@ -663,10 +663,10 @@ export default function AdminPage() {
             </div>
 
             {/* List Table */}
-            <div className="overflow-x-auto border border-gray-50 rounded-lg">
+            <div className="overflow-x-auto border border-border/40 rounded-lg">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-100 text-gray-400">
+                  <tr className="bg-muted border-b border-border/40 text-muted-foreground">
                     <th className="p-3 font-semibold uppercase">Student Profile</th>
                     <th className="p-3 font-semibold uppercase">Status</th>
                     <th className="p-3 font-semibold uppercase">Grades</th>
@@ -674,30 +674,30 @@ export default function AdminPage() {
                     <th className="p-3 font-semibold uppercase text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50 text-gray-700">
+                <tbody className="divide-y divide-border/30 text-foreground/80">
                   {filteredUsers.map(u => (
-                    <tr key={u.id} className="hover:bg-slate-50/50">
+                    <tr key={u.id} className="hover:bg-muted/10">
                       <td className="p-3">
-                        <p className="font-semibold text-gray-900">{u.full_name || 'Anonymous User'}</p>
-                        <p className="text-[10px] text-gray-400 font-mono mt-0.5">{u.email || '—'}</p>
-                        <p className="text-[10px] text-slate-400 font-medium mt-0.5">{u.branch || 'No branch listed'}</p>
+                        <p className="font-semibold text-foreground">{u.full_name || 'Anonymous User'}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono mt-0.5">{u.email || '—'}</p>
+                        <p className="text-[10px] text-muted-foreground font-medium mt-0.5">{u.branch || 'No branch listed'}</p>
                       </td>
                       <td className="p-3">
                         {u.is_deactivated ? (
-                          <span className="bg-red-50 text-red-600 px-2 py-0.5 rounded border border-red-100/50 text-[10px] font-bold">Deactivated</span>
+                          <span className="bg-red-500/10 text-red-500 px-2 py-0.5 rounded border border-red-500/20 text-[10px] font-bold">Deactivated</span>
                         ) : (
-                          <span className="bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded border border-emerald-100/50 text-[10px] font-bold">Active</span>
+                          <span className="bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded border border-emerald-500/20 text-[10px] font-bold">Active</span>
                         )}
                       </td>
                       <td className="p-3">
                         <p className="font-medium">GPA: {u.cgpa ?? '—'}/10</p>
-                        <p className="text-[10px] text-gray-400 mt-0.5">IELTS: {u.ielts_score ?? '—'} Band</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">IELTS: {u.ielts_score ?? '—'} Band</p>
                       </td>
                       <td className="p-3">
                         <select
-                          value={u.role || 'student'}
-                          onChange={e => handleRoleChange(u.clerk_user_id, e.target.value)}
-                          className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-600 font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                           value={u.role || 'student'}
+                           onChange={e => handleRoleChange(u.clerk_user_id, e.target.value)}
+                           className="bg-card border border-border rounded px-2 py-1 text-[11px] text-foreground font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
                         >
                           <option value="student">Student</option>
                           <option value="mentor">Mentor</option>
@@ -711,8 +711,8 @@ export default function AdminPage() {
                           onClick={() => handleToggleDeactivate(u.clerk_user_id, !u.is_deactivated)}
                           className={`p-1.5 rounded-lg border transition ${
                             u.is_deactivated
-                              ? 'border-emerald-200 hover:border-emerald-300 text-emerald-600 hover:bg-emerald-50'
-                              : 'border-amber-200 hover:border-amber-300 text-amber-600 hover:bg-amber-50'
+                              ? 'border-emerald-600/30 hover:border-emerald-600/50 text-emerald-600 hover:bg-emerald-500/10'
+                              : 'border-amber-600/30 hover:border-amber-600/50 text-amber-600 hover:bg-amber-500/10'
                           } cursor-pointer`}
                           title={u.is_deactivated ? 'Activate User' : 'Deactivate User'}
                         >
@@ -720,7 +720,7 @@ export default function AdminPage() {
                         </button>
                         <button
                           onClick={() => handleDeleteUser(u.clerk_user_id)}
-                          className="p-1.5 border border-red-200 hover:border-red-300 text-red-500 hover:bg-red-50 rounded-lg transition cursor-pointer"
+                          className="p-1.5 border border-red-600/30 hover:border-red-600/50 text-red-500 hover:bg-red-500/10 rounded-lg transition cursor-pointer"
                           title="Delete User"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -730,7 +730,7 @@ export default function AdminPage() {
                   ))}
                   {filteredUsers.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="text-center text-gray-400 py-10 font-medium">No registered students found matching criteria.</td>
+                      <td colSpan={5} className="text-center text-muted-foreground py-10 font-medium">No registered students found matching criteria.</td>
                     </tr>
                   )}
                 </tbody>
@@ -744,9 +744,9 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* CRUD Table Column */}
-            <div className="lg:col-span-2 bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider">University Catalog</h2>
+            <div className="lg:col-span-2 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-border/40 pb-2">
+                <h2 className="text-xs font-bold text-foreground uppercase tracking-wider">University Catalog</h2>
                 <button
                   onClick={() => {
                     setSelectedUni({
@@ -764,23 +764,23 @@ export default function AdminPage() {
 
               {/* Search bar */}
               <div className="relative">
-                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
                 <input
                   value={uniSearch}
                   onChange={e => setUniSearch(e.target.value)}
                   placeholder="Search university catalog by name or country..."
-                  className="w-full bg-slate-50 border border-gray-200 pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
 
               {/* Catalog list */}
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                 {filteredUnis.map(uni => (
-                  <div key={uni.id} className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex justify-between items-start hover:border-indigo-100 transition-all duration-300">
+                  <div key={uni.id} className="bg-muted/40 border border-border/40 rounded-xl p-3 flex justify-between items-start hover:border-indigo-500/40 transition-all duration-300">
                     <div className="space-y-1">
-                      <p className="font-semibold text-gray-900 text-sm">{uni.name}</p>
-                      <p className="text-[10px] text-gray-400 font-medium">{uni.city ? `${uni.city}, ` : ''}{uni.country} • Tier: <span className="font-bold text-indigo-600">{uni.tier}</span></p>
-                      <p className="text-[10px] text-gray-500 font-semibold leading-relaxed">
+                      <p className="font-semibold text-foreground text-sm">{uni.name}</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">{uni.city ? `${uni.city}, ` : ''}{uni.country} • Tier: <span className="font-bold text-indigo-600 dark:text-indigo-400">{uni.tier}</span></p>
+                      <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
                         GPA &ge; {uni.min_cgpa ?? '—'} • IELTS &ge; {uni.min_ielts ?? '—'} • Fee: ${uni.annual_fee_usd?.toLocaleString() || '—'}
                       </p>
                     </div>
@@ -793,13 +793,13 @@ export default function AdminPage() {
                           })
                           setShowUniModal(true)
                         }}
-                        className="px-2.5 py-1.5 border border-gray-200 hover:border-gray-300 text-gray-600 bg-white rounded-lg text-xs font-semibold cursor-pointer"
+                        className="px-2.5 py-1.5 border border-border hover:border-border/80 text-foreground bg-card rounded-lg text-xs font-semibold cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteUniversity(uni.id)}
-                        className="p-1.5 border border-red-200 hover:border-red-300 text-red-500 bg-white rounded-lg cursor-pointer"
+                        className="p-1.5 border border-red-650/30 hover:border-red-600/50 text-red-500 bg-card rounded-lg cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -807,44 +807,44 @@ export default function AdminPage() {
                   </div>
                 ))}
                 {filteredUnis.length === 0 && (
-                  <div className="text-center text-gray-400 py-10">No universities found matching filter.</div>
+                  <div className="text-center text-muted-foreground py-10">No universities found matching filter.</div>
                 )}
               </div>
             </div>
 
             {/* CSV Import Column */}
-            <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-              <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2 flex items-center gap-1.5">
+            <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
                 <FileSpreadsheet className="w-4 h-4 text-indigo-600" />
                 CSV Bulk Import
               </h2>
 
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Import multiple universities simultaneously using a formatted CSV file. Header structure should match catalog schema keys:
               </p>
               
-              <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-[9px] font-mono text-slate-500 whitespace-pre-wrap select-all">
+              <div className="bg-muted border border-border p-2.5 rounded-lg text-[9px] font-mono text-muted-foreground whitespace-pre-wrap select-all">
                 name,country,city,qs_ranking,acceptance_rate,min_cgpa,min_ielts,min_gre,annual_fee_usd,living_cost_usd,programs,website_url,tier
               </div>
 
               {/* Upload field */}
-              <div className="border-2 border-dashed border-slate-200 hover:border-indigo-300 transition rounded-xl p-6 text-center cursor-pointer relative">
+              <div className="border-2 border-dashed border-border hover:border-indigo-500/80 transition rounded-xl p-6 text-center cursor-pointer relative">
                 <input
                   type="file"
                   accept=".csv"
                   onChange={handleCsvFileSelect}
                   className="absolute inset-0 opacity-0 cursor-pointer"
                 />
-                <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <p className="text-xs font-semibold text-gray-700">Select University CSV File</p>
-                <p className="text-[10px] text-gray-400 mt-1">Accepts UTF-8 .csv files</p>
+                <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                <p className="text-xs font-semibold text-foreground/80">Select University CSV File</p>
+                <p className="text-[10px] text-muted-foreground mt-1">Accepts UTF-8 .csv files</p>
               </div>
 
               {/* Parse preview */}
               {parsedCsvData.length > 0 && (
                 <div className="space-y-3 pt-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold text-indigo-700">{parsedCsvData.length} records parsed</span>
+                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{parsedCsvData.length} records parsed</span>
                     <button
                       onClick={() => setParsedCsvData([])}
                       className="text-[10px] text-red-500 font-bold hover:underline"
@@ -852,11 +852,11 @@ export default function AdminPage() {
                       Clear
                     </button>
                   </div>
-                  <div className="max-h-[200px] overflow-y-auto border border-slate-100 rounded-lg p-2 bg-slate-50 space-y-1.5 text-[10px]">
+                  <div className="max-h-[200px] overflow-y-auto border border-border rounded-lg p-2 bg-muted space-y-1.5 text-[10px]">
                     {parsedCsvData.map((uni, idx) => (
-                      <div key={idx} className="border-b border-slate-200/50 pb-1.5 last:border-0 last:pb-0 font-medium">
-                        <p className="text-gray-800 truncate font-semibold">{uni.name}</p>
-                        <p className="text-gray-400">{uni.country} • CGPA &ge; {uni.min_cgpa} • Fee: ${uni.annual_fee_usd}</p>
+                      <div key={idx} className="border-b border-border/40 pb-1.5 last:border-0 last:pb-0 font-medium">
+                        <p className="text-foreground truncate font-semibold">{uni.name}</p>
+                        <p className="text-muted-foreground">{uni.country} • CGPA &ge; {uni.min_cgpa} • Fee: ${uni.annual_fee_usd}</p>
                       </div>
                     ))}
                   </div>
@@ -872,12 +872,11 @@ export default function AdminPage() {
             </div>
           </div>
         )}
-
         {/* --- Tab 4: Scholarships Directory --- */}
         {activeTab === 'scholarships' && (
-          <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-              <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider">Scholarships Directory</h2>
+          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+            <div className="flex items-center justify-between border-b border-border/40 pb-2">
+              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider">Scholarships Directory</h2>
               <button
                 onClick={() => {
                   setSelectedSch({
@@ -895,31 +894,31 @@ export default function AdminPage() {
 
             {/* Search and Filters */}
             <div className="relative">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+              <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
               <input
                 value={schSearch}
                 onChange={e => setSchSearch(e.target.value)}
                 placeholder="Search scholarships by name or country..."
-                className="w-full bg-slate-50 border border-gray-200 pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
               />
             </div>
 
             {/* List */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredScholarships.map(sch => (
-                <div key={sch.id} className="border border-slate-100 rounded-xl p-4 bg-slate-50/30 flex flex-col justify-between space-y-3 hover:border-indigo-100 transition-all">
+                <div key={sch.id} className="border border-border/40 rounded-xl p-4 bg-muted/20 flex flex-col justify-between space-y-3 hover:border-indigo-500/40 transition-all">
                   <div className="space-y-1">
                     <div className="flex justify-between items-start gap-2">
-                      <h3 className="font-semibold text-gray-900 text-xs leading-normal">{sch.name}</h3>
+                      <h3 className="font-semibold text-foreground text-xs leading-normal">{sch.name}</h3>
                       {sch.is_fully_funded && (
-                        <span className="bg-green-50 text-green-600 border border-green-100/50 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider shrink-0">Fully Funded</span>
+                        <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider shrink-0">Fully Funded</span>
                       )}
                     </div>
-                    <p className="text-[10px] text-gray-400 font-semibold">{sch.country || 'Global'} • Type: {sch.type}</p>
-                    <p className="text-xs text-gray-600 leading-normal line-clamp-2">{sch.description || 'No description listed.'}</p>
+                    <p className="text-[10px] text-muted-foreground font-semibold">{sch.country || 'Global'} • Type: {sch.type}</p>
+                    <p className="text-xs text-foreground/80 leading-normal line-clamp-2">{sch.description || 'No description listed.'}</p>
                   </div>
-                  <div className="flex justify-between items-center pt-2 border-t border-slate-100">
-                    <span className="text-[10px] font-bold text-indigo-600">Amt: ${sch.amount_usd?.toLocaleString() || 'Variable'}</span>
+                  <div className="flex justify-between items-center pt-2 border-t border-border/40">
+                    <span className="text-[10px] font-bold text-indigo-650 dark:text-indigo-400">Amt: ${sch.amount_usd?.toLocaleString() || 'Variable'}</span>
                     <div className="flex gap-1">
                       <button
                         onClick={() => {
@@ -929,13 +928,13 @@ export default function AdminPage() {
                           })
                           setShowSchModal(true)
                         }}
-                        className="px-2 py-1.5 border border-slate-200 hover:border-slate-300 bg-white rounded-lg text-[10px] font-bold text-gray-600 cursor-pointer"
+                        className="px-2 py-1.5 border border-border hover:border-border/80 bg-card rounded-lg text-[10px] font-bold text-foreground cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteScholarship(sch.id)}
-                        className="p-1.5 border border-red-200 hover:border-red-300 text-red-500 bg-white rounded-lg cursor-pointer"
+                        className="p-1.5 border border-red-650/30 hover:border-red-600/50 text-red-500 bg-card rounded-lg cursor-pointer"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -944,7 +943,7 @@ export default function AdminPage() {
                 </div>
               ))}
               {filteredScholarships.length === 0 && (
-                <div className="col-span-2 text-center text-gray-400 py-10">No scholarships found.</div>
+                <div className="col-span-2 text-center text-muted-foreground py-10">No scholarships found.</div>
               )}
             </div>
           </div>
@@ -955,23 +954,23 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             {/* Instructions Prompt Editor */}
-            <div className="lg:col-span-7 bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-              <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2 flex items-center gap-1.5">
-                <Settings className="w-4 h-4 text-indigo-600" />
+            <div className="lg:col-span-7 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <Settings className="w-4 h-4 text-indigo-650 dark:text-indigo-400" />
                 Active Counselor System instructions
               </h2>
               
               <div className="space-y-1">
-                <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">System Instructions Prompt</label>
+                <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">System Instructions Prompt</label>
                 <textarea
                   value={activePrompt}
                   onChange={e => setActivePrompt(e.target.value)}
-                  className="w-full h-40 border border-gray-200 rounded-lg p-3 text-xs text-gray-700 bg-white font-mono leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="w-full h-40 border border-border rounded-lg p-3 text-xs text-foreground bg-muted font-mono leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
 
               <div className="flex items-center justify-between">
-                <p className="text-[10px] text-gray-400 leading-relaxed font-semibold italic">
+                <p className="text-[10px] text-muted-foreground leading-relaxed font-semibold italic">
                   * Triggers real-time systeminstruction updates for chatbot responses.
                 </p>
                 <button
@@ -983,58 +982,58 @@ export default function AdminPage() {
               </div>
 
               {/* Version History Rollbacks */}
-              <div className="pt-4 border-t border-slate-100 space-y-3">
-                <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider">Prompt Revision History</h3>
+              <div className="pt-4 border-t border-border/40 space-y-3">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">Prompt Revision History</h3>
                 <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
                   {promptHistory.map((h, idx) => (
-                    <div key={h.id || idx} className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex justify-between items-center text-xs">
+                    <div key={h.id || idx} className="bg-muted/40 border border-border/40 rounded-xl p-3 flex justify-between items-center text-xs">
                       <div>
-                        <p className="font-semibold text-gray-700 leading-normal truncate max-w-[300px]">{h.prompt}</p>
-                        <p className="text-[10px] text-gray-400 mt-0.5">Revision: {new Date(h.updatedAt).toLocaleString()} • {h.author}</p>
+                        <p className="font-semibold text-foreground/80 leading-normal truncate max-w-[300px]">{h.prompt}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">Revision: {new Date(h.updatedAt).toLocaleString()} • {h.author}</p>
                       </div>
                       <button
                         onClick={() => handleRollbackPrompt(h.id)}
-                        className="px-2.5 py-1.5 border border-indigo-200 hover:border-indigo-300 hover:bg-indigo-50 text-indigo-600 rounded-lg font-semibold cursor-pointer shrink-0 text-[10px]"
+                        className="px-2.5 py-1.5 border border-indigo-500/20 hover:border-indigo-500/30 hover:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 rounded-lg font-semibold cursor-pointer shrink-0 text-[10px]"
                       >
                         Rollback
                       </button>
                     </div>
                   ))}
                   {promptHistory.length === 0 && (
-                    <p className="text-xs text-gray-400 text-center py-4">No revisions logged yet.</p>
+                    <p className="text-xs text-muted-foreground text-center py-4">No revisions logged yet.</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Sandbox Playground Column */}
-            <div className="lg:col-span-5 bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-              <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2 flex items-center gap-1.5">
-                <Play className="w-4 h-4 text-emerald-600" />
+            <div className="lg:col-span-5 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <Play className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Prompt Sandbox Playground
               </h2>
               
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Test custom prompt configurations in real-time before saving them live to the system.
               </p>
 
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Test System instructions</label>
+                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Test System instructions</label>
                   <textarea
                     value={sandboxPrompt}
                     onChange={e => setSandboxPrompt(e.target.value)}
-                    className="w-full h-24 border border-gray-200 rounded-lg p-2.5 text-xs text-gray-700 bg-white font-mono leading-normal resize-none focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                    className="w-full h-24 border border-border rounded-lg p-2.5 text-xs text-foreground bg-muted font-mono leading-normal resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                     placeholder="Enter system instruction..."
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">User Query input</label>
+                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">User Query input</label>
                   <input
                     value={sandboxQuery}
                     onChange={e => setSandboxQuery(e.target.value)}
                     placeholder="e.g. Which universities accept 6.5 IELTS?"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 bg-white"
+                    className="w-full border border-border rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-foreground bg-muted"
                   />
                 </div>
 
@@ -1050,8 +1049,8 @@ export default function AdminPage() {
               {/* Test Output box */}
               {sandboxResult && (
                 <div className="space-y-1.5 pt-2">
-                  <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Gemini Model Output</label>
-                  <div className="border border-slate-100 rounded-xl p-3 bg-slate-950 font-mono text-[10px] text-emerald-400 whitespace-pre-wrap max-h-[220px] overflow-y-auto leading-relaxed">
+                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Gemini Model Output</label>
+                  <div className="border border-border rounded-xl p-3 bg-zinc-950 dark:bg-black font-mono text-[10px] text-emerald-400 whitespace-pre-wrap max-h-[220px] overflow-y-auto leading-relaxed">
                     {sandboxResult}
                   </div>
                 </div>
@@ -1062,24 +1061,24 @@ export default function AdminPage() {
 
         {/* --- Tab 6: Audit Logs --- */}
         {activeTab === 'logs' && (
-          <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Audit Event logs</h2>
+          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
+            <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Audit Event logs</h2>
             
             <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
               {auditLogs.map((log, idx) => (
-                <div key={idx} className="text-xs border border-slate-100/50 bg-slate-50/20 hover:bg-slate-50/50 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-200">
+                <div key={idx} className="text-xs border border-border/40 bg-muted/10 hover:bg-muted/20 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-205">
                   <div className="space-y-1">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-slate-900 text-white">{log.action}</span>
-                    <p className="text-gray-700 leading-normal font-medium mt-1.5">{log.detail}</p>
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-primary text-primary-foreground">{log.action}</span>
+                    <p className="text-foreground/80 leading-normal font-medium mt-1.5">{log.detail}</p>
                   </div>
-                  <div className="text-right text-[10px] text-gray-400 shrink-0 font-medium font-mono">
+                  <div className="text-right text-[10px] text-muted-foreground shrink-0 font-medium font-mono">
                     <p>{new Date(log.timestamp).toLocaleString()}</p>
                     <p className="mt-0.5 font-sans">User: {log.actor}</p>
                   </div>
                 </div>
               ))}
               {auditLogs.length === 0 && (
-                <div className="text-center text-gray-400 py-10 font-medium">No system log records currently captured.</div>
+                <div className="text-center text-muted-foreground py-10 font-medium">No system log records currently captured.</div>
               )}
             </div>
           </div>
@@ -1089,112 +1088,112 @@ export default function AdminPage() {
 
       {/* --- UNIVERSITY MODAL DIALOG --- */}
       {showUniModal && selectedUni && (
-        <div className="fixed inset-0 z-50 bg-black/45 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-gray-900 text-sm border-b border-slate-50 pb-2">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-card border border-border rounded-2xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="font-bold text-foreground text-sm border-b border-border/40 pb-2">
               {selectedUni.id ? 'Edit University details' : 'Add New University'}
             </h3>
             
             <form onSubmit={handleSaveUniversity} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">University name</label>
+                  <label className="text-muted-foreground font-bold">University name</label>
                   <input
                     value={selectedUni.name}
                     onChange={e => setSelectedUni({ ...selectedUni, name: e.target.value })}
                     required
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Country</label>
+                  <label className="text-muted-foreground font-bold">Country</label>
                   <input
                     value={selectedUni.country}
                     onChange={e => setSelectedUni({ ...selectedUni, country: e.target.value })}
                     required
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">City</label>
+                  <label className="text-muted-foreground font-bold">City</label>
                   <input
                     value={selectedUni.city || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, city: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">QS Rank</label>
+                  <label className="text-muted-foreground font-bold">QS Rank</label>
                   <input
                     type="number"
                     value={selectedUni.qs_ranking || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, qs_ranking: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Acceptance Rate (%)</label>
+                  <label className="text-muted-foreground font-bold">Acceptance Rate (%)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedUni.acceptance_rate || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, acceptance_rate: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Min CGPA</label>
+                  <label className="text-muted-foreground font-bold">Min CGPA</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedUni.min_cgpa || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, min_cgpa: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Min IELTS Band</label>
+                  <label className="text-muted-foreground font-bold">Min IELTS Band</label>
                   <input
                     type="number"
                     step="0.5"
                     value={selectedUni.min_ielts || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, min_ielts: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Annual Fee (USD)</label>
+                  <label className="text-muted-foreground font-bold">Annual Fee (USD)</label>
                   <input
                     type="number"
                     value={selectedUni.annual_fee_usd || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, annual_fee_usd: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Living Cost (USD)</label>
+                  <label className="text-muted-foreground font-bold">Living Cost (USD)</label>
                   <input
                     type="number"
                     value={selectedUni.living_cost_usd || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, living_cost_usd: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">Programs Offered (comma-separated)</label>
+                  <label className="text-muted-foreground font-bold">Programs Offered (comma-separated)</label>
                   <input
                     value={selectedUni.programs || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, programs: e.target.value })}
                     placeholder="Computer Science, Data Science, Cyber Security"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Matching Tier</label>
+                  <label className="text-muted-foreground font-bold">Matching Tier</label>
                   <select
                     value={selectedUni.tier}
                     onChange={e => setSelectedUni({ ...selectedUni, tier: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   >
                     <option value="safe">Safe</option>
                     <option value="moderate">Moderate</option>
@@ -1203,21 +1202,21 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Website URL</label>
+                  <label className="text-muted-foreground font-bold">Website URL</label>
                   <input
                     value={selectedUni.website_url || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, website_url: e.target.value })}
                     placeholder="https://example.edu"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-50">
+              <div className="flex justify-end gap-2.5 pt-3 border-t border-border/40">
                 <button
                   type="button"
                   onClick={() => setShowUniModal(false)}
-                  className="px-3.5 py-2 border border-slate-200 text-gray-500 hover:text-gray-900 bg-white rounded-lg font-semibold cursor-pointer"
+                  className="px-3.5 py-2 border border-border text-muted-foreground hover:text-foreground bg-card rounded-lg font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1235,47 +1234,47 @@ export default function AdminPage() {
 
       {/* --- SCHOLARSHIP MODAL DIALOG --- */}
       {showSchModal && selectedSch && (
-        <div className="fixed inset-0 z-50 bg-black/45 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-gray-900 text-sm border-b border-slate-50 pb-2">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-card border border-border rounded-2xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="font-bold text-foreground text-sm border-b border-border/40 pb-2">
               {selectedSch.id ? 'Edit Scholarship details' : 'Add New Scholarship'}
             </h3>
 
             <form onSubmit={handleSaveScholarship} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">Scholarship name</label>
+                  <label className="text-muted-foreground font-bold">Scholarship name</label>
                   <input
                     value={selectedSch.name}
                     onChange={e => setSelectedSch({ ...selectedSch, name: e.target.value })}
                     required
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Country Assignment</label>
+                  <label className="text-muted-foreground font-bold">Country Assignment</label>
                   <input
                     value={selectedSch.country || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, country: e.target.value })}
                     placeholder="e.g. USA or Global"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Amount (USD)</label>
+                  <label className="text-muted-foreground font-bold">Amount (USD)</label>
                   <input
                     type="number"
                     value={selectedSch.amount_usd || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, amount_usd: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Funding Type</label>
+                  <label className="text-muted-foreground font-bold">Funding Type</label>
                   <select
                     value={selectedSch.type}
                     onChange={e => setSelectedSch({ ...selectedSch, type: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   >
                     <option value="merit">Merit-based</option>
                     <option value="need">Need-based</option>
@@ -1289,62 +1288,62 @@ export default function AdminPage() {
                     checked={!!selectedSch.is_fully_funded}
                     onChange={e => setSelectedSch({ ...selectedSch, is_fully_funded: e.target.checked })}
                     id="is_fully_funded"
-                    className="w-4 h-4 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500 cursor-pointer"
+                    className="w-4 h-4 rounded text-indigo-655 border-border focus:ring-indigo-500 bg-muted text-indigo-600 cursor-pointer"
                   />
-                  <label htmlFor="is_fully_funded" className="text-gray-700 font-semibold cursor-pointer">Fully Funded Scholarship</label>
+                  <label htmlFor="is_fully_funded" className="text-foreground/90 font-semibold cursor-pointer">Fully Funded Scholarship</label>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Min CGPA Required</label>
+                  <label className="text-muted-foreground font-bold">Min CGPA Required</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedSch.min_cgpa || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, min_cgpa: e.target.value })}
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-bold">Application Deadline</label>
+                  <label className="text-muted-foreground font-bold">Application Deadline</label>
                   <input
                     value={selectedSch.deadline || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, deadline: e.target.value })}
                     placeholder="e.g. Sep 15"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">Eligible Degrees (comma-separated)</label>
+                  <label className="text-muted-foreground font-bold">Eligible Degrees (comma-separated)</label>
                   <input
                     value={selectedSch.eligible_degrees || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, eligible_degrees: e.target.value })}
                     placeholder="Masters, PhD, Bachelors"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">Website / Apply Link</label>
+                  <label className="text-muted-foreground font-bold">Website / Apply Link</label>
                   <input
                     value={selectedSch.link || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, link: e.target.value })}
                     placeholder="https://example.com/scholarship"
-                    className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
+                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-gray-400 font-bold">Description</label>
+                  <label className="text-muted-foreground font-bold">Description</label>
                   <textarea
                     value={selectedSch.description || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, description: e.target.value })}
-                    className="w-full h-20 border border-gray-200 rounded px-2.5 py-1.5 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white resize-none"
+                    className="w-full h-20 border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted resize-none"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-50">
+              <div className="flex justify-end gap-2.5 pt-3 border-t border-border/40">
                 <button
                   type="button"
                   onClick={() => setShowSchModal(false)}
-                  className="px-3.5 py-2 border border-slate-200 text-gray-500 hover:text-gray-900 bg-white rounded-lg font-semibold cursor-pointer"
+                  className="px-3.5 py-2 border border-border text-muted-foreground hover:text-foreground bg-card rounded-lg font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>

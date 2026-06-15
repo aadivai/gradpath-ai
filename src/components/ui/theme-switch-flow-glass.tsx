@@ -48,7 +48,13 @@ export default function ThemeSwitchFlowGlass({
   const onChange = useCallback(
     (v: boolean) => {
       setChecked(v);
-      setTheme(v ? "dark" : "light");
+      if (typeof document !== "undefined" && "startViewTransition" in document) {
+        (document as any).startViewTransition(() => {
+          setTheme(v ? "dark" : "light");
+        });
+      } else {
+        setTheme(v ? "dark" : "light");
+      }
     },
     [setTheme],
   );

@@ -164,21 +164,21 @@ export default function VisaPage() {
     setAnswer('')
   }
 
-  if (loading) return <div className="text-center py-16 text-sm text-gray-400">Loading visa database...</div>
+  if (loading) return <div className="text-center py-16 text-sm text-muted-foreground">Loading visa database...</div>
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Visa Guidance & Simulator</h1>
-      <p className="text-sm text-gray-500 mt-1 mb-6">Embassy checksheets, visa probability meters, and AI mock interviews.</p>
+      <h1 className="text-2xl font-bold text-foreground tracking-tight">Visa Guidance & Simulator</h1>
+      <p className="text-sm text-muted-foreground mt-1 mb-6">Embassy checksheets, visa probability meters, and AI mock interviews.</p>
 
       {/* Country Selection */}
-      <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-100 pb-4">
+      <div className="flex flex-wrap gap-2 mb-6 border-b border-border pb-4">
         {COUNTRIES.map(c => (
           <button key={c} onClick={() => { setSelected(c); resetInterview(); setQIndex(0) }}
             className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer
               ${selected === c
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-white text-gray-600 border border-gray-200 hover:border-indigo-100 hover:text-indigo-600'}`}>
+                : 'bg-card text-muted-foreground border border-border hover:border-indigo-500/30 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>
             {c === 'United Kingdom' ? 'UK' : c}
           </button>
         ))}
@@ -190,26 +190,26 @@ export default function VisaPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             {/* Quick Details Card */}
-            <div className="md:col-span-2 bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4">
+            <div className="md:col-span-2 bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
                   {visa.visa_type}
                 </span>
-                <h2 className="text-lg font-bold text-gray-900 mt-2">{selected} Student Visa</h2>
+                <h2 className="text-lg font-bold text-foreground mt-2">{selected} Student Visa</h2>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 text-xs border-t border-gray-50 pt-4">
+              <div className="grid grid-cols-3 gap-2 text-xs border-t border-border/50 pt-4">
                 <div>
-                  <p className="text-gray-400 font-medium flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> Processing</p>
-                  <p className="font-bold text-gray-700 mt-0.5">{visa.processing_days_min}-{visa.processing_days_max} days</p>
+                  <p className="text-muted-foreground font-medium flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> Processing</p>
+                  <p className="font-bold text-foreground mt-0.5">{visa.processing_days_min}-{visa.processing_days_max} days</p>
                 </div>
                 <div>
-                  <p className="text-gray-400 font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> Visa Fee</p>
-                  <p className="font-bold text-gray-700 mt-0.5">${visa.estimated_cost_usd}</p>
+                  <p className="text-muted-foreground font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> Visa Fee</p>
+                  <p className="font-bold text-foreground mt-0.5">${visa.estimated_cost_usd}</p>
                 </div>
                 <div>
-                  <p className="text-gray-400 font-medium flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5" /> Finances</p>
-                  <p className="font-bold text-gray-700 mt-0.5">${visa.financial_requirement_usd?.toLocaleString()}</p>
+                  <p className="text-muted-foreground font-medium flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5" /> Finances</p>
+                  <p className="font-bold text-foreground mt-0.5">${visa.financial_requirement_usd?.toLocaleString()}</p>
                 </div>
               </div>
             </div>
@@ -238,37 +238,37 @@ export default function VisaPage() {
           </div>
 
           {/* Interactive AI Visa Interview Simulator */}
-          <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-50 pb-2">
+          <div className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-border/50 pb-2">
               <Sparkles className="w-4 h-4 text-indigo-500" />
               AI Visa Interview Simulator
             </h3>
             
             {!feedback ? (
               <div className="space-y-4">
-                <div className="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100/50">
-                  <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">Officer Question {qIndex + 1} of {questions.length}</span>
-                  <p className="text-sm font-bold text-indigo-900 mt-1">{questions[qIndex]}</p>
+                <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
+                  <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Officer Question {qIndex + 1} of {questions.length}</span>
+                  <p className="text-sm font-bold text-indigo-900 dark:text-indigo-300 mt-1">{questions[qIndex]}</p>
                 </div>
                 
                 <div>
-                  <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Your Response</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Your Response</label>
                   <textarea 
                     value={answer}
                     onChange={e => setAnswer(e.target.value)}
                     placeholder="Type your response to the officer here..."
-                    className="w-full h-24 border border-gray-200 rounded-lg p-3 text-sm mt-1 focus:outline-indigo-300 text-gray-900 bg-white leading-relaxed resize-none"
+                    className="w-full h-24 border border-border rounded-lg p-3 text-sm mt-1 focus:outline-indigo-300 text-foreground bg-card leading-relaxed resize-none"
                   />
                 </div>
 
                 <div className="flex gap-2">
                   {qIndex > 0 && (
-                    <button onClick={() => setQIndex(qIndex - 1)} className="px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                    <button onClick={() => setQIndex(qIndex - 1)} className="px-4 py-2 border border-border text-muted-foreground text-xs font-semibold rounded-lg hover:bg-muted transition-colors cursor-pointer">
                       Prev Question
                     </button>
                   )}
                   {qIndex < questions.length - 1 && (
-                    <button onClick={() => { setQIndex(qIndex + 1); setAnswer('') }} className="px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                    <button onClick={() => { setQIndex(qIndex + 1); setAnswer('') }} className="px-4 py-2 border border-border text-muted-foreground text-xs font-semibold rounded-lg hover:bg-muted transition-colors cursor-pointer">
                       Skip / Next
                     </button>
                   )}
@@ -284,35 +284,35 @@ export default function VisaPage() {
             ) : (
               <div className="space-y-4 animate-fade-in">
                 {/* Result header */}
-                <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-muted border border-border rounded-lg">
                   <div>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Officer Decision</span>
-                    <p className="text-sm font-bold text-gray-900 mt-0.5">{feedback.verdict}</p>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Officer Decision</span>
+                    <p className="text-sm font-bold text-foreground mt-0.5">{feedback.verdict}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Mock Score</span>
-                    <p className="text-lg font-bold text-indigo-600 mt-0.5">{feedback.score} / 10</p>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Mock Score</span>
+                    <p className="text-lg font-bold text-indigo-600 dark:text-indigo-400 mt-0.5">{feedback.score} / 10</p>
                   </div>
                 </div>
 
                 {/* Critique */}
                 <div>
-                  <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Officer Critique</h4>
-                  <p className="text-xs text-gray-600 bg-red-50/30 border border-red-100/30 rounded-lg p-3 mt-1 leading-relaxed">
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-wider">Officer Critique</h4>
+                  <p className="text-xs text-muted-foreground bg-red-500/10 border border-red-500/20 rounded-lg p-3 mt-1 leading-relaxed">
                     {feedback.critique}
                   </p>
                 </div>
 
                 {/* Improved answer suggestion */}
                 <div>
-                  <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Recommended Answer Guide</h4>
-                  <div className="text-xs text-emerald-800 bg-emerald-50/40 border border-emerald-100/50 rounded-lg p-3 mt-1 leading-relaxed whitespace-pre-wrap font-medium">
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-wider">Recommended Answer Guide</h4>
+                  <div className="text-xs text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mt-1 leading-relaxed whitespace-pre-wrap font-medium">
                     {feedback.improvedAnswer}
                   </div>
                 </div>
 
                 <div className="flex gap-2">
-                  <button onClick={resetInterview} className="flex-1 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 transition-colors cursor-pointer flex items-center justify-center gap-1">
+                  <button onClick={resetInterview} className="flex-1 py-2 border border-border text-muted-foreground text-xs font-semibold rounded-lg hover:bg-muted transition-colors cursor-pointer flex items-center justify-center gap-1">
                     <RotateCcw className="w-3.5 h-3.5" /> Retry Question
                   </button>
                   {qIndex < questions.length - 1 && (
@@ -326,11 +326,11 @@ export default function VisaPage() {
           </div>
 
           {/* Required documents Checklist */}
-          <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-3 border-b border-gray-50 pb-2">Required Checklist Documents</h3>
+          <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-3 border-b border-border/50 pb-2">Required Checklist Documents</h3>
             <ul className="space-y-2">
               {visa.required_docs?.map((doc, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed font-medium">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed font-medium">
                   <Check className="text-emerald-500 font-bold mt-0.5 w-4 h-4 shrink-0" strokeWidth={3} />
                   <span>{doc}</span>
                 </li>
@@ -340,21 +340,21 @@ export default function VisaPage() {
 
           {/* Interview tips */}
           {visa.interview_required && (
-            <div className="bg-amber-50 border border-amber-100 rounded-xl p-5 shadow-sm">
-              <h3 className="text-xs font-bold text-amber-950 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-5 shadow-sm">
+              <h3 className="text-xs font-bold text-amber-950 dark:text-amber-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                 <Info className="w-4 h-4 text-amber-500" />
                 Visa Credibility Interview Tips
               </h3>
-              <p className="text-xs text-amber-800 leading-relaxed">{visa.interview_tips}</p>
+              <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">{visa.interview_tips}</p>
             </div>
           )}
 
           {/* Rejection reasons */}
-          <div className="bg-red-50 border border-red-100 rounded-xl p-5 shadow-sm">
-            <h3 className="text-xs font-bold text-red-950 uppercase tracking-wider mb-2">Common Embassy Rejection Reasons</h3>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-5 shadow-sm">
+            <h3 className="text-xs font-bold text-red-950 dark:text-red-300 uppercase tracking-wider mb-2">Common Embassy Rejection Reasons</h3>
             <ul className="space-y-1.5">
               {visa.common_rejection_reasons?.map((reason, i) => (
-                <li key={i} className="flex items-start gap-1.5 text-xs text-red-800 leading-relaxed">
+                <li key={i} className="flex items-start gap-1.5 text-xs text-red-800 dark:text-red-300 leading-relaxed">
                   <span className="font-bold shrink-0 mt-0.5">&bull;</span>
                   <span>{reason}</span>
                 </li>

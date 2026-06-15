@@ -133,23 +133,23 @@ export default function ComparePage() {
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-stone-900 tracking-tight flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-2">
           <ArrowLeftRight className="w-6 h-6 text-indigo-600" />
           University Comparison Matrix
         </h1>
-        <p className="text-xs text-stone-500 mt-1">
+        <p className="text-xs text-muted-foreground mt-1">
           Compare admissions parameters, living expenditures, employabilities, and visa statistics side-by-side.
         </p>
       </div>
 
       {saved.length === 0 ? (
-        <div className="text-center py-16 bg-white border border-stone-200/40 rounded-2xl shadow-sm space-y-4">
+        <div className="text-center py-16 bg-card border border-border/40 rounded-2xl shadow-sm space-y-4">
           <div className="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 mx-auto">
             <ArrowLeftRight className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm font-bold text-stone-850">No saved universities to compare</p>
-            <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto leading-relaxed">
+            <p className="text-sm font-bold text-foreground">No saved universities to compare</p>
+            <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto leading-relaxed">
               Explore the global database list under the Universities module, click save, and return here to match them side-by-side.
             </p>
           </div>
@@ -164,8 +164,8 @@ export default function ComparePage() {
         <div className="space-y-6">
           
           {/* Active selection bar card */}
-          <div className="glass-card rounded-2xl p-5 border border-stone-200/50 space-y-3">
-            <h2 className="text-xs font-bold text-stone-850 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="glass-card rounded-2xl p-5 border border-border space-y-3">
+            <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-indigo-600" />
               Choose Shortlisted Universities to Compare
             </h2>
@@ -179,7 +179,7 @@ export default function ComparePage() {
                     className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
                       isSelected 
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' 
-                        : 'bg-white text-stone-600 border-stone-200 hover:border-indigo-300'
+                        : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
                     }`}
                   >
                     {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
@@ -191,20 +191,20 @@ export default function ComparePage() {
           </div>
 
           {selectedUnis.length === 0 ? (
-            <div className="text-center py-12 bg-white border border-stone-200/40 rounded-2xl text-xs text-stone-400 font-semibold">
+            <div className="text-center py-12 bg-card border border-border/40 rounded-2xl text-xs text-muted-foreground font-semibold">
               Select at least one university from the list above to show comparison details.
             </div>
           ) : (
             <>
               {/* Comparative grid table sheet */}
-              <div className="glass-card rounded-2xl border border-stone-200/60 overflow-hidden shadow-sm">
+              <div className="glass-card rounded-2xl border border-border overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
-                      <tr className="bg-slate-50/70 border-b border-stone-200/40">
-                        <th className="p-4 font-bold text-stone-400 uppercase tracking-wide w-48">Parameter</th>
+                      <tr className="bg-muted/70 border-b border-border/40">
+                        <th className="p-4 font-bold text-muted-foreground uppercase tracking-wide w-48">Parameter</th>
                         {selectedUnis.map(u => (
-                          <th key={u.id} className="p-4 font-bold text-stone-900 border-l border-stone-200/40 min-w-[200px] text-center">
+                          <th key={u.id} className="p-4 font-bold text-foreground border-l border-border/40 min-w-[200px] text-center">
                             {u.name}
                           </th>
                         ))}
@@ -212,22 +212,22 @@ export default function ComparePage() {
                     </thead>
                     <tbody className="divide-y divide-stone-200/30">
                       <tr>
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Country & City</td>
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Country & City</td>
                         {selectedUnis.map(u => (
-                          <td key={u.id} className="p-4 text-stone-850 border-l border-stone-200/40 font-semibold text-center">
+                          <td key={u.id} className="p-4 text-foreground border-l border-border/40 font-semibold text-center">
                             {u.city ? `${u.city}, ` : ''}{u.country}
                           </td>
                         ))}
                       </tr>
                       
                       {/* QS rank row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">QS World Rank</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">QS World Rank</td>
                         {selectedUnis.map(u => {
                           const isWinner = u.id === bestQsId && selectedUnis.length > 1
                           return (
-                            <td key={u.id} className={`p-4 border-l border-stone-200/40 font-bold text-center ${
-                              isWinner ? 'bg-indigo-50/40 text-indigo-700' : 'text-stone-800'
+                            <td key={u.id} className={`p-4 border-l border-border/40 font-bold text-center ${
+                              isWinner ? 'bg-indigo-50/40 text-indigo-700' : 'text-foreground'
                             }`}>
                               #{u.qs_ranking ?? '—'}
                               {isWinner && <span className="block text-[8px] font-extrabold uppercase mt-1 text-indigo-650 tracking-wider">🏆 Best Ranking</span>}
@@ -237,33 +237,33 @@ export default function ComparePage() {
                       </tr>
 
                       {/* THE Rank row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">THE World Rank</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">THE World Rank</td>
                         {selectedUnis.map(u => (
-                          <td key={u.id} className="p-4 text-stone-850 border-l border-stone-200/40 font-bold text-center">
+                          <td key={u.id} className="p-4 text-foreground border-l border-border/40 font-bold text-center">
                             #{u.the_ranking ?? '—'}
                           </td>
                         ))}
                       </tr>
 
                       {/* Acceptance rate row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Acceptance Rate</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Acceptance Rate</td>
                         {selectedUnis.map(u => (
-                          <td key={u.id} className="p-4 text-stone-800 border-l border-stone-200/40 font-semibold text-center">
+                          <td key={u.id} className="p-4 text-foreground border-l border-border/40 font-semibold text-center">
                             {u.acceptance_rate ? `${u.acceptance_rate}%` : '—'}
                           </td>
                         ))}
                       </tr>
 
                       {/* Tuition fees row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Annual Tuition Fee</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Annual Tuition Fee</td>
                         {selectedUnis.map(u => {
                           const isWinner = u.id === lowestFeeId && selectedUnis.length > 1
                           return (
-                            <td key={u.id} className={`p-4 border-l border-stone-200/40 font-bold text-center ${
-                              isWinner ? 'bg-emerald-50/40 text-emerald-700' : 'text-stone-800'
+                            <td key={u.id} className={`p-4 border-l border-border/40 font-bold text-center ${
+                              isWinner ? 'bg-emerald-50/40 text-emerald-700' : 'text-foreground'
                             }`}>
                               ${(u.annual_fee_usd ?? 0).toLocaleString()} USD
                               {isWinner && <span className="block text-[8px] font-extrabold uppercase mt-1 text-emerald-650 tracking-wider">🏆 Lowest Cost</span>}
@@ -273,23 +273,23 @@ export default function ComparePage() {
                       </tr>
 
                       {/* Living cost row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Living Cost / Month</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Living Cost / Month</td>
                         {selectedUnis.map(u => (
-                          <td key={u.id} className="p-4 text-stone-800 border-l border-stone-200/40 font-semibold text-center">
+                          <td key={u.id} className="p-4 text-foreground border-l border-border/40 font-semibold text-center">
                             ${(u.living_cost_usd ?? 0).toLocaleString()} USD
                           </td>
                         ))}
                       </tr>
 
                       {/* Employment rate row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Employability Rate</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Employability Rate</td>
                         {selectedUnis.map(u => {
                           const isWinner = u.id === highestEmployId && selectedUnis.length > 1
                           return (
-                            <td key={u.id} className={`p-4 border-l border-stone-200/40 font-black text-center ${
-                              isWinner ? 'bg-indigo-50/40 text-indigo-700' : 'text-stone-800'
+                            <td key={u.id} className={`p-4 border-l border-border/40 font-black text-center ${
+                              isWinner ? 'bg-indigo-50/40 text-indigo-700' : 'text-foreground'
                             }`}>
                               {u.employment_rate}%
                               {isWinner && <span className="block text-[8px] font-extrabold uppercase mt-1 text-indigo-650 tracking-wider">🏆 Highest Employment</span>}
@@ -299,13 +299,13 @@ export default function ComparePage() {
                       </tr>
 
                       {/* Visa success rate row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">Visa Success Odds</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">Visa Success Odds</td>
                         {selectedUnis.map(u => {
                           const isWinner = u.id === bestVisaId && selectedUnis.length > 1
                           return (
-                            <td key={u.id} className={`p-4 border-l border-stone-200/40 font-black text-center ${
-                              isWinner ? 'bg-emerald-50/40 text-emerald-700' : 'text-stone-800'
+                            <td key={u.id} className={`p-4 border-l border-border/40 font-black text-center ${
+                              isWinner ? 'bg-emerald-50/40 text-emerald-700' : 'text-foreground'
                             }`}>
                               {u.visa_success_rate}%
                               {isWinner && <span className="block text-[8px] font-extrabold uppercase mt-1 text-emerald-650 tracking-wider">🏆 Best Visa Odds</span>}
@@ -315,10 +315,10 @@ export default function ComparePage() {
                       </tr>
 
                       {/* ROI scorecard row */}
-                      <tr className="hover:bg-slate-50/20 transition-colors">
-                        <td className="p-4 font-bold text-stone-500 bg-slate-50/20">ROI Confidence</td>
+                      <tr className="hover:bg-muted/20 transition-colors">
+                        <td className="p-4 font-bold text-muted-foreground bg-muted/20">ROI Confidence</td>
                         {selectedUnis.map(u => (
-                          <td key={u.id} className="p-4 border-l border-stone-200/40 text-center font-bold">
+                          <td key={u.id} className="p-4 border-l border-border/40 text-center font-bold">
                             <span className="bg-amber-50 text-amber-700 border border-amber-100/60 px-2 py-0.5 rounded-full text-[10px]">
                               {u.roi_score} / 100
                             </span>
@@ -334,8 +334,8 @@ export default function ComparePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Cost Comparison chart card */}
-                <div className="glass-card rounded-2xl p-5 border border-stone-200/50 space-y-4">
-                  <h3 className="text-xs font-bold text-stone-850 uppercase tracking-wider flex items-center gap-1.5">
+                <div className="glass-card rounded-2xl p-5 border border-border space-y-4">
+                  <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                     <DollarSign className="w-4 h-4 text-indigo-600" />
                     Gross Yearly Costs (Tuition + Living)
                   </h3>
@@ -348,15 +348,15 @@ export default function ComparePage() {
                       const percent = Math.min(100, Math.round((totalCost / maxCost) * 100))
                       return (
                         <div key={u.id} className="space-y-1">
-                          <p className="text-[10px] font-bold text-stone-600 truncate">{u.name}</p>
+                          <p className="text-[10px] font-bold text-muted-foreground truncate">{u.name}</p>
                           <div className="flex items-center gap-3">
-                            <div className="flex-1 h-3 bg-stone-100 rounded-lg overflow-hidden relative border border-stone-250/20">
+                            <div className="flex-1 h-3 bg-muted rounded-lg overflow-hidden relative border border-border/20">
                               <div 
                                 className="h-full bg-gradient-to-r from-amber-400 to-indigo-600 rounded-lg transition-all duration-700 ease-out" 
                                 style={{ width: `${percent}%` }}
                               />
                             </div>
-                            <span className="text-xs font-bold text-stone-800 shrink-0">${totalCost.toLocaleString()}</span>
+                            <span className="text-xs font-bold text-foreground shrink-0">${totalCost.toLocaleString()}</span>
                           </div>
                         </div>
                       )
@@ -365,8 +365,8 @@ export default function ComparePage() {
                 </div>
 
                 {/* Placement Comparison chart card */}
-                <div className="glass-card rounded-2xl p-5 border border-stone-200/50 space-y-4">
-                  <h3 className="text-xs font-bold text-stone-850 uppercase tracking-wider flex items-center gap-1.5">
+                <div className="glass-card rounded-2xl p-5 border border-border space-y-4">
+                  <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                     <Briefcase className="w-4 h-4 text-indigo-600" />
                     Post-Graduation Employment Odds
                   </h3>
@@ -374,15 +374,15 @@ export default function ComparePage() {
                   <div className="space-y-4 pt-2">
                     {selectedUnis.map(u => (
                       <div key={u.id} className="space-y-1">
-                        <p className="text-[10px] font-bold text-stone-600 truncate">{u.name}</p>
+                        <p className="text-[10px] font-bold text-muted-foreground truncate">{u.name}</p>
                         <div className="flex items-center gap-3">
-                          <div className="flex-1 h-3 bg-stone-100 rounded-lg overflow-hidden relative border border-stone-250/20">
+                          <div className="flex-1 h-3 bg-muted rounded-lg overflow-hidden relative border border-border/20">
                             <div 
                               className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-lg transition-all duration-700 ease-out" 
                               style={{ width: `${u.employment_rate}%` }}
                             />
                           </div>
-                          <span className="text-xs font-bold text-stone-800 shrink-0">{u.employment_rate}%</span>
+                          <span className="text-xs font-bold text-foreground shrink-0">{u.employment_rate}%</span>
                         </div>
                       </div>
                     ))}
@@ -392,16 +392,16 @@ export default function ComparePage() {
               </div>
 
               {/* Differentiator Information card */}
-              <div className="glass-card rounded-2xl p-5 border border-stone-200/50 bg-amber-50/40 text-amber-800 flex items-start gap-3.5">
-                <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="glass-card rounded-2xl p-5 border border-border bg-amber-50/40 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 flex items-start gap-3.5">
+                <Info className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                 <div className="space-y-1">
-                  <h4 className="text-[10px] text-amber-700 font-bold uppercase tracking-wider">
+                  <h4 className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-wider">
                     ROI Analysis Truth
                   </h4>
-                  <p className="text-xs leading-relaxed text-amber-700/95 font-medium">
+                  <p className="text-xs leading-relaxed text-amber-700/95 dark:text-amber-300/90 font-medium">
                     Do not base your comparison entirely on QS Rank. A higher rank (e.g. #30 vs #150) often carries double the tuition fee with marginal salary differences after graduation in standard engineering and tech fields.
                   </p>
-                  <p className="text-xs leading-relaxed text-amber-700/90">
+                  <p className="text-xs leading-relaxed text-amber-700/90 dark:text-amber-300/80">
                     Always evaluate local visa policies for post-study work streams. For example, Germany offers a 18-month job seeker extension, whereas the UK features a 2-year Graduate Route.
                   </p>
                 </div>

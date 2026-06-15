@@ -1,6 +1,6 @@
 import type { University, Profile } from '@/types'
 
-// Static enrichment data for global universities to satisfy GradPath 2.0 rich dataset requirements
+// Static enrichment data for global universities to satisfy GradPath 3.0 rich dataset requirements
 export const UNIVERSITY_METADATA: Record<string, {
   the_ranking: number
   employment_rate: number // percentage
@@ -12,27 +12,52 @@ export const UNIVERSITY_METADATA: Record<string, {
   international_student_count: number
   language_requirements: string
   image_url: string
+  safety_index?: number
+  city_rating?: number
+  nearby_companies?: string
+  nearby_startups?: string
+  industry_connections?: string
+  research_labs?: string
+  faculty_ratio?: string
 }> = {
   'Massachusetts Institute of Technology (MIT)': {
     the_ranking: 3, employment_rate: 95, visa_success_rate: 88, roi_score: 98, climate: 'cold',
     internship_opportunities: 'Access to top Boston tech startups & MIT Media Lab research contracts.',
     placement_statistics: '$120,000 median starting salary. 96% placement within 3 months.',
     international_student_count: 3400, language_requirements: 'English (IELTS 7.5+)',
-    image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600'
+    image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600',
+    safety_index: 85, city_rating: 9.0,
+    nearby_companies: 'Google, Microsoft, Amazon, Akamai, Biogen, Novartis',
+    nearby_startups: 'Boston Dynamics, HubSpot, Toast, Formlabs, Desktop Metal',
+    industry_connections: 'Unmatched MIT Industrial Liaison Program, direct VC pipelines.',
+    research_labs: 'Computer Science and Artificial Intelligence Lab (CSAIL), Media Lab, Lincoln Lab',
+    faculty_ratio: '1:3'
   },
   'Stanford University': {
     the_ranking: 2, employment_rate: 96, visa_success_rate: 90, roi_score: 99, climate: 'warm',
     internship_opportunities: 'Direct pipeline to Silicon Valley giants (Google, Apple, Meta).',
     placement_statistics: '$135,000 median starting salary. 97% placement within 3 months.',
     international_student_count: 4100, language_requirements: 'English (IELTS 7.5+)',
-    image_url: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=600'
+    image_url: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=600',
+    safety_index: 92, city_rating: 9.5,
+    nearby_companies: 'Google, Apple, Meta, HP, VMware, Tesla',
+    nearby_startups: 'Stripe, OpenAI, Airbnb, Robinhood, Plaid',
+    industry_connections: 'Stanford Technology Ventures Program, heavy Sand Hill Road venture firm pipelines.',
+    research_labs: 'Stanford AI Lab (SAIL), Stanford Center for Research on Foundation Models',
+    faculty_ratio: '1:5'
   },
   'Harvard University': {
     the_ranking: 4, employment_rate: 94, visa_success_rate: 89, roi_score: 97, climate: 'cold',
     internship_opportunities: 'Global internships, Harvard Business School consultancies.',
     placement_statistics: '$118,000 median starting salary. 95% placement within 3 months.',
     international_student_count: 4800, language_requirements: 'English (IELTS 7.5+)',
-    image_url: 'https://images.unsplash.com/photo-1568310065099-28c0b58e7279?q=80&w=600'
+    image_url: 'https://images.unsplash.com/photo-1568310065099-28c0b58e7279?q=80&w=600',
+    safety_index: 87, city_rating: 9.0,
+    nearby_companies: 'Boston Consulting Group, McKinsey, Bain, Fidelity, Vertex Pharmaceuticals',
+    nearby_startups: 'HubSpot, Toast, WHOOP, Kayak',
+    industry_connections: 'Harvard Harvard Alumni Association (HAA), vast private equity / hedge fund connections.',
+    research_labs: 'Harvard John A. Paulson School of Engineering and Applied Sciences (SEAS) Labs',
+    faculty_ratio: '1:7'
   },
   'San Jose State University': {
     the_ranking: 601, employment_rate: 88, visa_success_rate: 94, roi_score: 92, climate: 'warm',
@@ -74,7 +99,13 @@ export const UNIVERSITY_METADATA: Record<string, {
     internship_opportunities: 'Research partnerships with BMW, Siemens, and European Space Agency.',
     placement_statistics: 'No tuition fees. €52,000 starting salary. 98% placement in Europe.',
     international_student_count: 14000, language_requirements: 'English / German (IELTS 6.5+)',
-    image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600'
+    image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600',
+    safety_index: 94, city_rating: 9.3,
+    nearby_companies: 'BMW Group, Siemens AG, Allianz, Munich Re, Infineon Technologies',
+    nearby_startups: 'Celonis, Personio, Lilium, Isar Aerospace, IQM Quantum Computers',
+    industry_connections: 'TUM Partners of Excellence, Munich Innovation Hub, direct link to German Mittelstand.',
+    research_labs: 'TUM Institute for Advanced Study (TUM-IAS), Munich School of Robotics and Machine Intelligence',
+    faculty_ratio: '1:9'
   },
   'RWTH Aachen University': {
     the_ranking: 90, employment_rate: 94, visa_success_rate: 97, roi_score: 98, climate: 'moderate',
@@ -256,6 +287,22 @@ export const UNIVERSITY_METADATA: Record<string, {
 export interface ScoredUniversity extends University {
   matching_score: number
   why_recommended: string
+  admission_probability?: number
+  scholarship_probability?: number
+  roi_score?: number | null
+  employment_score?: number | null
+  safety_index?: number | null
+  city_rating?: number | null
+  nearby_companies?: string | null
+  nearby_startups?: string | null
+  industry_connections?: string | null
+  research_labs?: string | null
+  faculty_ratio?: string | null
+  internship_opportunities?: string | null
+  placement_statistics?: string | null
+  international_student_count?: number | null
+  language_requirements?: string | null
+  image_url?: string | null
 }
 
 export function scoreAndFilter(universities: University[], profile: Profile): {
@@ -271,6 +318,9 @@ export function scoreAndFilter(universities: University[], profile: Profile): {
   const countries = profile.preferred_countries ?? []
   const research = profile.research_experience_months ?? 0
   const projects = profile.projects_count ?? 0
+  const publications = profile.publications_count ?? 0
+  const internships = profile.internships_count ?? 0
+  const workExperience = profile.work_experience_months ?? 0
   const weather = profile.weather_preference ?? 'any'
 
   const scored: ScoredUniversity[] = universities.map(uni => {
@@ -285,7 +335,14 @@ export function scoreAndFilter(universities: University[], profile: Profile): {
       placement_statistics: 'Standard regional placements.',
       international_student_count: 2000,
       language_requirements: 'English',
-      image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600'
+      image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600',
+      safety_index: 82,
+      city_rating: 8.5,
+      nearby_companies: 'Local consulting firms, tech providers, regional banking offices.',
+      nearby_startups: 'SaaS ventures, e-commerce firms, hardware labs.',
+      industry_connections: 'Strong relationships with local engineering and business corporations.',
+      research_labs: 'Primary regional research departments, digital innovation hubs.',
+      faculty_ratio: '1:15'
     }
 
     const enrichedUni: ScoredUniversity = {
@@ -334,9 +391,11 @@ export function scoreAndFilter(universities: University[], profile: Profile): {
       else score -= 5
     }
 
-    // Work Exp / Research Bonus (up to 10 points)
-    const academicBonus = Math.min(10, Math.floor(research / 3) + Math.floor(projects * 2))
-    score += academicBonus
+    // Academic achievements / Work Exp / Research Bonus (up to 15 points)
+    const workBonus = Math.min(5, Math.floor(workExperience / 12) * 2)
+    const researchBonus = Math.min(5, Math.floor(research / 6) * 1.5 + publications * 2)
+    const practicalBonus = Math.min(5, projects * 1 + internships * 1.5)
+    score += (workBonus + researchBonus + practicalBonus)
 
     // Country match bonus
     if (countries.length > 0) {
@@ -352,11 +411,23 @@ export function scoreAndFilter(universities: University[], profile: Profile): {
     // Bound score to 0 - 100
     enrichedUni.matching_score = Math.min(100, Math.max(0, score))
 
+    // 3. Dynamic Predictors
+    enrichedUni.admission_probability = Math.round(enrichedUni.matching_score)
+    
+    // Scholarship prediction
+    const baseSch = cgpa >= 8.5 ? 45 : cgpa >= 7.5 ? 25 : 5
+    const schBonus = Math.min(45, (publications * 10) + (research * 2) + (projects * 4) + (internships * 5))
+    enrichedUni.scholarship_probability = Math.min(95, baseSch + schBonus)
+
+    // ROI and Employment details
+    enrichedUni.roi_score = meta.roi_score ?? 80
+    enrichedUni.employment_score = meta.employment_rate ? Math.round((meta.employment_rate / 10) * 10) / 10 : 8.5
+
     // Formulate concise reasoning
     const reasons: string[] = []
-    if (cgpa >= (uni.min_cgpa ?? 0)) reasons.push(`CGPA (${cgpa}) exceeds requirement`)
-    if (research > 6) reasons.push('Research background adds strength')
-    if (projects > 2) reasons.push('Hands-on projects match coursework')
+    if (cgpa >= (uni.min_cgpa ?? 0)) reasons.push(`CGPA (${cgpa}) meets/exceeds requirement`)
+    if (research > 6 || publications > 0) reasons.push('Strong academic/research profile')
+    if (workExperience >= 12) reasons.push('Valuable industry experience')
     if (countries.includes(uni.country)) reasons.push(`Matches country preference (${uni.country})`)
     if (weather !== 'any' && meta.climate === weather) reasons.push(`Climate matches (${meta.climate})`)
 
@@ -368,7 +439,6 @@ export function scoreAndFilter(universities: University[], profile: Profile): {
   // Tier classification based on matching scores and academic requirements:
   return {
     safe: scored.filter(u => {
-      // Safe: student is clearly above requirements, high match score
       const gpaDiff = cgpa - (u.min_cgpa ?? 0)
       return u.matching_score >= 75 && gpaDiff >= 0.3
     }),

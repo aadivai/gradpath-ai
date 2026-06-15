@@ -18,11 +18,11 @@ type SavedUni = {
 const STATUSES = ['shortlisted', 'applied', 'offer_received', 'rejected', 'enrolled']
 
 const STATUS_COLORS: Record<string, string> = {
-  shortlisted:    'bg-gray-50 text-gray-600 border-gray-200',
-  applied:        'bg-blue-50 text-blue-700 border-blue-100',
-  offer_received: 'bg-green-50 text-green-700 border-green-100',
-  rejected:       'bg-red-50 text-red-600 border-red-100',
-  enrolled:       'bg-indigo-50 text-indigo-700 border-indigo-100',
+  shortlisted:    'bg-muted text-muted-foreground border-border',
+  applied:        'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20',
+  offer_received: 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20',
+  rejected:       'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
+  enrolled:       'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20',
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -67,18 +67,18 @@ export default function SavedUniversitiesPage() {
     await supabase.from('saved_universities').delete().eq('id', savedId)
   }
 
-  if (loading) return <div className="text-center py-16 text-sm text-gray-400">Loading...</div>
+  if (loading) return <div className="text-center py-16 text-sm text-muted-foreground">Loading...</div>
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
-      <h1 className="text-xl font-semibold text-gray-900 mb-1">Saved universities</h1>
-      <p className="text-sm text-gray-500 mb-6">Track status of universities you've shortlisted.</p>
+      <h1 className="text-xl font-semibold text-foreground mb-1">Saved universities</h1>
+      <p className="text-sm text-muted-foreground mb-6">Track status of universities you've shortlisted.</p>
 
       {saved.length === 0 && (
-        <div className="text-center py-14 bg-white border border-gray-100 rounded-xl">
+        <div className="text-center py-14 bg-card border border-border rounded-xl">
           <p className="text-3xl mb-3">🏛</p>
-          <p className="text-sm font-medium text-gray-700 mb-1">No saved universities yet</p>
-          <p className="text-xs text-gray-400 mb-4">Go to Universities and tap "Save" on any match.</p>
+          <p className="text-sm font-medium text-foreground mb-1">No saved universities yet</p>
+          <p className="text-xs text-muted-foreground mb-4">Go to Universities and tap "Save" on any match.</p>
           <a href="/universities"
             className="inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">
             Browse universities →
@@ -92,26 +92,26 @@ export default function SavedUniversitiesPage() {
           const cost = ((uni.annual_fee_usd ?? 0) + (uni.living_cost_usd ?? 0))
           const inr  = Math.round(cost * 83 / 100000)
           return (
-            <div key={s.id} className="bg-white border border-gray-100 rounded-xl p-5">
+            <div key={s.id} className="bg-card border border-border rounded-xl p-5">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">{uni.name}</p>
-                  <p className="text-xs text-gray-400">{uni.city}, {uni.country}</p>
+                  <p className="text-sm font-semibold text-foreground">{uni.name}</p>
+                  <p className="text-xs text-muted-foreground">{uni.city}, {uni.country}</p>
                 </div>
                 <button onClick={() => removeUni(s.id)}
-                  className="text-xs text-gray-400 hover:text-red-500 transition-colors">
+                  className="text-xs text-muted-foreground hover:text-red-500 transition-colors">
                   Remove
                 </button>
               </div>
 
               {/* Status selector */}
               <div className="mb-3">
-                <p className="text-xs text-gray-400 mb-1.5">Application status</p>
+                <p className="text-xs text-muted-foreground mb-1.5">Application status</p>
                 <div className="flex flex-wrap gap-1.5">
                   {STATUSES.map(st => (
                     <button key={st} onClick={() => updateStatus(s.id, st)}
                       className={`text-xs px-2.5 py-1 rounded-full border font-medium transition-colors
-                        ${s.status === st ? STATUS_COLORS[st] : 'bg-gray-50 text-gray-400 border-gray-100 hover:border-gray-200'}`}>
+                        ${s.status === st ? STATUS_COLORS[st] : 'bg-muted text-muted-foreground border-border hover:border-border/80'}`}>
                       {STATUS_LABELS[st]}
                     </button>
                   ))}
@@ -119,18 +119,18 @@ export default function SavedUniversitiesPage() {
               </div>
 
               {/* Cost + notes */}
-              <div className="flex items-center justify-between text-xs text-gray-400 border-t border-gray-50 pt-3">
+              <div className="flex items-center justify-between text-xs text-muted-foreground border-t border-border/50 pt-3">
                 <span>~₹{inr}L/year total</span>
                 {editId === s.id ? (
                   <div className="flex items-center gap-2">
                     <input value={notes} onChange={e => setNotes(e.target.value)}
-                      className="border border-gray-200 rounded px-2 py-1 text-xs w-40" placeholder="Add note..." />
-                    <button onClick={() => saveNotes(s.id)} className="text-indigo-600 font-medium">Save</button>
-                    <button onClick={() => setEditId(null)} className="text-gray-400">Cancel</button>
+                      className="border border-border rounded px-2 py-1 text-xs w-40 bg-card text-foreground" placeholder="Add note..." />
+                    <button onClick={() => saveNotes(s.id)} className="text-indigo-600 dark:text-indigo-400 font-medium">Save</button>
+                    <button onClick={() => setEditId(null)} className="text-muted-foreground">Cancel</button>
                   </div>
                 ) : (
                   <button onClick={() => { setEditId(s.id); setNotes(s.notes ?? '') }}
-                    className="text-indigo-600 hover:underline">
+                    className="text-indigo-600 dark:text-indigo-400 hover:underline">
                     {s.notes ? `Note: ${s.notes}` : '+ Add note'}
                   </button>
                 )}

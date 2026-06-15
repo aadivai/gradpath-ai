@@ -36,10 +36,10 @@ const DEFAULT_TASKS: Omit<TimelineTask, 'id'>[] = [
 ]
 
 const COLUMNS = [
-  { id: 'todo', label: 'To Do', color: 'border-t-slate-400 bg-slate-50/40 text-slate-800' },
-  { id: 'in_progress', label: 'In Progress', color: 'border-t-indigo-500 bg-indigo-50/10 text-indigo-700' },
-  { id: 'submitted', label: 'Submitted', color: 'border-t-amber-500 bg-amber-50/10 text-amber-700' },
-  { id: 'completed', label: 'Completed', color: 'border-t-emerald-500 bg-emerald-50/10 text-emerald-700' }
+  { id: 'todo', label: 'To Do', color: 'border-t-slate-400 bg-muted/40 text-foreground' },
+  { id: 'in_progress', label: 'In Progress', color: 'border-t-indigo-500 bg-indigo-500/5 text-foreground' },
+  { id: 'submitted', label: 'Submitted', color: 'border-t-amber-500 bg-amber-500/5 text-foreground' },
+  { id: 'completed', label: 'Completed', color: 'border-t-emerald-500 bg-emerald-500/5 text-foreground' }
 ] as const
 
 type KanbanStatus = typeof COLUMNS[number]['id']
@@ -216,10 +216,10 @@ export default function TimelinePage() {
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-10 space-y-4 animate-pulse">
-        <div className="h-6 bg-gray-100 rounded w-48" />
-        <div className="h-24 bg-gray-100 rounded-xl" />
+        <div className="h-6 bg-muted rounded w-48" />
+        <div className="h-24 bg-muted rounded-xl" />
         <div className="grid grid-cols-4 gap-4 h-96">
-          {[1,2,3,4].map(i => <div key={i} className="bg-gray-100 rounded-xl" />)}
+          {[1,2,3,4].map(i => <div key={i} className="bg-muted rounded-xl" />)}
         </div>
       </div>
     )
@@ -228,10 +228,10 @@ export default function TimelinePage() {
   if (!profileId) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-10">
-        <div className="text-center py-16 bg-white border border-gray-100 rounded-xl shadow-sm">
+        <div className="text-center py-16 bg-card border border-border rounded-xl shadow-sm">
           <p className="text-3xl mb-3">📋</p>
-          <p className="text-sm font-bold text-gray-700 mb-1">Complete your profile first</p>
-          <p className="text-xs text-gray-400 mb-4">
+          <p className="text-sm font-bold text-foreground mb-1">Complete your profile first</p>
+          <p className="text-xs text-muted-foreground mb-4">
             We will set up your personalized study abroad roadmap once your profile is completed.
           </p>
           <Link href="/profile"
@@ -248,17 +248,17 @@ export default function TimelinePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Application Timeline</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage tasks across your Kanban board board stages.</p>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Application Timeline</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage tasks across your Kanban board board stages.</p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           {saveStatus === 'saving' && (
-            <span className="flex items-center gap-1.5 text-xs text-gray-400">
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Loader2 className="w-3.5 h-3.5 animate-spin" /> Saving
             </span>
           )}
           {saveStatus === 'saved' && (
-            <span className="flex items-center gap-1.5 text-xs text-green-600">
+            <span className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400">
               <Check className="w-3.5 h-3.5" /> Saved
             </span>
           )}
@@ -272,12 +272,12 @@ export default function TimelinePage() {
       </div>
 
       {/* Progress Card */}
-      <div className="bg-white border border-gray-100 rounded-xl p-5 mb-8 flex items-center justify-between shadow-sm">
+      <div className="bg-card border border-border rounded-xl p-5 mb-8 flex items-center justify-between shadow-sm">
         <div>
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Overall Milestone Progress</p>
-          <h3 className="text-xl font-bold text-gray-950 mt-1">{pct}% Complete ({done} / {total} Tasks)</h3>
+          <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Overall Milestone Progress</p>
+          <h3 className="text-xl font-bold text-foreground mt-1">{pct}% Complete ({done} / {total} Tasks)</h3>
         </div>
-        <div className="w-32 bg-slate-100 h-2.5 rounded-full overflow-hidden shrink-0">
+        <div className="w-32 bg-muted h-2.5 rounded-full overflow-hidden shrink-0">
           <div className="h-full bg-indigo-600 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
         </div>
       </div>
@@ -287,40 +287,40 @@ export default function TimelinePage() {
         {COLUMNS.map(col => {
           const colTasks = kanbanColumns[col.id]
           return (
-            <div key={col.id} className={`rounded-xl border-t-4 border border-gray-100/50 shadow-sm p-4 flex flex-col min-h-[400px] ${col.color}`}>
+            <div key={col.id} className={`rounded-xl border-t-4 border border-border/50 shadow-sm p-4 flex flex-col min-h-[400px] ${col.color}`}>
               {/* Column Title */}
-              <div className="flex justify-between items-center mb-4 border-b border-gray-100/20 pb-2">
+              <div className="flex justify-between items-center mb-4 border-b border-border/20 pb-2">
                 <span className="text-xs font-bold uppercase tracking-wider">{col.label}</span>
-                <span className="text-[10px] font-bold bg-white/70 px-2 py-0.5 rounded-md border border-gray-100/10">{colTasks.length}</span>
+                <span className="text-[10px] font-bold bg-card/70 px-2 py-0.5 rounded-md border border-border/10">{colTasks.length}</span>
               </div>
 
               {/* Cards List */}
               <div className="space-y-2 flex-1 overflow-y-auto">
                 {colTasks.length === 0 && (
-                  <p className="text-[10px] text-gray-400/80 text-center py-6 italic font-medium">Empty column</p>
+                  <p className="text-[10px] text-muted-foreground/80 text-center py-6 italic font-medium">Empty column</p>
                 )}
                 {colTasks.map(task => (
-                  <div key={task.dbId} className="bg-white border border-gray-100 rounded-xl p-3 shadow-xs hover:border-indigo-100 hover:shadow transition-all duration-200 group relative">
-                    <p className="text-xs font-bold text-gray-800 leading-relaxed pr-6">{task.title}</p>
+                  <div key={task.dbId} className="bg-card border border-border rounded-xl p-3 shadow-xs hover:border-indigo-500/30 hover:shadow transition-all duration-200 group relative">
+                    <p className="text-xs font-bold text-foreground leading-relaxed pr-6">{task.title}</p>
                     
-                    <div className="flex items-center justify-between mt-3 text-[10px] text-gray-400">
-                      <span className="font-semibold uppercase bg-slate-50 border border-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md">
+                    <div className="flex items-center justify-between mt-3 text-[10px] text-muted-foreground">
+                      <span className="font-semibold uppercase bg-muted border border-border text-muted-foreground px-1.5 py-0.5 rounded-md">
                         M{task.due_month}
                       </span>
                       
                       {/* Left/Right controls */}
                       <div className="flex gap-1">
                         {col.id !== 'todo' && (
-                          <button onClick={() => moveTask(task.dbId!, 'left')} className="p-1 hover:bg-slate-50 rounded text-gray-400 hover:text-indigo-600 cursor-pointer">
+                          <button onClick={() => moveTask(task.dbId!, 'left')} className="p-1 hover:bg-muted rounded text-muted-foreground hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                             <ChevronLeft className="w-3.5 h-3.5" />
                           </button>
                         )}
                         {col.id !== 'completed' && (
-                          <button onClick={() => moveTask(task.dbId!, 'right')} className="p-1 hover:bg-slate-50 rounded text-gray-400 hover:text-indigo-600 cursor-pointer">
+                          <button onClick={() => moveTask(task.dbId!, 'right')} className="p-1 hover:bg-muted rounded text-muted-foreground hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                             <ChevronRight className="w-3.5 h-3.5" />
                           </button>
                         )}
-                        <button onClick={() => deleteTask(task.dbId!)} className="p-1 hover:bg-red-50 rounded text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                        <button onClick={() => deleteTask(task.dbId!)} className="p-1 hover:bg-red-500/10 rounded text-muted-foreground/50 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                           <Trash2 className="w-3 h-3" />
                         </button>
                       </div>
@@ -336,27 +336,27 @@ export default function TimelinePage() {
       {/* Add Task Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-black/35 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-100 rounded-xl p-6 max-w-sm w-full shadow-lg space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">Create Custom Task</h3>
+          <div className="bg-card border border-border rounded-xl p-6 max-w-sm w-full shadow-lg space-y-4">
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wide">Create Custom Task</h3>
             
             <div className="space-y-3">
               <div>
-                <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block mb-1">Task Title</label>
+                <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider block mb-1">Task Title</label>
                 <input 
                   value={newTitle} 
                   onChange={e => setNewTitle(e.target.value)} 
-                  className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-900 bg-white" 
+                  className="w-full border border-border rounded-lg px-3 py-1.5 text-xs text-foreground bg-card" 
                   placeholder="e.g. Schedule biometric visa appointment" 
                 />
               </div>
               
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block mb-1">Category</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider block mb-1">Category</label>
                   <select 
                     value={newCategory} 
                     onChange={e => setNewCategory(e.target.value as any)}
-                    className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 bg-white"
+                    className="w-full border border-border rounded-lg px-2 py-1.5 text-xs text-foreground bg-card"
                   >
                     <option value="test_prep">Test Prep</option>
                     <option value="documents">Documents</option>
@@ -366,11 +366,11 @@ export default function TimelinePage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block mb-1">Due Month</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider block mb-1">Due Month</label>
                   <select 
                     value={newMonth} 
                     onChange={e => setNewMonth(parseInt(e.target.value))}
-                    className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 bg-white"
+                    className="w-full border border-border rounded-lg px-2 py-1.5 text-xs text-foreground bg-card"
                   >
                     {[1, 2, 3, 4, 5, 6].map(m => <option key={m} value={m}>Month {m}</option>)}
                   </select>
@@ -379,7 +379,7 @@ export default function TimelinePage() {
             </div>
 
             <div className="flex gap-2 justify-end pt-2">
-              <button onClick={() => setShowAddModal(false)} className="px-3 py-1.5 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 cursor-pointer">
+              <button onClick={() => setShowAddModal(false)} className="px-3 py-1.5 border border-border text-muted-foreground text-xs font-semibold rounded-lg hover:bg-muted cursor-pointer">
                 Cancel
               </button>
               <button onClick={handleAddTask} disabled={!newTitle.trim()} className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm disabled:opacity-50 cursor-pointer">
@@ -391,12 +391,12 @@ export default function TimelinePage() {
       )}
 
       {/* Reset options */}
-      <div className="mt-8 text-center flex items-center justify-between border-t border-gray-50 pt-6">
+      <div className="mt-8 text-center flex items-center justify-between border-t border-border pt-6">
         <button onClick={resetToDefaults}
-          className="text-xs text-gray-400 hover:text-red-500 font-semibold transition-colors cursor-pointer">
+          className="text-xs text-muted-foreground hover:text-red-500 font-semibold transition-colors cursor-pointer">
           Reset Timeline Board
         </button>
-        <p className="text-[10px] text-gray-400 leading-relaxed font-semibold italic flex items-center gap-1">
+        <p className="text-[10px] text-muted-foreground leading-relaxed font-semibold italic flex items-center gap-1">
           <AlertCircle className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
           Click Chevron controls on task cards to transition their Kanban status.
         </p>
