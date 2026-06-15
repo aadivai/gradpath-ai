@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ClerkProvider } from '@clerk/nextjs'
+import { SupabaseAuthProvider } from '@/components/providers/SupabaseAuthProvider'
 import './globals.css'
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider afterSignOutUrl="/">
+    <SupabaseAuthProvider>
       <html lang="en" className={geist.variable} suppressHydrationWarning>
         <body className="min-h-full flex flex-col font-sans">
           <ThemeProvider
@@ -28,6 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SpeedInsights />
         </body>
       </html>
-    </ClerkProvider>
+    </SupabaseAuthProvider>
   )
 }

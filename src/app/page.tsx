@@ -40,13 +40,13 @@ export default function LandingPage() {
             <ThemeSwitchFlowGlass intensity={1.2} />
             
             <Link
-              href="/sign-in"
+              href="/login"
               className="px-4 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
             >
               Sign in
             </Link>
             <Link
-              href="/sign-up"
+              href="/signup"
               className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-full shadow-xs"
             >
               Get started free
@@ -75,13 +75,13 @@ export default function LandingPage() {
 
         <div className="flex gap-3 justify-center pt-2">
           <Link
-            href="/sign-up"
+            href="/signup"
             className="px-6 py-3 bg-foreground hover:bg-foreground/90 text-background text-xs font-bold rounded-full shadow hover:-translate-y-0.5"
           >
             Start for free &rarr;
           </Link>
           <Link
-            href="/sign-in"
+            href="/login"
             className="px-6 py-3 border border-border hover:border-foreground/30 bg-card/50 text-foreground text-xs font-bold rounded-full flex items-center gap-1.5 hover:-translate-y-0.5"
           >
             Sign in

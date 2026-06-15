@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { getProfileId } from '@/lib/profile'
 import { UNIVERSITY_METADATA } from '@/lib/recommender'
@@ -68,7 +68,7 @@ export default function ComparePage() {
         setLoading(false)
       }
     })()
-  }, [user])
+  }, [user?.id])
 
   const toggleSelect = (id: string) => {
     setSelectedIds(prev => 

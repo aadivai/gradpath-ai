@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { parseProfile } from '@/utils/profileMetadata'
@@ -84,7 +84,7 @@ export default function DashboardPage() {
     }
 
     load()
-  }, [isLoaded, user])
+  }, [isLoaded, user?.id])
 
   const completion = profile ? completionPercent(profile) : 0
   const name = profile?.full_name?.split(' ')[0] ?? user?.firstName ?? 'there'

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { parseProfile } from '@/utils/profileMetadata'
 import { getProfileId } from '@/lib/profile'
@@ -100,7 +100,7 @@ export default function VisaPage() {
       }
       setLoading(false)
     })()
-  }, [user])
+  }, [user?.id])
 
   const visa = visas[selected]
 

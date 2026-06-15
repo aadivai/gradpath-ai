@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { parseProfile, serializeFullName } from '@/utils/profileMetadata'
@@ -267,7 +267,7 @@ export default function ProfilePage() {
         }
         setLoading(false)
       })
-  }, [isLoaded, user])
+  }, [isLoaded, user?.id])
 
   function update(key: keyof FormData, value: any) {
     setData(prev => ({ ...prev, [key]: value }))

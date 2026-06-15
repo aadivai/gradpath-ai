@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { TimelineTask } from '@/types'
@@ -110,7 +110,7 @@ export default function TimelinePage() {
         setLoading(false)
       }
     })()
-  }, [user])
+  }, [user?.id])
 
   const done  = tasks.filter(t => t.is_completed).length
   const total = tasks.length

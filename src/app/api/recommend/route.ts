@@ -1,13 +1,14 @@
-import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseServer } from '@/lib/serverSupabase'
 import { scoreAndFilter } from '@/lib/recommender'
 import { askGemini } from '@/lib/gemini'
 import { parseProfile } from '@/utils/profileMetadata'
 
 export async function GET() {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const [profileRes, universitiesRes] = await Promise.all([

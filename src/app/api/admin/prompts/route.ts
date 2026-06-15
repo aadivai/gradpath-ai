@@ -1,6 +1,5 @@
-import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseServer } from '@/lib/serverSupabase'
 import { verifyAdmin } from '@/lib/profile'
 import { serializeFullName } from '@/utils/profileMetadata'
 
@@ -10,7 +9,9 @@ Help students match universities, find scholarships, map timelines, and complete
 // GET: Retrieve the active prompt configuration and rollback history
 export async function GET(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId || !(await verifyAdmin(userId))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
@@ -42,7 +43,9 @@ export async function GET(req: Request) {
 // POST: Sandbox execution, prompt updates, and rollback versions
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId || !(await verifyAdmin(userId))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
@@ -190,6 +193,7 @@ export async function POST(req: Request) {
 // Internal Audit Log Helper
 async function logAuditEvent(actorClerkId: string, actionType: string, detail: string) {
   try {
+    const supabase = await getSupabaseServer()
     const { data: logsProfile } = await supabase
       .from('profiles')
       .select('full_name')

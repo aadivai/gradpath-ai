@@ -1,12 +1,13 @@
-import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseServer } from '@/lib/serverSupabase'
 import { verifyAdmin } from '@/lib/profile'
 
 // GET: Retrieve all audit log entries
 export async function GET(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId || !(await verifyAdmin(userId))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }

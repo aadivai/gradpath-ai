@@ -1,6 +1,5 @@
 'use client'
-import { useUser } from '@clerk/nextjs'
-import { UserButton } from '@clerk/nextjs'
+import { useUser, useAuth } from '@/components/providers/SupabaseAuthProvider'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -23,7 +22,8 @@ import {
   MessageSquare, 
   Settings,
   Globe2,
-  Users
+  Users,
+  LogOut
 } from 'lucide-react'
 
 const navItems = [
@@ -47,34 +47,18 @@ const navItems = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser()
+  const { role, signOut } = useAuth()
   const router   = useRouter()
   const pathname = usePathname()
 
   // Command palette state
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [role, setRole] = useState<string>('student')
 
   useEffect(() => {
     if (isLoaded && !user) {
-      router.push('/sign-in')
+      router.push('/login')
       return
-    }
-
-    if (user) {
-      supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('clerk_user_id', user.id)
-        .single()
-        .then(({ data }) => {
-          if (data?.full_name && data.full_name.includes('|||')) {
-            try {
-              const meta = JSON.parse(data.full_name.split('|||')[1])
-              if (meta.role) setRole(meta.role)
-            } catch (e) {}
-          }
-        })
     }
   }, [isLoaded, user, router])
 
@@ -123,10 +107,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex h-screen bg-background text-foreground overflow-hidden relative">
+    <div className="flex h-screen bg-background text-foreground overflow-hidden relative print:h-auto print:overflow-visible print:block print:bg-white">
       
       {/* Sidebar aside */}
-      <aside className="w-60 bg-background border-r border-border/40 flex flex-col shrink-0">
+      <aside className="w-60 bg-background border-r border-border/40 flex flex-col shrink-0 print:hidden">
         <div className="px-6 py-5 border-b border-border/40 flex items-center">
           <span className="font-black text-foreground tracking-tight text-lg">
             Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
@@ -149,17 +133,35 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             )
           })}
         </nav>
-        <div className="px-5 py-4 border-t border-border/40 flex items-center gap-3 bg-muted/20">
-          <UserButton />
-          <span className="text-xs text-foreground/80 font-semibold">My Account</span>
+        <div className="px-5 py-4 border-t border-border/40 flex items-center justify-between gap-3 bg-muted/20">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-xs">
+              {user?.fullName ? user.fullName[0].toUpperCase() : 'S'}
+            </div>
+            <div>
+              <p className="text-[11px] font-bold text-foreground leading-tight">
+                {user?.fullName || 'Student Account'}
+              </p>
+              <p className="text-[9px] text-muted-foreground capitalize font-bold leading-none mt-0.5">
+                {role}
+              </p>
+            </div>
+          </div>
+          <button 
+            onClick={signOut}
+            className="p-1.5 text-muted-foreground hover:text-rose-500 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
+            title="Sign Out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </aside>
 
 
       {/* Main Container */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden print:block print:overflow-visible">
         {/* Top Header Bar */}
-        <header className="h-14 bg-background border-b border-border/40 px-6 flex items-center justify-between shrink-0">
+        <header className="h-14 bg-background border-b border-border/40 px-6 flex items-center justify-between shrink-0 print:hidden">
           {/* Palette trigger button */}
           <button 
             onClick={() => setOpen(true)}
@@ -178,7 +180,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </header>
 
         {/* Content main body */}
-        <main className="flex-1 overflow-y-auto bg-background">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-background print:overflow-visible print:block print:bg-white">{children}</main>
       </div>
 
       {/* Search Palette Overlay Modal */}

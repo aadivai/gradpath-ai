@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { getProfileId } from '@/lib/profile'
 

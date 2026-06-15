@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { parseProfile } from '@/utils/profileMetadata'
 import type { Profile, Scholarship } from '@/types'
@@ -14,6 +14,8 @@ import {
   AlertTriangle,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   ShieldCheck,
   HelpCircle,
   TrendingDown,
@@ -39,7 +41,7 @@ const TYPE_COLORS: Record<string, string> = {
   university: 'bg-purple-50/70   text-purple-700   border-purple-100/50 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-500/20',
 }
 
-const COUNTRIES = ['All', 'Germany', 'Canada', 'United Kingdom', 'Ireland', 'Netherlands', 'USA', 'Australia']
+const COUNTRIES = ['All', 'India', 'USA', 'Canada', 'United Kingdom', 'Germany', 'Ireland', 'Netherlands', 'France', 'Italy', 'Spain', 'Sweden', 'Switzerland', 'Australia', 'New Zealand', 'Singapore', 'Japan', 'South Korea', 'UAE']
 const TYPES     = ['All', 'merit', 'need', 'government', 'university']
 
 // Static enrichment data for 3.0 scholarship intelligence
@@ -72,6 +74,30 @@ const SCHOLARSHIP_METADATA: Record<string, {
     deadline: 'February 1, 2026',
     documents_required: ['Motivation Letter', 'Academic Transcripts', 'CV', 'Enrolment confirmation'],
     checklist: ['Submit application to Dutch host university', 'Write Dutch motivation letter', 'Scan Dutch acceptance page']
+  },
+  'JN Tata Endowment Loan Scholarship': {
+    funding_percent: 40,
+    deadline: 'March 15, 2026',
+    documents_required: ['SOP / Essay', 'Letter of Recommendation', 'Academic Transcripts', 'Parental Income Proof'],
+    checklist: ['Fill JN Tata portal application', 'Prepare for online thinking skills test', 'Attend mock interview', 'Get LOR from college dean']
+  },
+  'Inlaks Shivdasani Foundation Scholarship': {
+    funding_percent: 100,
+    deadline: 'March 30, 2026',
+    documents_required: ['SOP / Essay', 'Evidence of admission', '2 LORs', 'CV', 'Portfolio (for arts/design candidates)'],
+    checklist: ['Review Inlaks eligibility guidelines', 'Obtain target university acceptance offer', 'Draft Inlaks project proposal', 'Submit referee email details']
+  },
+  'K.C. Mahindra Postgraduate Scholarship': {
+    funding_percent: 35,
+    deadline: 'July 5, 2026',
+    documents_required: ['Mahindra Application Form', 'Statement of Purpose', '3 LORs', 'Acceptance letter', 'GRE/GMAT/IELTS sheets'],
+    checklist: ['Submit preliminary application', 'Draft SOP for Mahindra trustees', 'Request professor reference letters', 'Attend final round panel interview']
+  },
+  'National Overseas Scholarship Scheme (NOS)': {
+    funding_percent: 100,
+    deadline: 'March 31, 2026',
+    documents_required: ['Caste Certificate', 'Income Certificate', 'Academic Marksheets', 'Acceptance Offer Letter', 'Aadhaar Card'],
+    checklist: ['Apply on NOS portal', 'Get caste certificate verified', 'Upload official university offer letter', 'Submit family income affidavit']
   }
 }
 
@@ -82,6 +108,7 @@ export default function ScholarshipsPage() {
   const [loading, setLoading] = useState(true)
   const [country, setCountry] = useState('All')
   const [type, setType] = useState('All')
+  const [showFilters, setShowFilters] = useState(false)
 
   // Calculator inputs
   const [selectedScholarshipId, setSelectedScholarshipId] = useState<string>('')
@@ -136,10 +163,16 @@ export default function ScholarshipsPage() {
     }
 
     loadData()
-  }, [isLoaded, user])
+  }, [isLoaded, user?.id])
 
   const filtered = scholarships.filter(s => {
-    if (country !== 'All' && s.country !== country) return false
+    if (country !== 'All') {
+      if (country === 'India') {
+        if (s.country !== 'India') return false
+      } else {
+        if (s.country !== country && s.country !== 'India' && s.country !== 'All' && s.country !== 'global') return false
+      }
+    }
     if (type !== 'All' && s.type !== type) return false
     return true
   })
@@ -167,53 +200,88 @@ export default function ScholarshipsPage() {
   const netGapINR = Math.round(netGapVal * 83)
 
   // AI Predictor status calculation
-  const getEligibilityStatus = (s: Scholarship, cgpaVal: number, ieltsVal: number) => {
+  const getScholarshipMatchProb = (s: Scholarship, cgpaVal: number, ieltsVal: number) => {
     const minReq = s.min_cgpa ?? 0
-    if (minReq === 0) return { label: 'Eligible', color: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' }
-    
+    if (minReq === 0) return 82
+
     if (cgpaVal >= minReq) {
-      if (s.type === 'government' || s.name.includes('Fulbright') || s.name.includes('Pearson')) {
-        return { label: 'Highly Competitive', color: 'bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20' }
-      }
-      if (cgpaVal >= minReq + 1.2 && ieltsVal >= 7.0) {
-        return { label: 'Guaranteed Match', color: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-450 border border-emerald-500/20 font-bold' }
-      }
-      return { label: 'Eligible', color: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/10' }
+      const diff = cgpaVal - minReq
+      const bonus = Math.round(diff * 12)
+      const ieltsBonus = ieltsVal >= 7.0 ? 5 : 0
+      return Math.min(98, 80 + bonus + ieltsBonus)
     } else {
       const diff = minReq - cgpaVal
-      if (diff <= 0.6) {
-        return { label: 'Partially Eligible', color: 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/10' }
-      }
-      return { label: 'Highly Competitive', color: 'bg-rose-500/10 text-rose-700 dark:text-rose-450 border border-rose-500/20' }
+      const penalty = Math.round(diff * 35)
+      return Math.max(15, 75 - penalty)
     }
+  }
+
+  const getEligibilityStatus = (s: Scholarship, cgpaVal: number, ieltsVal: number) => {
+    const prob = getScholarshipMatchProb(s, cgpaVal, ieltsVal)
+    if (prob >= 85) return { label: 'Highly Recommended', color: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold' }
+    if (prob >= 70) return { label: 'Recommended', color: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/10' }
+    if (prob >= 50) return { label: 'Competitive', color: 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/15' }
+    return { label: 'Stretch', color: 'bg-rose-500/10 text-rose-700 dark:text-rose-455 border border-rose-500/20' }
   }
 
   // Calculate Match Probability
   const calculateMatchProb = () => {
     if (!activeScholarship) return 0
-    const minReq = activeScholarship.min_cgpa ?? 0
-    if (minReq === 0) return 82
-
-    if (studentCgpa >= minReq) {
-      const diff = studentCgpa - minReq
-      const bonus = Math.round(diff * 12)
-      return Math.min(98, 85 + bonus)
-    } else {
-      const diff = minReq - studentCgpa
-      const penalty = Math.round(diff * 35)
-      return Math.max(15, 80 - penalty)
-    }
+    return getScholarshipMatchProb(activeScholarship, studentCgpa, studentIelts)
   }
 
   const matchProbability = calculateMatchProb()
 
   const getMatchGrade = (prob: number) => {
-    if (prob >= 80) return { label: 'High Eligibility', color: 'text-emerald-700 bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-500/20', dot: 'bg-emerald-500', barColor: 'bg-emerald-500' }
-    if (prob >= 50) return { label: 'Moderate Match', color: 'text-amber-700 bg-amber-50 border-amber-100 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-500/20', dot: 'bg-amber-500', barColor: 'bg-amber-500' }
-    return { label: 'Low Eligibility', color: 'text-rose-700 bg-rose-50 border-rose-100 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-500/20', dot: 'bg-rose-500', barColor: 'bg-rose-500' }
+    if (prob >= 85) return { label: 'Highly Recommended', color: 'text-emerald-700 bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-500/20', dot: 'bg-emerald-500', barColor: 'bg-emerald-500' }
+    if (prob >= 70) return { label: 'Recommended', color: 'text-indigo-700 bg-indigo-50 border-indigo-100 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20', dot: 'bg-indigo-500', barColor: 'bg-indigo-500' }
+    if (prob >= 50) return { label: 'Competitive', color: 'text-amber-700 bg-amber-50 border-amber-100 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-500/20', dot: 'bg-amber-500', barColor: 'bg-amber-500' }
+    return { label: 'Stretch', color: 'text-rose-700 bg-rose-50 border-rose-100 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-500/20', dot: 'bg-rose-500', barColor: 'bg-rose-500' }
   }
 
   const matchGrade = getMatchGrade(matchProbability)
+
+  // Advanced scholarship metrics
+  const eligibilityScore = (() => {
+    if (!activeScholarship) return 0
+    const minReq = activeScholarship.min_cgpa ?? 0
+    if (minReq === 0) {
+      return Math.min(100, Math.round((studentCgpa / 8.0) * 85 + (studentIelts / 7.0) * 15))
+    }
+    return Math.min(100, Math.round((studentCgpa / minReq) * 85 + (studentIelts / 7.5) * 15))
+  })()
+
+  const estimatedRoi = (() => {
+    if (!activeScholarship) return 'N/A'
+    if (activeScholarship.is_fully_funded) {
+      return 'Very High (100% Tuition & Living covered)'
+    }
+    const percentCovered = (scholarshipAmount / totalCost) * 100
+    if (percentCovered >= 75) {
+      return `Very High (${Math.round(percentCovered)}% Cost covered)`
+    }
+    if (percentCovered >= 50) {
+      return `High (${Math.round(percentCovered)}% Cost covered)`
+    }
+    if (percentCovered >= 25) {
+      return `Moderate (${Math.round(percentCovered)}% Cost covered)`
+    }
+    return `Balanced (Partial tuition/fees covered)`
+  })()
+
+  const visaCompatibility = (() => {
+    if (!activeScholarship) return 'N/A'
+    if (activeScholarship.is_fully_funded || netGapVal === 0) {
+      return 'Excellent (99% - Fully Sponsored / Zero Gap)'
+    }
+    if (netGapVal < 10000) {
+      return 'High (92% - Low funding gap, easily approved with minor proof)'
+    }
+    if (netGapVal < 25000) {
+      return 'Good (85% - Standard gap, requires moderate liquid funds/loan)'
+    }
+    return 'Moderate (72% - Large gap, requires substantial sponsor/collateral loan proof)'
+  })()
 
   const handleSelectScholarship = (s: Scholarship) => {
     setSelectedScholarshipId(s.id)
@@ -249,50 +317,67 @@ export default function ScholarshipsPage() {
         {/* Left Side: Directory & List */}
         <div className="lg:col-span-7 space-y-6">
           <div className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-indigo-600" />
-              Filter Schemes
-            </h3>
+            <button 
+              onClick={() => setShowFilters(!showFilters)}
+              className="w-full flex items-center justify-between text-xs font-bold text-foreground uppercase tracking-wider cursor-pointer select-none outline-none"
+            >
+              <span className="flex items-center gap-1.5">
+                <Filter className="w-4 h-4 text-indigo-600" />
+                Filter Schemes
+              </span>
+              <span className="text-muted-foreground flex items-center gap-2">
+                {!showFilters && (
+                  <span className="text-[10px] lowercase font-semibold text-indigo-650 bg-indigo-50/50 border border-indigo-100/50 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20 px-2.5 py-0.5 rounded-md">
+                    {country} • {type === 'All' ? 'all classes' : TYPE_LABELS[type]}
+                  </span>
+                )}
+                {showFilters ? <ChevronUp className="w-4 h-4 text-indigo-600" /> : <ChevronDown className="w-4 h-4 text-indigo-600" />}
+              </span>
+            </button>
 
-            {/* Country Selector */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Country</label>
-              <div className="flex flex-wrap gap-1.5">
-                {COUNTRIES.map(c => (
-                  <button
-                    key={c}
-                    onClick={() => setCountry(c)}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
-                      country === c
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
-                    }`}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </div>
+            {showFilters && (
+              <div className="space-y-4 pt-4 border-t border-border/40 animate-fade-in">
+                {/* Country Selector */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Country</label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {COUNTRIES.map(c => (
+                      <button
+                        key={c}
+                        onClick={() => setCountry(c)}
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
+                          country === c
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                            : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
+                        }`}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Type Selector */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Scholarship Class</label>
-              <div className="flex flex-wrap gap-1.5">
-                {TYPES.map(t => (
-                  <button
-                    key={t}
-                    onClick={() => setType(t)}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
-                      type === t
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
-                    }`}
-                  >
-                    {t === 'All' ? 'All Types' : TYPE_LABELS[t]}
-                  </button>
-                ))}
+                {/* Type Selector */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Scholarship Class</label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {TYPES.map(t => (
+                      <button
+                        key={t}
+                        onClick={() => setType(t)}
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
+                          type === t
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                            : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
+                        }`}
+                      >
+                        {t === 'All' ? 'All Types' : TYPE_LABELS[t]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Results Listings */}
@@ -504,11 +589,11 @@ export default function ScholarshipsPage() {
               
               {/* Match Probability Score */}
               {activeScholarship && (
-                <div className="bg-muted/50 border border-border/40 rounded-xl p-4 flex flex-col gap-3">
+                <div className="bg-muted/50 border border-border/40 rounded-xl p-4 flex flex-col gap-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">Match Probability</span>
-                      <span className="text-xs font-bold text-foreground/80">Admission & eligibility score</span>
+                      <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">Predictor Grade</span>
+                      <span className="text-xs font-bold text-foreground/80">Overall profile evaluation</span>
                     </div>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${matchGrade.color}`}>
                       {matchGrade.label}
@@ -524,7 +609,7 @@ export default function ScholarshipsPage() {
                       />
                     </div>
                     <div className="flex justify-between text-[9px] text-muted-foreground font-bold">
-                      <span>{matchProbability}% Confidence</span>
+                      <span>{matchProbability}% Match Confidence</span>
                       {activeScholarship.min_cgpa && studentCgpa < activeScholarship.min_cgpa ? (
                         <span className="text-rose-500 flex items-center gap-0.5">
                           <AlertTriangle className="w-2.5 h-2.5" /> GPA below minimum
@@ -534,6 +619,37 @@ export default function ScholarshipsPage() {
                           <CheckCircle className="w-2.5 h-2.5" /> Meets GPA cut
                         </span>
                       )}
+                    </div>
+                  </div>
+
+                  {/* Advanced Score Parameters (Eligibility Score, ROI, Visa) */}
+                  <div className="border-t border-border/40 pt-3.5 space-y-3">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5">
+                        <Percent className="w-3.5 h-3.5 text-indigo-500" />
+                        <span className="text-muted-foreground font-semibold">Eligibility Score</span>
+                      </div>
+                      <span className="font-bold text-foreground">{eligibilityScore} / 100</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5">
+                        <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
+                        <span className="text-muted-foreground font-semibold">Estimated ROI</span>
+                      </div>
+                      <span className="font-bold text-foreground text-right text-[11px] max-w-[200px] truncate" title={estimatedRoi}>
+                        {estimatedRoi}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
+                        <span className="text-muted-foreground font-semibold">Visa Compatibility</span>
+                      </div>
+                      <span className="font-bold text-foreground text-right text-[11px] max-w-[200px] truncate" title={visaCompatibility}>
+                        {visaCompatibility}
+                      </span>
                     </div>
                   </div>
                 </div>

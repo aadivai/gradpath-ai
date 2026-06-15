@@ -1,14 +1,14 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
-import { useClerk } from '@clerk/nextjs'
+import { useAuth } from '@/components/providers/SupabaseAuthProvider'
 
 export function SignOutButton() {
   const router = useRouter()
-  const clerk = useClerk()
+  const { signOut } = useAuth()
 
   const handleSignOut = async () => {
-    await clerk.signOut()
+    await signOut()
     router.push('/')
   }
 

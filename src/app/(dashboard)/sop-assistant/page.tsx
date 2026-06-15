@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { getProfileId } from '@/lib/profile'
 import {
@@ -75,7 +75,7 @@ export default function SOPPage() {
     if (user) {
       loadDrafts()
     }
-  }, [user])
+  }, [user?.id])
 
   async function loadDrafts() {
     try {

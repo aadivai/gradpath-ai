@@ -1,12 +1,13 @@
-import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseServer } from '@/lib/serverSupabase'
 import { askGemini } from '@/lib/gemini'
 import { parseProfile, serializeFullName } from '@/utils/profileMetadata'
 
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const { messages } = await req.json()
@@ -14,16 +15,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid message list.' }, { status: 400 })
     }
 
-    // Fetch context data (Student profile, Universities, Visas)
-    const [profileRes, universitiesRes, visasRes] = await Promise.all([
+    // Fetch context data (Student profile, Universities, Visas, Scholarships)
+    const [profileRes, universitiesRes, visasRes, scholarshipsRes] = await Promise.all([
       supabase.from('profiles').select('*').eq('clerk_user_id', userId).single(),
       supabase.from('universities').select('*'),
-      supabase.from('visa_requirements').select('*')
+      supabase.from('visa_requirements').select('*'),
+      supabase.from('scholarships').select('*')
     ])
 
     const profile = profileRes.data
     const universities = universitiesRes.data
     const visas = visasRes.data
+    const scholarships = scholarshipsRes.data
 
     const parsedProfile = profile ? parseProfile(profile) : null
     const userQuery = messages[messages.length - 1]?.content ?? ''
@@ -35,6 +38,9 @@ ${parsedProfile ? JSON.stringify(parsedProfile, null, 2) : 'No profile completed
 
 Available Universities in Database:
 ${JSON.stringify(universities?.map(u => ({ id: u.id, name: u.name, country: u.country, city: u.city, qs: u.qs_ranking, cgpa: u.min_cgpa, ielts: u.min_ielts, fee: u.annual_fee_usd, living: u.living_cost_usd, programs: u.programs })) || [], null, 2)}
+
+Available Scholarships in Database:
+${JSON.stringify(scholarships?.map(s => ({ name: s.name, country: s.country, type: s.type, amount: s.amount_usd, fully_funded: s.is_fully_funded, min_cgpa: s.min_cgpa, desc: s.description })) || [], null, 2)}
 
 Visa Requirements:
 ${JSON.stringify(visas || [], null, 2)}

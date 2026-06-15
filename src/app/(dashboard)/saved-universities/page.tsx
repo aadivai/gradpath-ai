@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { getProfileId } from '@/lib/profile'
 
@@ -49,7 +49,7 @@ export default function SavedUniversitiesPage() {
       setSaved((data || []) as unknown as SavedUni[])
       setLoading(false)
     })()
-  }, [user])
+  }, [user?.id])
 
   async function updateStatus(savedId: string, status: string) {
     setSaved(prev => prev.map(s => s.id === savedId ? { ...s, status } : s))

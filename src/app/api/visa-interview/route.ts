@@ -1,10 +1,12 @@
-import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { askGemini } from '@/lib/gemini'
+import { getSupabaseServer } from '@/lib/serverSupabase'
 
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = await getSupabaseServer()
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const { country, question, answer } = await req.json()
