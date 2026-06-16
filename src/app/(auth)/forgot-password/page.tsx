@@ -33,25 +33,23 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative flex items-center justify-center p-6">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-20 pointer-events-none" />
-      
-      <div className="w-full max-w-md relative z-10">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/">
-            <h1 className="text-2xl font-black tracking-tight text-foreground">
+          <Link href="/" className="inline-block">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
               Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
             </h1>
           </Link>
-          <p className="text-xs text-muted-foreground mt-2 font-medium">
+          <p className="text-sm text-muted-foreground mt-2">
             Reset Your Password
           </p>
         </div>
 
-        <div className="glass-card bg-card border border-border/80 rounded-2xl p-8 shadow-xl space-y-6">
+        <div className="glass-card bg-card border border-border rounded-xl p-8 shadow-sm space-y-6">
           <div>
-            <h2 className="text-lg font-bold text-foreground">Forgot your password?</h2>
-            <p className="text-xs text-muted-foreground mt-1 font-semibold">
+            <h2 className="text-lg font-semibold text-foreground">Forgot your password?</h2>
+            <p className="text-sm text-muted-foreground mt-1">
               Enter your registered email address and we'll send you a password recovery link.
             </p>
           </div>

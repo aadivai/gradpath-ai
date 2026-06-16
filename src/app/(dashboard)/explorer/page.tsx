@@ -198,17 +198,17 @@ export default function ExplorerPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-6">
         <div>
-          <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
-            <Compass className="w-6.5 h-6.5 text-indigo-600 animate-[spin_12s_linear_infinite]" />
-            AI Global Operations Explorer
+          <h1 className="text-xl font-semibold text-foreground tracking-tight flex items-center gap-2">
+            <Compass className="w-5 h-5 text-muted-foreground" />
+            Country Explorer
           </h1>
-          <p className="text-xs text-muted-foreground mt-1 font-medium">
-            Analyze tuition structures, visa throughput statistics, and local relocation metrics across major academic destinations.
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Compare tuition, visa, and career data across study destinations.
           </p>
         </div>
-        <div className="flex items-center gap-2 bg-muted/50 border border-border px-3.5 py-1.5 rounded-full text-[10px] font-bold text-foreground">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          Active Route: <span className="text-indigo-600 dark:text-indigo-400 font-black">India &rarr; {selectedCountry}</span>
+        <div className="flex items-center gap-2 bg-muted border border-border px-3 py-1.5 rounded-full text-xs font-medium text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          India → {selectedCountry}
         </div>
       </div>
 
@@ -217,12 +217,8 @@ export default function ExplorerPage() {
         {/* Left: SVG Map Dashboard (col-span-7) */}
         <div className="lg:col-span-7 glass-card rounded-3xl p-6 flex flex-col justify-between border border-border bg-card shadow-lg relative overflow-hidden h-[510px]">
           
-          <div className="flex justify-between items-center mb-4 border-b border-border/40 pb-3">
-            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Continental Command Map</span>
-            <span className="text-[9.5px] text-indigo-650 dark:text-indigo-400 font-bold uppercase tracking-wider flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-650 animate-ping" />
-              Interactive Radar Node System
-            </span>
+          <div className="flex justify-between items-center mb-4 border-b border-border pb-3">
+            <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">World map</span>
           </div>
 
           {/* SVG Map Container */}
@@ -353,8 +349,8 @@ export default function ExplorerPage() {
           {/* Top color band matching country profile style */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600" />
           
-          <div className="border-b border-border/40 pb-3.5 flex items-center justify-between mt-1">
-            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Destination Profile</span>
+          <div className="flex items-center justify-between mt-1">
+            <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Destination details</span>
             <span className="text-[9.5px] bg-indigo-50 text-indigo-750 border border-indigo-100 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20 px-2.5 py-0.5 rounded-full font-bold">
               {data.studentRatio}
             </span>

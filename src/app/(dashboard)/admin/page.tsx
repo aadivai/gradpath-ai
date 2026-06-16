@@ -23,6 +23,7 @@ import {
   HelpCircle,
   FileSpreadsheet
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/page-header'
 
 // Tab definitions
 type TabType = 'overview' | 'users' | 'universities' | 'scholarships' | 'prompts' | 'logs'
@@ -468,31 +469,30 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 space-y-6">
+    <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
       {/* Header Banner */}
-      <div className="flex items-center justify-between border-b border-border/40 pb-5">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
-            <Shield className="w-5 h-5" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">Admin Operations Studio</h1>
-            <p className="text-xs text-muted-foreground">Control system instruction prompts, student directories, audit logs, and global catalog databases</p>
-          </div>
-        </div>
-        <button onClick={loadAdminData} className="p-2 border border-border hover:border-border/80 bg-card rounded-lg text-muted-foreground hover:text-foreground transition shadow-xs flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
-          <RefreshCw className="w-3.5 h-3.5" /> Refresh
-        </button>
-      </div>
+      <PageHeader
+        icon={Shield}
+        title="Admin Operations Studio"
+        subtitle="Control system instruction prompts, student directories, audit logs, and global catalog databases"
+        actions={
+          <button 
+            onClick={loadAdminData} 
+            className="px-3 py-2 border border-border hover:bg-muted bg-card rounded-lg text-muted-foreground hover:text-foreground transition shadow-xs flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+          >
+            <RefreshCw className="w-3.5 h-3.5" /> Refresh
+          </button>
+        }
+      />
 
       {/* Global Success / Error Banners */}
       {error && (
-        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-600 dark:text-red-400 flex items-start gap-2.5 animate-fade-in">
+        <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-sm text-rose-600 dark:text-rose-400 flex items-start gap-2.5 animate-fade-in">
           <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
           <div className="flex-1">
-            <span className="font-bold">Execution Error: </span> {error}
+            <span className="font-semibold">Execution Error: </span> {error}
           </div>
-          <button onClick={() => setError('')} className="text-red-400 hover:text-red-700 text-xs font-bold font-mono">×</button>
+          <button onClick={() => setError('')} className="text-rose-400 hover:text-rose-750 text-xs font-mono font-bold">×</button>
         </div>
       )}
 
@@ -521,7 +521,7 @@ export default function AdminPage() {
               onClick={() => { setActiveTab(tab.id as TabType); setError(''); }}
               className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                 active
-                  ? 'border-indigo-600 text-indigo-600 font-bold bg-indigo-500/10 dark:bg-indigo-500/20'
+                  ? 'border-indigo-600 text-indigo-600 font-medium'
                   : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border/60'
               }`}
             >
@@ -540,39 +540,39 @@ export default function AdminPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
-                <div className="w-10 h-10 bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center shrink-0">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Total Students</p>
-                  <p className="text-xl font-bold text-foreground mt-0.5">{totalStudents}</p>
+                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Total Students</p>
+                  <p className="text-xl font-semibold text-foreground mt-0.5">{totalStudents}</p>
                 </div>
               </div>
               <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
-                <div className="w-10 h-10 bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-lg flex items-center justify-center shrink-0">
                   <BarChart3 className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Avg CGPA</p>
-                  <p className="text-xl font-bold text-foreground mt-0.5">{avgCgpa} / 10</p>
+                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Avg CGPA</p>
+                  <p className="text-xl font-semibold text-foreground mt-0.5">{avgCgpa} / 10</p>
                 </div>
               </div>
               <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
-                <div className="w-10 h-10 bg-rose-500/10 text-rose-500 dark:text-rose-400 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-lg flex items-center justify-center shrink-0">
                   <Award className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Avg IELTS Band</p>
-                  <p className="text-xl font-bold text-foreground mt-0.5">{avgIelts}</p>
+                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Avg IELTS Band</p>
+                  <p className="text-xl font-semibold text-foreground mt-0.5">{avgIelts}</p>
                 </div>
               </div>
               <div className="bg-card border border-border rounded-xl p-4 shadow-xs flex items-center gap-3">
-                <div className="w-10 h-10 bg-amber-500/10 text-amber-500 dark:text-amber-400 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-lg flex items-center justify-center shrink-0">
                   <Database className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Catalog Universities</p>
-                  <p className="text-xl font-bold text-foreground mt-0.5">{unisList.length}</p>
+                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Catalog Universities</p>
+                  <p className="text-xl font-semibold text-foreground mt-0.5">{unisList.length}</p>
                 </div>
               </div>
             </div>
@@ -581,7 +581,7 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Audit feed snapshot */}
               <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Recent System Events</h3>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Recent System Events</h3>
                 <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
                   {auditLogs.slice(0, 5).map((log, idx) => (
                     <div key={idx} className="text-xs flex items-start gap-2.5 border-b border-border/30 pb-2 last:border-0 last:pb-0">
@@ -600,7 +600,7 @@ export default function AdminPage() {
 
               {/* Popular countries breakdown */}
               <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Popular Country Preferences</h3>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Popular Country Preferences</h3>
                 <div className="space-y-3">
                   {(() => {
                     const countries: Record<string, number> = {}
@@ -620,8 +620,8 @@ export default function AdminPage() {
                             <span>{country}</span>
                             <span>{count} votes ({pct}%)</span>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${pct}%` }} />
+                          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                            <div className="h-full bg-indigo-600 dark:bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
                           </div>
                         </div>
                       )
@@ -640,18 +640,18 @@ export default function AdminPage() {
             {/* Filter Tools */}
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="flex-1 relative">
-                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-2.5" />
                 <input
                   value={userQuery}
                   onChange={e => setUserQuery(e.target.value)}
                   placeholder="Search students by name, email, or branch..."
-                  className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  className="w-full bg-muted/30 border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                 />
               </div>
               <select
                 value={userRoleFilter}
                 onChange={e => setUserRoleFilter(e.target.value)}
-                className="bg-card border border-border px-3 py-2 rounded-lg text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                className="bg-card border border-border px-3 py-2 rounded-lg text-xs text-foreground focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 cursor-pointer"
               >
                 <option value="">All Roles</option>
                 <option value="student">Student</option>
@@ -666,7 +666,7 @@ export default function AdminPage() {
             <div className="overflow-x-auto border border-border/40 rounded-lg">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-muted border-b border-border/40 text-muted-foreground">
+                  <tr className="bg-muted text-muted-foreground border-b border-border/40">
                     <th className="p-3 font-semibold uppercase">Student Profile</th>
                     <th className="p-3 font-semibold uppercase">Status</th>
                     <th className="p-3 font-semibold uppercase">Grades</th>
@@ -684,9 +684,9 @@ export default function AdminPage() {
                       </td>
                       <td className="p-3">
                         {u.is_deactivated ? (
-                          <span className="bg-red-500/10 text-red-500 px-2 py-0.5 rounded border border-red-500/20 text-[10px] font-bold">Deactivated</span>
+                          <span className="bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded border border-rose-500/20 text-[10px] font-semibold">Deactivated</span>
                         ) : (
-                          <span className="bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded border border-emerald-500/20 text-[10px] font-bold">Active</span>
+                          <span className="bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded border border-emerald-500/20 text-[10px] font-semibold">Active</span>
                         )}
                       </td>
                       <td className="p-3">
@@ -697,7 +697,7 @@ export default function AdminPage() {
                         <select
                            value={u.role || 'student'}
                            onChange={e => handleRoleChange(u.clerk_user_id, e.target.value)}
-                           className="bg-card border border-border rounded px-2 py-1 text-[11px] text-foreground font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
+                           className="bg-card border border-border rounded-lg px-2 py-1 text-[11px] text-foreground font-semibold focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 cursor-pointer"
                         >
                           <option value="student">Student</option>
                           <option value="mentor">Mentor</option>
@@ -711,7 +711,7 @@ export default function AdminPage() {
                           onClick={() => handleToggleDeactivate(u.clerk_user_id, !u.is_deactivated)}
                           className={`p-1.5 rounded-lg border transition ${
                             u.is_deactivated
-                              ? 'border-emerald-600/30 hover:border-emerald-600/50 text-emerald-600 hover:bg-emerald-500/10'
+                              ? 'border-emerald-650/30 hover:border-emerald-600/50 text-emerald-600 hover:bg-emerald-500/10'
                               : 'border-amber-600/30 hover:border-amber-600/50 text-amber-600 hover:bg-amber-500/10'
                           } cursor-pointer`}
                           title={u.is_deactivated ? 'Activate User' : 'Deactivate User'}
@@ -720,7 +720,7 @@ export default function AdminPage() {
                         </button>
                         <button
                           onClick={() => handleDeleteUser(u.clerk_user_id)}
-                          className="p-1.5 border border-red-600/30 hover:border-red-600/50 text-red-500 hover:bg-red-500/10 rounded-lg transition cursor-pointer"
+                          className="p-1.5 border border-rose-600/30 hover:border-rose-600/50 text-rose-500 hover:bg-rose-500/10 rounded-lg transition cursor-pointer"
                           title="Delete User"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -746,7 +746,7 @@ export default function AdminPage() {
             {/* CRUD Table Column */}
             <div className="lg:col-span-2 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between border-b border-border/40 pb-2">
-                <h2 className="text-xs font-bold text-foreground uppercase tracking-wider">University Catalog</h2>
+                <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider">University Catalog</h2>
                 <button
                   onClick={() => {
                     setSelectedUni({
@@ -756,7 +756,7 @@ export default function AdminPage() {
                     })
                     setShowUniModal(true)
                   }}
-                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add University
                 </button>
@@ -764,27 +764,27 @@ export default function AdminPage() {
 
               {/* Search bar */}
               <div className="relative">
-                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-2.5" />
                 <input
                   value={uniSearch}
                   onChange={e => setUniSearch(e.target.value)}
                   placeholder="Search university catalog by name or country..."
-                  className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  className="w-full bg-muted/30 border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                 />
               </div>
 
               {/* Catalog list */}
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                 {filteredUnis.map(uni => (
-                  <div key={uni.id} className="bg-muted/40 border border-border/40 rounded-xl p-3 flex justify-between items-start hover:border-indigo-500/40 transition-all duration-300">
+                  <div key={uni.id} className="bg-card border border-border rounded-lg p-3.5 flex justify-between items-start hover:border-indigo-500/20 transition-all duration-300">
                     <div className="space-y-1">
                       <p className="font-semibold text-foreground text-sm">{uni.name}</p>
-                      <p className="text-[10px] text-muted-foreground font-medium">{uni.city ? `${uni.city}, ` : ''}{uni.country} • Tier: <span className="font-bold text-indigo-600 dark:text-indigo-400">{uni.tier}</span></p>
-                      <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
+                      <p className="text-[10px] text-muted-foreground font-medium">{uni.city ? `${uni.city}, ` : ''}{uni.country} • Tier: <span className="font-semibold text-indigo-600 dark:text-indigo-400 uppercase text-[9px]">{uni.tier}</span></p>
+                      <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed mt-1">
                         GPA &ge; {uni.min_cgpa ?? '—'} • IELTS &ge; {uni.min_ielts ?? '—'} • Fee: ${uni.annual_fee_usd?.toLocaleString() || '—'}
                       </p>
                     </div>
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-1.5 shrink-0">
                       <button
                         onClick={() => {
                           setSelectedUni({
@@ -793,13 +793,13 @@ export default function AdminPage() {
                           })
                           setShowUniModal(true)
                         }}
-                        className="px-2.5 py-1.5 border border-border hover:border-border/80 text-foreground bg-card rounded-lg text-xs font-semibold cursor-pointer"
+                        className="px-2.5 py-1.5 border border-border hover:bg-muted text-foreground bg-card rounded-lg text-xs font-semibold cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteUniversity(uni.id)}
-                        className="p-1.5 border border-red-650/30 hover:border-red-600/50 text-red-500 bg-card rounded-lg cursor-pointer"
+                        className="p-1.5 border border-rose-600/30 hover:border-rose-600/50 text-rose-500 bg-card rounded-lg cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -814,7 +814,7 @@ export default function AdminPage() {
 
             {/* CSV Import Column */}
             <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
+              <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
                 <FileSpreadsheet className="w-4 h-4 text-indigo-600" />
                 CSV Bulk Import
               </h2>
@@ -828,7 +828,7 @@ export default function AdminPage() {
               </div>
 
               {/* Upload field */}
-              <div className="border-2 border-dashed border-border hover:border-indigo-500/80 transition rounded-xl p-6 text-center cursor-pointer relative">
+              <div className="border border-dashed border-border hover:border-indigo-600 dark:hover:border-indigo-500 transition rounded-xl p-6 text-center cursor-pointer relative">
                 <input
                   type="file"
                   accept=".csv"
@@ -844,10 +844,10 @@ export default function AdminPage() {
               {parsedCsvData.length > 0 && (
                 <div className="space-y-3 pt-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{parsedCsvData.length} records parsed</span>
+                    <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{parsedCsvData.length} records parsed</span>
                     <button
                       onClick={() => setParsedCsvData([])}
-                      className="text-[10px] text-red-500 font-bold hover:underline"
+                      className="text-[10px] text-rose-500 font-semibold hover:underline"
                     >
                       Clear
                     </button>
@@ -863,7 +863,7 @@ export default function AdminPage() {
 
                   <button
                     onClick={handleImportParsedCsv}
-                    className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition cursor-pointer"
+                    className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition cursor-pointer"
                   >
                     Confirm Import ({parsedCsvData.length} Rows)
                   </button>
@@ -872,11 +872,12 @@ export default function AdminPage() {
             </div>
           </div>
         )}
+
         {/* --- Tab 4: Scholarships Directory --- */}
         {activeTab === 'scholarships' && (
           <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between border-b border-border/40 pb-2">
-              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider">Scholarships Directory</h2>
+              <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider">Scholarships Directory</h2>
               <button
                 onClick={() => {
                   setSelectedSch({
@@ -886,7 +887,7 @@ export default function AdminPage() {
                   })
                   setShowSchModal(true)
                 }}
-                className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Scholarship
               </button>
@@ -894,32 +895,32 @@ export default function AdminPage() {
 
             {/* Search and Filters */}
             <div className="relative">
-              <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+              <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-2.5" />
               <input
                 value={schSearch}
                 onChange={e => setSchSearch(e.target.value)}
                 placeholder="Search scholarships by name or country..."
-                className="w-full bg-muted border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                className="w-full bg-muted/30 border border-border pl-9 pr-3 py-2 rounded-lg text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
               />
             </div>
 
             {/* List */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredScholarships.map(sch => (
-                <div key={sch.id} className="border border-border/40 rounded-xl p-4 bg-muted/20 flex flex-col justify-between space-y-3 hover:border-indigo-500/40 transition-all">
+                <div key={sch.id} className="bg-card border border-border rounded-lg p-4 flex flex-col justify-between space-y-3 hover:border-indigo-500/20 shadow-xs transition-all">
                   <div className="space-y-1">
                     <div className="flex justify-between items-start gap-2">
                       <h3 className="font-semibold text-foreground text-xs leading-normal">{sch.name}</h3>
                       {sch.is_fully_funded && (
-                        <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider shrink-0">Fully Funded</span>
+                        <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-1.5 py-0.5 rounded text-[8px] font-semibold uppercase tracking-wider shrink-0">Fully Funded</span>
                       )}
                     </div>
                     <p className="text-[10px] text-muted-foreground font-semibold">{sch.country || 'Global'} • Type: {sch.type}</p>
                     <p className="text-xs text-foreground/80 leading-normal line-clamp-2">{sch.description || 'No description listed.'}</p>
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-border/40">
-                    <span className="text-[10px] font-bold text-indigo-650 dark:text-indigo-400">Amt: ${sch.amount_usd?.toLocaleString() || 'Variable'}</span>
-                    <div className="flex gap-1">
+                    <span className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Amt: ${sch.amount_usd?.toLocaleString() || 'Variable'}</span>
+                    <div className="flex gap-1 shrink-0">
                       <button
                         onClick={() => {
                           setSelectedSch({
@@ -928,13 +929,13 @@ export default function AdminPage() {
                           })
                           setShowSchModal(true)
                         }}
-                        className="px-2 py-1.5 border border-border hover:border-border/80 bg-card rounded-lg text-[10px] font-bold text-foreground cursor-pointer"
+                        className="px-2 py-1.5 border border-border hover:bg-muted bg-card rounded-lg text-[10px] font-semibold text-foreground cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteScholarship(sch.id)}
-                        className="p-1.5 border border-red-650/30 hover:border-red-600/50 text-red-500 bg-card rounded-lg cursor-pointer"
+                        className="p-1.5 border border-rose-600/30 hover:border-rose-600/50 text-rose-500 bg-card rounded-lg cursor-pointer"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -955,17 +956,17 @@ export default function AdminPage() {
             
             {/* Instructions Prompt Editor */}
             <div className="lg:col-span-7 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
-                <Settings className="w-4 h-4 text-indigo-650 dark:text-indigo-400" />
+              <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <Settings className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 Active Counselor System instructions
               </h2>
               
               <div className="space-y-1">
-                <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">System Instructions Prompt</label>
+                <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">System Instructions Prompt</label>
                 <textarea
                   value={activePrompt}
                   onChange={e => setActivePrompt(e.target.value)}
-                  className="w-full h-40 border border-border rounded-lg p-3 text-xs text-foreground bg-muted font-mono leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  className="w-full h-40 border border-border rounded-lg p-3 text-xs text-foreground bg-muted/30 font-mono leading-relaxed resize-none focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                 />
               </div>
 
@@ -975,7 +976,7 @@ export default function AdminPage() {
                 </p>
                 <button
                   onClick={handleSaveActivePrompt}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   Save Active Prompt
                 </button>
@@ -983,10 +984,10 @@ export default function AdminPage() {
 
               {/* Version History Rollbacks */}
               <div className="pt-4 border-t border-border/40 space-y-3">
-                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">Prompt Revision History</h3>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">Prompt Revision History</h3>
                 <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
                   {promptHistory.map((h, idx) => (
-                    <div key={h.id || idx} className="bg-muted/40 border border-border/40 rounded-xl p-3 flex justify-between items-center text-xs">
+                    <div key={h.id || idx} className="bg-card border border-border rounded-lg p-3 flex justify-between items-center text-xs">
                       <div>
                         <p className="font-semibold text-foreground/80 leading-normal truncate max-w-[300px]">{h.prompt}</p>
                         <p className="text-[10px] text-muted-foreground mt-0.5">Revision: {new Date(h.updatedAt).toLocaleString()} • {h.author}</p>
@@ -1008,7 +1009,7 @@ export default function AdminPage() {
 
             {/* Sandbox Playground Column */}
             <div className="lg:col-span-5 bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
+              <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2 flex items-center gap-1.5">
                 <Play className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Prompt Sandbox Playground
               </h2>
@@ -1019,28 +1020,28 @@ export default function AdminPage() {
 
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Test System instructions</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Test System instructions</label>
                   <textarea
                     value={sandboxPrompt}
                     onChange={e => setSandboxPrompt(e.target.value)}
-                    className="w-full h-24 border border-border rounded-lg p-2.5 text-xs text-foreground bg-muted font-mono leading-normal resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                    className="w-full h-24 border border-border rounded-lg p-2.5 text-xs text-foreground bg-muted/30 font-mono leading-normal resize-none focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                     placeholder="Enter system instruction..."
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">User Query input</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">User Query input</label>
                   <input
                     value={sandboxQuery}
                     onChange={e => setSandboxQuery(e.target.value)}
                     placeholder="e.g. Which universities accept 6.5 IELTS?"
-                    className="w-full border border-border rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-foreground bg-muted"
+                    className="w-full border border-border rounded-lg px-3 py-2 text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 text-foreground bg-muted/30"
                   />
                 </div>
 
                 <button
                   onClick={handleRunSandboxTest}
                   disabled={testingSandbox || !sandboxPrompt.trim() || !sandboxQuery.trim()}
-                  className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2 bg-emerald-650 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs transition disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer bg-emerald-600"
                 >
                   {testingSandbox ? 'Executing Test...' : 'Run Sandbox Query'}
                 </button>
@@ -1049,8 +1050,8 @@ export default function AdminPage() {
               {/* Test Output box */}
               {sandboxResult && (
                 <div className="space-y-1.5 pt-2">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Gemini Model Output</label>
-                  <div className="border border-border rounded-xl p-3 bg-zinc-950 dark:bg-black font-mono text-[10px] text-emerald-400 whitespace-pre-wrap max-h-[220px] overflow-y-auto leading-relaxed">
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Gemini Model Output</label>
+                  <div className="border border-border rounded-lg p-3 bg-zinc-950 dark:bg-black font-mono text-[10px] text-emerald-400 whitespace-pre-wrap max-h-[220px] overflow-y-auto leading-relaxed">
                     {sandboxResult}
                   </div>
                 </div>
@@ -1062,11 +1063,11 @@ export default function AdminPage() {
         {/* --- Tab 6: Audit Logs --- */}
         {activeTab === 'logs' && (
           <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-            <h2 className="text-xs font-bold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Audit Event logs</h2>
+            <h2 className="text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/40 pb-2">Audit Event logs</h2>
             
             <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
               {auditLogs.map((log, idx) => (
-                <div key={idx} className="text-xs border border-border/40 bg-muted/10 hover:bg-muted/20 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-205">
+                <div key={idx} className="text-xs border border-border bg-card hover:bg-muted/30 rounded-lg p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-200">
                   <div className="space-y-1">
                     <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-primary text-primary-foreground">{log.action}</span>
                     <p className="text-foreground/80 leading-normal font-medium mt-1.5">{log.detail}</p>
@@ -1089,111 +1090,111 @@ export default function AdminPage() {
       {/* --- UNIVERSITY MODAL DIALOG --- */}
       {showUniModal && selectedUni && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-card border border-border rounded-2xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-foreground text-sm border-b border-border/40 pb-2">
+          <div className="bg-card border border-border rounded-xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="font-semibold text-foreground text-sm border-b border-border/40 pb-2">
               {selectedUni.id ? 'Edit University details' : 'Add New University'}
             </h3>
             
             <form onSubmit={handleSaveUniversity} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">University name</label>
+                  <label className="text-muted-foreground font-semibold">University name</label>
                   <input
                     value={selectedUni.name}
                     onChange={e => setSelectedUni({ ...selectedUni, name: e.target.value })}
                     required
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Country</label>
+                  <label className="text-muted-foreground font-semibold">Country</label>
                   <input
                     value={selectedUni.country}
                     onChange={e => setSelectedUni({ ...selectedUni, country: e.target.value })}
                     required
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">City</label>
+                  <label className="text-muted-foreground font-semibold">City</label>
                   <input
                     value={selectedUni.city || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, city: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">QS Rank</label>
+                  <label className="text-muted-foreground font-semibold">QS Rank</label>
                   <input
                     type="number"
                     value={selectedUni.qs_ranking || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, qs_ranking: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Acceptance Rate (%)</label>
+                  <label className="text-muted-foreground font-semibold">Acceptance Rate (%)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedUni.acceptance_rate || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, acceptance_rate: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Min CGPA</label>
+                  <label className="text-muted-foreground font-semibold">Min CGPA</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedUni.min_cgpa || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, min_cgpa: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Min IELTS Band</label>
+                  <label className="text-muted-foreground font-semibold">Min IELTS Band</label>
                   <input
                     type="number"
                     step="0.5"
                     value={selectedUni.min_ielts || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, min_ielts: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Annual Fee (USD)</label>
+                  <label className="text-muted-foreground font-semibold">Annual Fee (USD)</label>
                   <input
                     type="number"
                     value={selectedUni.annual_fee_usd || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, annual_fee_usd: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Living Cost (USD)</label>
+                  <label className="text-muted-foreground font-semibold">Living Cost (USD)</label>
                   <input
                     type="number"
                     value={selectedUni.living_cost_usd || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, living_cost_usd: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">Programs Offered (comma-separated)</label>
+                  <label className="text-muted-foreground font-semibold">Programs Offered (comma-separated)</label>
                   <input
                     value={selectedUni.programs || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, programs: e.target.value })}
                     placeholder="Computer Science, Data Science, Cyber Security"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Matching Tier</label>
+                  <label className="text-muted-foreground font-semibold">Matching Tier</label>
                   <select
                     value={selectedUni.tier}
                     onChange={e => setSelectedUni({ ...selectedUni, tier: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 cursor-pointer"
                   >
                     <option value="safe">Safe</option>
                     <option value="moderate">Moderate</option>
@@ -1202,12 +1203,12 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Website URL</label>
+                  <label className="text-muted-foreground font-semibold">Website URL</label>
                   <input
                     value={selectedUni.website_url || ''}
                     onChange={e => setSelectedUni({ ...selectedUni, website_url: e.target.value })}
                     placeholder="https://example.edu"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -1216,13 +1217,13 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setShowUniModal(false)}
-                  className="px-3.5 py-2 border border-border text-muted-foreground hover:text-foreground bg-card rounded-lg font-semibold cursor-pointer"
+                  className="px-3.5 py-2 border border-border text-muted-foreground hover:bg-muted bg-card rounded-lg font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-sm cursor-pointer"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-xs cursor-pointer"
                 >
                   Save
                 </button>
@@ -1235,46 +1236,46 @@ export default function AdminPage() {
       {/* --- SCHOLARSHIP MODAL DIALOG --- */}
       {showSchModal && selectedSch && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-card border border-border rounded-2xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-foreground text-sm border-b border-border/40 pb-2">
+          <div className="bg-card border border-border rounded-xl p-6 max-w-lg w-full shadow-lg space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="font-semibold text-foreground text-sm border-b border-border/40 pb-2">
               {selectedSch.id ? 'Edit Scholarship details' : 'Add New Scholarship'}
             </h3>
 
             <form onSubmit={handleSaveScholarship} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">Scholarship name</label>
+                  <label className="text-muted-foreground font-semibold">Scholarship name</label>
                   <input
                     value={selectedSch.name}
                     onChange={e => setSelectedSch({ ...selectedSch, name: e.target.value })}
                     required
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Country Assignment</label>
+                  <label className="text-muted-foreground font-semibold">Country Assignment</label>
                   <input
                     value={selectedSch.country || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, country: e.target.value })}
                     placeholder="e.g. USA or Global"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Amount (USD)</label>
+                  <label className="text-muted-foreground font-semibold">Amount (USD)</label>
                   <input
                     type="number"
                     value={selectedSch.amount_usd || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, amount_usd: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Funding Type</label>
+                  <label className="text-muted-foreground font-semibold">Funding Type</label>
                   <select
                     value={selectedSch.type}
                     onChange={e => setSelectedSch({ ...selectedSch, type: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 cursor-pointer"
                   >
                     <option value="merit">Merit-based</option>
                     <option value="need">Need-based</option>
@@ -1288,53 +1289,53 @@ export default function AdminPage() {
                     checked={!!selectedSch.is_fully_funded}
                     onChange={e => setSelectedSch({ ...selectedSch, is_fully_funded: e.target.checked })}
                     id="is_fully_funded"
-                    className="w-4 h-4 rounded text-indigo-655 border-border focus:ring-indigo-500 bg-muted text-indigo-600 cursor-pointer"
+                    className="w-4 h-4 rounded border-border text-indigo-600 focus:ring-indigo-500 bg-muted/30 cursor-pointer"
                   />
                   <label htmlFor="is_fully_funded" className="text-foreground/90 font-semibold cursor-pointer">Fully Funded Scholarship</label>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Min CGPA Required</label>
+                  <label className="text-muted-foreground font-semibold">Min CGPA Required</label>
                   <input
                     type="number"
                     step="0.1"
                     value={selectedSch.min_cgpa || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, min_cgpa: e.target.value })}
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-muted-foreground font-bold">Application Deadline</label>
+                  <label className="text-muted-foreground font-semibold">Application Deadline</label>
                   <input
                     value={selectedSch.deadline || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, deadline: e.target.value })}
                     placeholder="e.g. Sep 15"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">Eligible Degrees (comma-separated)</label>
+                  <label className="text-muted-foreground font-semibold">Eligible Degrees (comma-separated)</label>
                   <input
                     value={selectedSch.eligible_degrees || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, eligible_degrees: e.target.value })}
                     placeholder="Masters, PhD, Bachelors"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">Website / Apply Link</label>
+                  <label className="text-muted-foreground font-semibold">Website / Apply Link</label>
                   <input
                     value={selectedSch.link || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, link: e.target.value })}
                     placeholder="https://example.com/scholarship"
-                    className="w-full border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500"
                   />
                 </div>
                 <div className="col-span-2 space-y-1">
-                  <label className="text-muted-foreground font-bold">Description</label>
+                  <label className="text-muted-foreground font-semibold">Description</label>
                   <textarea
                     value={selectedSch.description || ''}
                     onChange={e => setSelectedSch({ ...selectedSch, description: e.target.value })}
-                    className="w-full h-20 border border-border rounded px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-muted resize-none"
+                    className="w-full h-20 border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 resize-none"
                   />
                 </div>
               </div>
@@ -1343,13 +1344,13 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setShowSchModal(false)}
-                  className="px-3.5 py-2 border border-border text-muted-foreground hover:text-foreground bg-card rounded-lg font-semibold cursor-pointer"
+                  className="px-3.5 py-2 border border-border text-muted-foreground hover:bg-muted bg-card rounded-lg font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-sm cursor-pointer"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-xs cursor-pointer"
                 >
                   Save
                 </button>

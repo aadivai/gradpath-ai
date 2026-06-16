@@ -8,10 +8,10 @@ export default function Error({
   reset: () => void
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center text-center px-4">
       <p className="text-3xl mb-4">⚠️</p>
-      <p className="text-lg font-medium text-gray-900 mb-2">Something went wrong</p>
-      <p className="text-sm text-gray-500 mb-6 max-w-xs">
+      <p className="text-lg font-medium text-foreground mb-2">Something went wrong</p>
+      <p className="text-sm text-muted-foreground mb-6 max-w-xs">
         {error.message || 'An unexpected error occurred. Please try again.'}
       </p>
       <button

@@ -4,6 +4,8 @@ import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { parseProfile, serializeFullName } from '@/utils/profileMetadata'
+import { PageHeader } from '@/components/ui/page-header'
+
 
 type FormData = {
   full_name: string
@@ -42,7 +44,7 @@ const INTAKES   = ['Fall 2025', 'Spring 2026', 'Fall 2026', 'Spring 2027']
 const CLIMATES: ('any' | 'warm' | 'moderate' | 'cold')[] = ['any', 'warm', 'moderate', 'cold']
 const LANGUAGES = ['English', 'German', 'French', 'Japanese', 'Korean', 'Spanish', 'Dutch', 'Swedish']
 
-const inputCls = 'w-full border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-card'
+const inputCls = 'w-full bg-background border border-border rounded-xl px-3.5 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 dark:focus-visible:ring-indigo-500 focus-visible:border-indigo-600 dark:focus-visible:border-indigo-500 transition-shadow'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -64,10 +66,10 @@ function StepIndicator({ current }: { current: number }) {
         return (
           <div key={i} className="flex items-center gap-2">
             <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold
-                ${done   ? 'bg-green-500 text-white shadow-sm shadow-green-100'   : ''}
-                ${active ? 'bg-indigo-600 text-white ring-4 ring-indigo-500/20'  : ''}
-                ${!done && !active ? 'bg-muted text-muted-foreground' : ''}`}
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all
+                ${done   ? 'bg-emerald-500 text-white shadow-xs shadow-emerald-500/10'   : ''}
+                ${active ? 'bg-indigo-650 text-white ring-4 ring-indigo-500/15'  : ''}
+                ${!done && !active ? 'bg-muted text-muted-foreground border border-border/60' : ''}`}
             >
               {done ? '✓' : num}
             </div>
@@ -191,10 +193,10 @@ function Step3({
             const selected = data.language_preference.includes(lang)
             return (
               <button key={lang} type="button" onClick={() => toggleLanguage(lang)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
                   ${selected
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-card text-muted-foreground border-border hover:border-indigo-300'}`}>
+                    ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500'
+                    : 'bg-background text-muted-foreground border-border hover:text-foreground hover:border-muted-foreground/30'}`}>
                 {lang}
               </button>
             )
@@ -211,10 +213,10 @@ function Step3({
             const selected = data.preferred_countries.includes(country)
             return (
               <button key={country} type="button" onClick={() => toggleCountry(country)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
                   ${selected
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-card text-muted-foreground border-border hover:border-indigo-300'}`}>
+                    ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500'
+                    : 'bg-background text-muted-foreground border-border hover:text-foreground hover:border-muted-foreground/30'}`}>
                 {country}
               </button>
             )
@@ -345,45 +347,56 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-6 py-10">
-      <h1 className="text-xl font-semibold text-foreground mb-1">
-        {isEdit ? 'Edit your profile' : 'Complete your profile'}
-      </h1>
-      <p className="text-sm text-muted-foreground mb-6">
-        {isEdit
-          ? 'Update your details to refresh university recommendations.'
-          : 'We use this to suggest universities, scholarships, and a roadmap.'}
-      </p>
+    <div className="max-w-xl mx-auto px-6 py-10 space-y-6">
+      {/* Header using PageHeader */}
+      <PageHeader
+        title={isEdit ? 'Edit your profile' : 'Complete your profile'}
+        subtitle={
+          isEdit
+            ? 'Update your details to refresh university recommendations.'
+            : 'We use this to suggest universities, scholarships, and a roadmap.'
+        }
+      />
 
       <StepIndicator current={step} />
 
-      <div className="bg-card border border-border rounded-xl p-6 mb-4 shadow-sm">
+      <div className="bg-card border border-border rounded-xl p-6 shadow-xs">
         {step === 1 && <Step1 data={data} update={update} />}
         {step === 2 && <Step2 data={data} update={update} />}
         {step === 3 && <Step3 data={data} update={update} toggleCountry={toggleCountry} toggleLanguage={toggleLanguage} />}
       </div>
 
       {error && (
-        <div className="mb-4 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-600 dark:text-red-400">
+        <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-650 dark:text-red-400">
           {error}
         </div>
       )}
 
       <div className="flex gap-3">
         {step > 1 && (
-          <button onClick={() => setStep(s => s - 1)}
-            className="flex-1 px-4 py-2.5 border border-border rounded-lg text-sm text-muted-foreground hover:bg-muted transition-colors cursor-pointer">
+          <button 
+            type="button"
+            onClick={() => setStep(s => s - 1)}
+            className="flex-1 px-4 py-2.5 border border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl text-sm font-semibold transition-colors cursor-pointer"
+          >
             ← Back
           </button>
         )}
         {step < 3 ? (
-          <button onClick={() => setStep(s => s + 1)}
-            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors cursor-pointer">
+          <button 
+            type="button"
+            onClick={() => setStep(s => s + 1)}
+            className="flex-[2] px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-xs transition-colors cursor-pointer"
+          >
             Next →
           </button>
         ) : (
-          <button onClick={saveProfile} disabled={saving}
-            className="flex-[2] px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 disabled:opacity-60 transition-colors cursor-pointer">
+          <button 
+            type="button"
+            onClick={saveProfile} 
+            disabled={saving}
+            className="flex-[2] px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold disabled:opacity-60 shadow-xs transition-colors cursor-pointer"
+          >
             {saving ? 'Saving...' : isEdit ? 'Update profile' : 'Save & continue'}
           </button>
         )}

@@ -17,6 +17,7 @@ import {
   Star,
   Check
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/page-header'
 
 type Alumni = {
   id: string
@@ -243,38 +244,33 @@ export default function AlumniPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 space-y-6">
+    <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
       
       {/* Header Banner */}
-      <div className="border-b border-border/40 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
-            <Users className="w-6 h-6 text-indigo-650" />
-            Student Community & Mentorship
-          </h1>
-          <p className="text-xs text-muted-foreground mt-1 font-semibold">
-            Interact with peers on active discussion channels, book direct mock chats with alumni, and find study groups.
-          </p>
-        </div>
+      <PageHeader
+        icon={Users}
+        title="Student Community & Mentorship"
+        subtitle="Interact with peers on active discussion channels, book direct mock chats with alumni, and find study groups."
+      />
 
-        {/* Operating System Subtabs */}
-        <div className="flex bg-muted/60 p-1 rounded-xl border border-border shrink-0 self-start">
-          {[
-            { id: 'directory', label: 'Alumni Network' },
-            { id: 'forum',     label: 'Discussion Forum' },
-            { id: 'groups',    label: 'Study Channels' }
-          ].map(t => (
-            <button
-              key={t.id}
-              onClick={() => setActiveTab(t.id as any)}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeTab === t.id ? 'bg-card text-foreground shadow-xs' : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+      <div className="flex bg-muted/60 p-1 rounded-lg border border-border shrink-0 max-w-sm">
+        {[
+          { id: 'directory', label: 'Alumni Network' },
+          { id: 'forum',     label: 'Discussion Forum' },
+          { id: 'groups',    label: 'Study Channels' }
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setActiveTab(t.id as any)}
+            className={`flex-1 px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+              activeTab === t.id 
+                ? 'bg-card text-foreground shadow-xs' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -286,21 +282,21 @@ export default function AlumniPage() {
           {activeTab === 'directory' && (
             <div className="space-y-6">
               {/* Search and Filters Bar */}
-              <div className="glass-card rounded-2xl p-4 border border-border bg-card flex flex-col sm:flex-row gap-3 shadow-xs">
-                <div className="flex-1 flex items-center gap-2 border border-border rounded-xl px-3 py-2 bg-muted/20">
+              <div className="bg-card rounded-xl p-4 border border-border flex flex-col sm:flex-row gap-3 shadow-xs">
+                <div className="flex-1 flex items-center gap-2 border border-border rounded-lg px-3 py-2 bg-muted/30 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600 dark:focus-within:ring-indigo-500 transition-all">
                   <Search className="w-4 h-4 text-muted-foreground shrink-0" />
                   <input
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     placeholder="Search seniors by name, university, or current employer..."
-                    className="w-full text-xs font-semibold bg-transparent text-foreground placeholder-muted-foreground outline-none"
+                    className="w-full text-xs bg-transparent text-foreground placeholder-muted-foreground outline-none"
                   />
                 </div>
 
                 <select
                   value={filterCountry}
                   onChange={e => setFilterCountry(e.target.value)}
-                  className="border border-border rounded-xl px-3.5 py-2 text-xs font-bold text-foreground focus:outline-indigo-500 bg-card cursor-pointer shrink-0"
+                  className="border border-border rounded-lg px-3 py-2 text-xs text-foreground bg-card cursor-pointer focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 transition-all shrink-0"
                 >
                   <option value="All">All Countries</option>
                   <option value="Germany">Germany</option>
@@ -314,25 +310,25 @@ export default function AlumniPage() {
               {/* Directory Listings */}
               <div className="space-y-4">
                 {filteredAlumni.map(alumni => (
-                  <div key={alumni.id} className="bg-card border border-border rounded-2xl p-5 hover:border-indigo-500/30 hover:shadow-xs transition-all flex flex-col sm:flex-row gap-5 items-start justify-between">
+                  <div key={alumni.id} className="bg-card border border-border rounded-xl p-5 hover:border-indigo-500/20 shadow-xs transition-all flex flex-col sm:flex-row gap-5 items-start justify-between">
                     <div className="space-y-3 flex-1 min-w-0">
                       <div>
-                        <h3 className="text-sm font-black text-foreground">{alumni.name}</h3>
-                        <p className="text-[10px] text-muted-foreground mt-0.5 font-bold uppercase tracking-wider">{alumni.undergrad}</p>
+                        <h3 className="text-sm font-semibold text-foreground">{alumni.name}</h3>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 font-semibold uppercase tracking-wider">{alumni.undergrad}</p>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-xs">
-                        <div className="flex items-center gap-1.5 font-semibold text-foreground/80">
-                          <GraduationCap className="w-4 h-4 text-indigo-500 shrink-0" />
+                        <div className="flex items-center gap-1.5 font-medium text-foreground/80">
+                          <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
                           <span className="truncate">{alumni.gradUni} ({alumni.program})</span>
                         </div>
-                        <div className="flex items-center gap-1.5 font-semibold text-foreground/80">
+                        <div className="flex items-center gap-1.5 font-medium text-foreground/80">
                           <Briefcase className="w-4 h-4 text-muted-foreground shrink-0" />
-                          <span>{alumni.currentRole} at <span className="font-bold text-foreground">{alumni.company}</span></span>
+                          <span>{alumni.currentRole} at <span className="font-semibold text-foreground">{alumni.company}</span></span>
                         </div>
                       </div>
 
-                      <p className="text-xs text-muted-foreground leading-relaxed pl-3 border-l-2 border-indigo-500/30 font-medium">
+                      <p className="text-xs text-muted-foreground leading-relaxed pl-3 border-l-2 border-indigo-500/30">
                         {alumni.bio}
                       </p>
                     </div>
@@ -343,16 +339,16 @@ export default function AlumniPage() {
                         href={alumni.linkedInUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-[#0077b5] hover:bg-[#00669b] text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5"
+                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-[#0077b5] hover:bg-[#0077b5]/90 text-white text-xs font-semibold rounded-lg shadow-xs transition-all flex items-center justify-center gap-1.5"
                       >
                         <Link2 className="w-4 h-4" />
                         LinkedIn Profile
                       </a>
                       <button
                         onClick={() => setSelectedAlumniForChat(alumni)}
-                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-muted hover:bg-stone-200 dark:hover:bg-stone-850 text-foreground border border-border text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-muted hover:bg-muted/80 text-foreground border border-border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                       >
-                        <MessageSquare className="w-4 h-4" />
+                        <MessageSquare className="w-4 h-4 text-muted-foreground" />
                         Schedule Chat
                       </button>
                     </div>
@@ -368,10 +364,10 @@ export default function AlumniPage() {
               
               {/* Forum post headers */}
               <div className="flex items-center justify-between border-b border-border/40 pb-2">
-                <span className="text-xs font-extrabold uppercase text-muted-foreground tracking-wider">Active Peer Conversations</span>
+                <span className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Active Peer Conversations</span>
                 <button
                   onClick={() => setShowNewPostForm(!showNewPostForm)}
-                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" /> Create Thread
                 </button>
@@ -379,10 +375,10 @@ export default function AlumniPage() {
 
               {/* Form to submit new post */}
               {showNewPostForm && (
-                <form onSubmit={handleCreatePost} className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4 animate-fade-in">
-                  <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">Start a Community Discussion</h3>
+                <form onSubmit={handleCreatePost} className="bg-card rounded-xl p-5 border border-border space-y-4 animate-fade-in shadow-xs">
+                  <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">Start a Community Discussion</h3>
                   
-                  <div className="space-y-3 text-xs font-semibold">
+                  <div className="space-y-3 text-xs">
                     <div className="grid grid-cols-3 gap-3">
                       <div className="col-span-2">
                         <input
@@ -390,14 +386,14 @@ export default function AlumniPage() {
                           onChange={e => setNewTitle(e.target.value)}
                           placeholder="What is your question? Be specific..."
                           required
-                          className="border border-border rounded-xl px-3 py-2 bg-card text-foreground focus:outline-indigo-500 w-full"
+                          className="border border-border rounded-lg px-3 py-2 bg-muted/30 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 w-full"
                         />
                       </div>
                       <div>
                         <select
                           value={newCat}
                           onChange={e => setNewCat(e.target.value as any)}
-                          className="border border-border rounded-xl px-3 py-2 bg-card text-foreground focus:outline-indigo-500 w-full cursor-pointer"
+                          className="border border-border rounded-lg px-3 py-2 bg-muted/30 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 w-full cursor-pointer"
                         >
                           <option value="scholarships">Scholarships</option>
                           <option value="visa">Visa Prep</option>
@@ -412,7 +408,7 @@ export default function AlumniPage() {
                       onChange={e => setNewContent(e.target.value)}
                       placeholder="Add details, background, scores, or constraints to get personalized peer feedback..."
                       required
-                      className="border border-border rounded-xl px-3 py-2 bg-card text-foreground focus:outline-indigo-500 w-full h-24 resize-none leading-relaxed"
+                      className="border border-border rounded-lg px-3 py-2 bg-muted/30 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 w-full h-24 resize-none leading-relaxed"
                     />
                   </div>
 
@@ -420,13 +416,13 @@ export default function AlumniPage() {
                     <button
                       type="button"
                       onClick={() => setShowNewPostForm(false)}
-                      className="px-4 py-2 border border-border text-muted-foreground hover:bg-muted rounded-xl cursor-pointer"
+                      className="px-4 py-2 border border-border text-muted-foreground hover:bg-muted rounded-lg cursor-pointer font-semibold"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold cursor-pointer"
+                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold cursor-pointer"
                     >
                       Publish Thread
                     </button>
@@ -437,40 +433,40 @@ export default function AlumniPage() {
               {/* Forum thread listings */}
               <div className="space-y-4">
                 {posts.map(post => (
-                  <div key={post.id} className="bg-card border border-border rounded-2xl p-5 hover:border-indigo-500/20 transition-all flex gap-4 items-start">
+                  <div key={post.id} className="bg-card border border-border rounded-xl p-5 hover:border-indigo-500/20 transition-all flex gap-4 items-start">
                     {/* Upvote side button */}
                     <button
                       onClick={() => handleUpvote(post.id)}
-                      className={`flex flex-col items-center gap-1 py-2 px-2.5 rounded-xl border cursor-pointer transition-colors ${
+                      className={`flex flex-col items-center gap-1 py-2 px-2.5 rounded-lg border cursor-pointer transition-colors ${
                         post.userUpvoted 
-                          ? 'bg-indigo-600/10 border-indigo-600/30 text-indigo-650 dark:text-indigo-400' 
+                          ? 'bg-indigo-600/10 border-indigo-600/30 text-indigo-600 dark:text-indigo-400' 
                           : 'bg-muted border-border text-muted-foreground hover:text-foreground'
                       }`}
                     >
                       <ThumbsUp className="w-3.5 h-3.5 fill-current" />
-                      <span className="text-[10px] font-extrabold">{post.upvotes}</span>
+                      <span className="text-[10px] font-bold">{post.upvotes}</span>
                     </button>
 
                     {/* Thread details */}
                     <div className="flex-1 min-w-0 space-y-2">
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-[9px] uppercase tracking-wider font-extrabold bg-indigo-500/10 text-indigo-700 border border-indigo-500/20 px-2 py-0.5 rounded-full dark:text-indigo-300">
+                          <span className="text-[9px] uppercase tracking-wider font-semibold bg-indigo-500/10 text-indigo-700 border border-indigo-500/20 px-2 py-0.5 rounded-full dark:text-indigo-300">
                             {post.category}
                           </span>
                           <span className="text-[10px] text-muted-foreground font-semibold">
                             Posted by {post.author} ({post.role}) • {post.timestamp}
                           </span>
                         </div>
-                        <h3 className="font-black text-foreground text-sm mt-1 leading-snug hover:text-indigo-600 transition-colors">
+                        <h3 className="font-semibold text-foreground text-sm mt-1 leading-snug hover:text-indigo-600 transition-colors">
                           {post.title}
                         </h3>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed font-semibold">
+                      <p className="text-xs text-muted-foreground leading-relaxed">
                         {post.content}
                       </p>
                       
-                      <div className="flex items-center gap-4 text-[10px] font-bold text-muted-foreground pt-1 border-t border-border/30">
+                      <div className="flex items-center gap-4 text-[10px] font-semibold text-muted-foreground pt-2 border-t border-border/30">
                         <span className="flex items-center gap-1 hover:text-indigo-600 cursor-pointer">
                           <MessageSquare className="w-3.5 h-3.5" />
                           {post.replies} Replies
@@ -490,26 +486,26 @@ export default function AlumniPage() {
           {activeTab === 'groups' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {STUDY_GROUPS.map((group, idx) => (
-                <div key={idx} className="bg-card border border-border rounded-2xl p-5 hover:border-indigo-500/30 transition-all flex flex-col justify-between space-y-4">
+                <div key={idx} className="bg-card border border-border rounded-xl p-5 hover:border-indigo-500/20 transition-all flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-1.5">
-                      <span className="text-[9px] uppercase tracking-wider font-extrabold text-indigo-600 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20 dark:text-indigo-300">
+                      <span className="text-[9px] uppercase tracking-wider font-semibold text-indigo-600 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20 dark:text-indigo-300">
                         {group.category}
                       </span>
-                      <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-0.5">
+                      <span className="text-[10px] font-semibold text-muted-foreground flex items-center gap-0.5">
                         <Globe className="w-3 h-3" /> {group.country}
                       </span>
                     </div>
-                    <h3 className="text-sm font-black text-foreground leading-snug">{group.name}</h3>
-                    <p className="text-[10px] text-emerald-600 font-extrabold uppercase mt-1">{group.members}</p>
-                    <p className="text-xs text-muted-foreground mt-2 leading-relaxed font-semibold">
+                    <h3 className="text-sm font-semibold text-foreground leading-snug">{group.name}</h3>
+                    <p className="text-[10px] text-emerald-600 font-semibold uppercase mt-1">{group.members}</p>
+                    <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                       {group.desc}
                     </p>
                   </div>
 
                   <button
                     onClick={() => alert(`Redirecting to live chat channel. Token generated: GP_STUDY_${idx + 2481}`)}
-                    className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
+                    className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer"
                   >
                     Join Study Channel &rarr;
                   </button>
@@ -524,59 +520,59 @@ export default function AlumniPage() {
         <div className="lg:col-span-4 space-y-6">
           
           {/* Peer review and mentorship stats */}
-          <div className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4">
+          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
             <div>
-              <h3 className="text-xs font-black text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4.5 h-4.5 text-indigo-650" />
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-4.5 h-4.5 text-indigo-600 dark:text-indigo-400" />
                 Community Metrics
               </h3>
-              <p className="text-[10px] text-muted-foreground font-semibold mt-0.5">Alumni connection insights</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Alumni connection insights</p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-center">
-              <div className="bg-muted/60 p-3 rounded-xl border border-border/50">
-                <span className="text-lg font-black text-indigo-600">89%</span>
-                <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider block mt-0.5">Acceptance Rate</span>
+              <div className="bg-muted/30 p-3 rounded-lg border border-border">
+                <span className="text-lg font-semibold text-indigo-600 dark:text-indigo-400">89%</span>
+                <span className="text-[9px] text-muted-foreground uppercase font-semibold tracking-wider block mt-0.5">Acceptance Rate</span>
               </div>
-              <div className="bg-muted/60 p-3 rounded-xl border border-border/50">
-                <span className="text-lg font-black text-emerald-600">1.2k+</span>
-                <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider block mt-0.5">Admitted Peers</span>
+              <div className="bg-muted/30 p-3 rounded-lg border border-border">
+                <span className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">1.2k+</span>
+                <span className="text-[9px] text-muted-foreground uppercase font-semibold tracking-wider block mt-0.5">Admitted Peers</span>
               </div>
             </div>
             
-            <p className="text-xs leading-relaxed text-muted-foreground font-semibold">
+            <p className="text-xs leading-relaxed text-muted-foreground">
               The easiest way to land admissions and relocation clarity is by reaching out directly to alumni on LinkedIn.
             </p>
 
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 text-indigo-850 dark:text-indigo-300 text-[10.5px] leading-relaxed font-semibold">
-              <span className="font-extrabold uppercase tracking-wide block mb-1">💡 Quick Pro Tip</span>
+            <div className="bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-3 text-indigo-800 dark:text-indigo-300 text-xs leading-relaxed">
+              <span className="font-semibold uppercase tracking-wider block text-[10px] mb-1">💡 Quick Pro Tip</span>
               When sending a connection request to seniors, always add a personalized 300-character note: 
-              <span className="italic block mt-1 bg-card/60 p-2 rounded border border-indigo-500/10">"Hi, I graduated from your undergrad college and recently got admitted to [Target Uni]! I would love to connect and ask a quick question about city housing."</span>
+              <span className="italic block mt-1.5 bg-card/60 p-2 rounded border border-indigo-500/10 dark:bg-card/40">"Hi, I graduated from your undergrad college and recently got admitted to [Target Uni]! I would love to connect and ask a quick question about city housing."</span>
             </div>
           </div>
 
           {/* Peer reviews list preview */}
-          <div className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4">
+          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
             <div>
-              <h3 className="text-xs font-black text-foreground uppercase tracking-wider">Top-Rated Mentors</h3>
-              <p className="text-[10px] text-muted-foreground font-semibold mt-0.5">Rated by applicants this intake</p>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">Top-Rated Mentors</h3>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Rated by applicants this intake</p>
             </div>
 
-            <div className="space-y-3 text-xs font-semibold">
+            <div className="space-y-3 text-xs">
               {[
                 { name: 'Neha Patel', rating: 5, review: 'Helped me review my SOP and suggested amazing pointers.' },
                 { name: 'Amit Sharma', rating: 5, review: 'Guided me on German blocked accounts step-by-step.' }
               ].map((m, idx) => (
-                <div key={idx} className="p-3 bg-muted/40 border border-border/40 rounded-xl space-y-1">
+                <div key={idx} className="p-3 bg-muted/30 border border-border rounded-lg space-y-1">
                   <div className="flex justify-between items-center">
-                    <span className="font-bold text-foreground">{m.name}</span>
+                    <span className="font-semibold text-foreground">{m.name}</span>
                     <div className="flex gap-0.5 text-amber-500">
                       {Array.from({ length: m.rating }).map((_, i) => (
                         <Star key={i} className="w-3 h-3 fill-current" />
                       ))}
                     </div>
                   </div>
-                  <p className="text-muted-foreground text-[10.5px] italic leading-normal font-medium">"{m.review}"</p>
+                  <p className="text-muted-foreground text-[10.5px] italic leading-normal">"{m.review}"</p>
                 </div>
               ))}
             </div>
@@ -589,39 +585,39 @@ export default function AlumniPage() {
       {/* Booking Mock Chat Modal popup */}
       {selectedAlumniForChat && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-card border border-border rounded-2xl p-6 max-w-md w-full shadow-lg space-y-4">
+          <div className="bg-card border border-border rounded-xl p-6 max-w-md w-full shadow-lg space-y-4">
             <div>
-              <h3 className="font-bold text-foreground text-sm">Schedule Mentorship Chat</h3>
+              <h3 className="font-semibold text-foreground text-sm">Schedule Mentorship Chat</h3>
               <p className="text-xs text-muted-foreground mt-0.5">Book a 1:1 video session with {selectedAlumniForChat.name}</p>
             </div>
 
-            <div className="p-3.5 bg-muted rounded-xl flex gap-3 items-center">
-              <GraduationCap className="w-8 h-8 text-indigo-650 shrink-0" />
-              <div className="text-xs font-semibold text-foreground/80 leading-normal">
-                <p className="font-bold text-foreground">{selectedAlumniForChat.gradUni}</p>
+            <div className="p-3.5 bg-muted/45 border border-border rounded-lg flex gap-3 items-center">
+              <GraduationCap className="w-8 h-8 text-indigo-600 dark:text-indigo-400 shrink-0" />
+              <div className="text-xs text-foreground/80 leading-normal">
+                <p className="font-semibold text-foreground">{selectedAlumniForChat.gradUni}</p>
                 <p className="text-[10.5px] text-muted-foreground mt-0.5">{selectedAlumniForChat.program}</p>
               </div>
             </div>
 
             <form onSubmit={handleScheduleChat} className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3 font-semibold">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider text-muted-foreground">Select Date</label>
+                  <label className="text-[9px] uppercase tracking-wider text-muted-foreground font-semibold">Select Date</label>
                   <input
                     type="date"
                     required
                     value={chatDate}
                     onChange={e => setChatDate(e.target.value)}
-                    className="w-full border border-border rounded-xl px-2.5 py-1.5 text-foreground bg-card focus:outline-indigo-500"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider text-muted-foreground">Select Time Slot</label>
+                  <label className="text-[9px] uppercase tracking-wider text-muted-foreground font-semibold">Select Time Slot</label>
                   <select
                     required
                     value={chatTime}
                     onChange={e => setChatTime(e.target.value)}
-                    className="w-full border border-border rounded-xl px-2.5 py-1.5 text-foreground bg-card focus:outline-indigo-500 cursor-pointer"
+                    className="w-full border border-border rounded-lg px-2.5 py-1.5 text-foreground bg-muted/30 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 cursor-pointer"
                   >
                     <option value="">Choose slot</option>
                     <option value="17:00">5:00 PM - 5:30 PM</option>
@@ -637,14 +633,14 @@ export default function AlumniPage() {
                   type="button"
                   onClick={() => setSelectedAlumniForChat(null)}
                   disabled={chatScheduled}
-                  className="px-4 py-2 border border-border text-muted-foreground hover:bg-muted rounded-xl cursor-pointer"
+                  className="px-4 py-2 border border-border text-muted-foreground hover:bg-muted rounded-lg cursor-pointer font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={chatScheduled}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold flex items-center justify-center gap-1 cursor-pointer"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold flex items-center justify-center gap-1 cursor-pointer"
                 >
                   {chatScheduled ? (
                     <>

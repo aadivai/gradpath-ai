@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { getSupabaseServer } from '@/lib/serverSupabase'
-import { scoreAndFilter } from '@/lib/recommender'
-import { askGemini } from '@/lib/gemini'
+import { recommendUniversities } from '@/lib/recommender'
+import { explainRecommendations } from '@/lib/ai/explainRecommendations'
 import { parseProfile } from '@/utils/profileMetadata'
+import type { ScoredUniversity } from '@/lib/recommender'
 
 export async function GET() {
   try {
@@ -11,10 +12,7 @@ export async function GET() {
     const userId = user?.id
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const [profileRes, universitiesRes] = await Promise.all([
-      supabase.from('profiles').select('*').eq('clerk_user_id', userId).single(),
-      supabase.from('universities').select('*'),
-    ])
+    const profileRes = await supabase.from('profiles').select('*').eq('clerk_user_id', userId).single()
 
     if (profileRes.error) {
       console.error('[Recommend API] Profile fetch error:', profileRes.error)
@@ -24,44 +22,63 @@ export async function GET() {
       return NextResponse.json({ error: 'Database error fetching profile: ' + profileRes.error.message }, { status: 500 })
     }
 
-    if (universitiesRes.error) {
-      console.error('[Recommend API] Universities fetch error:', universitiesRes.error)
-      return NextResponse.json({ error: 'Database error fetching universities: ' + universitiesRes.error.message }, { status: 500 })
-    }
-
     const profile = profileRes.data
-    const universities = universitiesRes.data
 
-    if (!profile)     return NextResponse.json({ error: 'Complete your profile first.' }, { status: 404 })
-    if (!universities) return NextResponse.json({ error: 'No university data found.' },   { status: 500 })
+    if (!profile) return NextResponse.json({ error: 'Complete your profile first.' }, { status: 404 })
 
     const parsedProfile = parseProfile(profile)
-    const { safe, moderate, ambitious, dream } = scoreAndFilter(universities, parsedProfile)
+    const { safe, moderate, ambitious, dream } = await recommendUniversities(profile.id, parsedProfile)
 
-    const prompt = `You are a warm, direct study abroad counselor for Indian students.
-Student profile:
-- Branch: ${parsedProfile.branch}
-- CGPA: ${parsedProfile.cgpa}/10
-- IELTS: ${parsedProfile.ielts_score ?? 'not taken'}
-- GRE: ${parsedProfile.gre_score ?? 'not taken'}
-- Research Exp: ${parsedProfile.research_experience_months ?? 0} months
-- Projects: ${parsedProfile.projects_count ?? 0} completed
-- Budget: ₹${parsedProfile.budget_inr?.toLocaleString() ?? 'not set'}/year
-- Countries: ${parsedProfile.preferred_countries?.join(', ') || 'no preference'}
-- Target Intake: ${parsedProfile.target_intake ?? 'not set'}
-- Climate Pref: ${parsedProfile.weather_preference ?? 'any'}
-- Career Goals: ${parsedProfile.career_goals ?? 'not set'}
-- Safe options found: ${safe.length}, Moderate: ${moderate.length}, Ambitious: ${ambitious.length}, Dream: ${dream.length}
+    // Combine all recommended universities to identify the top 5 by match score
+    const allUnis = [...safe, ...moderate, ...ambitious, ...dream]
+    const top5 = [...allUnis]
+      .sort((a, b) => b.matching_score - a.matching_score)
+      .slice(0, 5)
 
-Write exactly 3 short, punchy sentences: 
-1. Their strongest asset for studying abroad (highlighting research or projects if significant).
-2. Which tier/country to prioritize and why.
-3. One specific actionable tip (mentioning their career goals).
-No bullet points. No generic advice.`
+    // Generate explanations using Gemini
+    const explanationResult = await explainRecommendations(parsedProfile, top5)
 
-    const aiInsight = await askGemini(prompt)
+    // Map explanation results to a lookup Map
+    const explanationMap = new Map(
+      explanationResult.recommendations.map(r => [r.university, r])
+    )
 
-    return NextResponse.json({ safe, moderate, ambitious, dream, aiInsight, profile: parsedProfile })
+    // Helper to merge explanation fields back into ScoredUniversity
+    const mergeExplanation = (uni: ScoredUniversity) => {
+      const exp = explanationMap.get(uni.name)
+      return {
+        ...uni,
+        ai_explanation: exp?.explanation || null,
+        strengths: exp?.strengths || null,
+        considerations: exp?.considerations || null
+      }
+    }
+
+    const mergedSafe = safe.map(mergeExplanation)
+    const mergedModerate = moderate.map(mergeExplanation)
+    const mergedAmbitious = ambitious.map(mergeExplanation)
+    const mergedDream = dream.map(mergeExplanation)
+
+    // Formulate the flat recommendations array matching the requested response format
+    const flatRecommendations = [...mergedSafe, ...mergedModerate, ...mergedAmbitious, ...mergedDream]
+      .map(uni => ({
+        name: uni.name,
+        match_score: uni.matching_score,
+        recommendation: uni.why_recommended,
+        ai_explanation: uni.ai_explanation || `Calculated as a ${uni.tier} match. ${uni.why_recommended}`,
+        strengths: uni.strengths || ['Meets minimum entry thresholds', 'Matches preferred region'],
+        considerations: uni.considerations || ['Review specific visa deadlines']
+      }))
+
+    return NextResponse.json({
+      safe: mergedSafe,
+      moderate: mergedModerate,
+      ambitious: mergedAmbitious,
+      dream: mergedDream,
+      aiInsight: explanationResult.overview,
+      profile: parsedProfile,
+      recommendations: flatRecommendations
+    })
   } catch (err: any) {
     console.error('[Recommend API] Critical error:', err)
     return NextResponse.json({ error: 'Server recommendation error: ' + err.message }, { status: 500 })

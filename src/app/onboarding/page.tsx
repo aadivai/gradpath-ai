@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
@@ -137,7 +136,7 @@ export default function OnboardingPage() {
         { role: 'assistant', content: 'Oops! Something went wrong. Let me retry.' },
       ])
     } finally {
-      setLoading(false)
+      loading && setLoading(false)
     }
   }
 
@@ -178,34 +177,34 @@ export default function OnboardingPage() {
 
   return (
     <div className="h-screen bg-background text-foreground relative flex flex-col md:flex-row overflow-hidden font-sans">
-      {/* Premium Gradient Background Elements */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background Elements */}
+      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Profile Real-time Sync Sidebar */}
       <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-border bg-card/30 backdrop-blur-md p-6 flex flex-col justify-between shrink-0 relative z-10">
         <div>
           <div className="mb-6 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-indigo-500 animate-pulse" />
-            <h1 className="text-lg font-black tracking-tight">
+            <Sparkles className="w-4 h-4 text-indigo-500" />
+            <h1 className="text-lg font-bold tracking-tight">
               Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
             </h1>
           </div>
 
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">
+          <h2 className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-4">
             Your AI Profile
           </h2>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Country Card */}
-            <div className="p-3.5 rounded-xl border border-border/60 bg-muted/20 relative overflow-hidden group">
+            <div className="p-3 rounded-lg border border-border bg-muted/30 relative overflow-hidden">
               <div className="flex items-center gap-2.5">
                 <Globe className="w-4 h-4 text-indigo-500 shrink-0" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                  <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
                     Target Countries
                   </div>
-                  <div className="text-xs font-semibold mt-0.5">
+                  <div className="text-xs font-semibold mt-0.5 text-foreground">
                     {profile?.preferred_countries?.join(', ') || (
                       <span className="text-muted-foreground italic font-medium">Not set yet</span>
                     )}
@@ -215,14 +214,14 @@ export default function OnboardingPage() {
             </div>
 
             {/* GPA Card */}
-            <div className="p-3.5 rounded-xl border border-border/60 bg-muted/20 relative overflow-hidden">
+            <div className="p-3 rounded-lg border border-border bg-muted/30 relative overflow-hidden">
               <div className="flex items-center gap-2.5">
                 <Award className="w-4 h-4 text-indigo-500 shrink-0" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                  <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
                     Academic CGPA
                   </div>
-                  <div className="text-xs font-semibold mt-0.5">
+                  <div className="text-xs font-semibold mt-0.5 text-foreground">
                     {profile?.cgpa !== null ? (
                       `${profile?.cgpa} / 10`
                     ) : (
@@ -234,14 +233,14 @@ export default function OnboardingPage() {
             </div>
 
             {/* Branch Card */}
-            <div className="p-3.5 rounded-xl border border-border/60 bg-muted/20 relative overflow-hidden">
+            <div className="p-3 rounded-lg border border-border bg-muted/30 relative overflow-hidden">
               <div className="flex items-center gap-2.5">
                 <BookOpen className="w-4 h-4 text-indigo-500 shrink-0" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                  <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
                     Field of Study
                   </div>
-                  <div className="text-xs font-semibold mt-0.5 truncate">
+                  <div className="text-xs font-semibold mt-0.5 text-foreground truncate max-w-[180px]">
                     {profile?.branch || (
                       <span className="text-muted-foreground italic font-medium">Not set yet</span>
                     )}
@@ -251,14 +250,14 @@ export default function OnboardingPage() {
             </div>
 
             {/* Budget Card */}
-            <div className="p-3.5 rounded-xl border border-border/60 bg-muted/20 relative overflow-hidden">
+            <div className="p-3 rounded-lg border border-border bg-muted/30 relative overflow-hidden">
               <div className="flex items-center gap-2.5">
                 <DollarSign className="w-4 h-4 text-indigo-500 shrink-0" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                  <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
                     Maximum Budget
                   </div>
-                  <div className="text-xs font-semibold mt-0.5">
+                  <div className="text-xs font-semibold mt-0.5 text-foreground">
                     {profile?.budget_inr ? (
                       `₹ ${(profile.budget_inr / 100000).toFixed(1)} Lakhs`
                     ) : (
@@ -274,7 +273,7 @@ export default function OnboardingPage() {
         {/* Sync Indicator */}
         <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-semibold">
           <div className="flex items-center gap-1.5">
-            <div className={`w-2 h-2 rounded-full ${savingProgress ? 'bg-amber-500 animate-ping' : 'bg-emerald-500'}`} />
+            <div className={`w-2 h-2 rounded-full ${savingProgress ? 'bg-amber-500' : 'bg-emerald-500'}`} />
             <span>{savingProgress ? 'Syncing...' : 'Synced to Supabase'}</span>
           </div>
           <span className="text-indigo-600 dark:text-indigo-400 font-bold">{progress}% Complete</span>
@@ -284,7 +283,7 @@ export default function OnboardingPage() {
       {/* Main Conversational Space */}
       <div className="flex-1 flex flex-col relative z-10">
         {/* Onboarding Progress Bar */}
-        <div className="h-1.5 w-full bg-muted overflow-hidden shrink-0">
+        <div className="h-1 w-full bg-muted overflow-hidden shrink-0">
           <div 
             className="h-full bg-indigo-600 dark:bg-indigo-500 transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
@@ -294,11 +293,11 @@ export default function OnboardingPage() {
         {/* Completion View */}
         {onboardingCompleted ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-6 max-w-md mx-auto">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 animate-bounce">
-              <CheckCircle2 className="w-8 h-8" />
+            <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 mx-auto">
+              <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-foreground font-sans">You&apos;re All Set!</h2>
+              <h2 className="text-xl font-semibold text-foreground">You&apos;re All Set!</h2>
               <p className="text-sm text-muted-foreground mt-2 leading-relaxed font-medium">
                 Your profile has been created and synced with the operating system database. We are ready to suggest universities and scholarships.
               </p>
@@ -306,7 +305,7 @@ export default function OnboardingPage() {
             
             <button
               onClick={handleFinish}
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-500/10 cursor-pointer w-full justify-center transition-all mt-4"
+              className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg text-xs flex items-center gap-2 shadow-xs cursor-pointer w-full justify-center transition-all mt-4"
             >
               Enter Dashboard <ArrowRight className="w-4 h-4" />
             </button>
@@ -328,10 +327,10 @@ export default function OnboardingPage() {
                     {m.role === 'user' ? <User className="w-4 h-4" /> : <MessageSquare className="w-4 h-4" />}
                   </div>
                   
-                  <div className={`p-4 rounded-2xl text-xs font-semibold leading-relaxed border ${
+                  <div className={`p-3 rounded-lg text-xs font-semibold leading-relaxed border ${
                     m.role === 'user' 
-                      ? 'bg-indigo-600 text-white border-indigo-700 rounded-tr-none' 
-                      : 'bg-card text-foreground border-border/80 rounded-tl-none shadow-sm'
+                      ? 'bg-indigo-600 text-white border-indigo-750 rounded-tr-none' 
+                      : 'bg-card text-foreground border-border/80 rounded-tl-none shadow-xs'
                   }`}>
                     {m.content}
                   </div>
@@ -342,7 +341,7 @@ export default function OnboardingPage() {
                   <div className="w-8 h-8 rounded-full bg-muted/40 text-indigo-600 border border-border/80 flex items-center justify-center animate-spin">
                     <Loader2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   </div>
-                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider animate-pulse">Aria is thinking...</span>
+                  <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Aria is thinking...</span>
                 </div>
               )}
               <div ref={chatEndRef} />
@@ -350,13 +349,13 @@ export default function OnboardingPage() {
 
             {/* Input Options / Suggestions */}
             {suggestions.length > 0 && !loading && (
-              <div className="px-6 py-2 flex flex-wrap gap-2 shrink-0 border-t border-border/40 bg-card/10">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider self-center mr-1">Quick reply:</span>
+              <div className="px-6 py-2.5 flex flex-wrap gap-2 shrink-0 border-t border-border/40 bg-card/10">
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider self-center mr-1">Quick reply:</span>
                 {suggestions.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSend(sug)}
-                    className="py-1.5 px-3 bg-muted hover:bg-muted/80 border border-border/60 text-xs font-bold rounded-lg cursor-pointer transition-all hover:scale-[1.02] text-foreground"
+                    className="py-1.5 px-3 bg-muted/40 hover:bg-muted/70 border border-border text-xs font-medium rounded-lg cursor-pointer transition-colors text-foreground"
                   >
                     {sug}
                   </button>
@@ -380,7 +379,7 @@ export default function OnboardingPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Tell Aria about your goals, GPA, or budget..."
-                  className="w-full pl-4 pr-12 py-3.5 border border-border rounded-xl text-xs font-semibold bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all disabled:opacity-75"
+                  className="w-full pl-4 pr-12 py-3 border border-border rounded-lg text-xs bg-card text-foreground focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600 focus-visible:border-indigo-600 dark:focus-visible:ring-indigo-500 transition-all disabled:opacity-75"
                 />
                 <button
                   type="submit"

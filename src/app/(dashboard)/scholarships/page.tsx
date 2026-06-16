@@ -26,6 +26,8 @@ import {
   Square,
   BellRing
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/page-header'
+import { SkeletonCard } from '@/components/ui/skeleton'
 
 const TYPE_LABELS: Record<string, string> = {
   merit:      'Merit',
@@ -35,10 +37,10 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  merit:      'bg-indigo-50/70   text-indigo-700   border-indigo-100/50 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20',
-  need:       'bg-amber-50/70    text-amber-700    border-amber-100/50 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-500/20',
-  government: 'bg-emerald-50/70  text-emerald-700  border-emerald-100/50 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-500/20',
-  university: 'bg-purple-50/70   text-purple-700   border-purple-100/50 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-500/20',
+  merit:      'bg-indigo-500/5 text-indigo-650 dark:text-indigo-400 border-indigo-500/10 dark:border-indigo-500/20',
+  need:       'bg-amber-500/5 text-amber-600 dark:text-amber-400 border-amber-500/10 dark:border-amber-500/20',
+  government: 'bg-emerald-500/5 text-emerald-650 dark:text-emerald-450 border-emerald-500/10 dark:border-emerald-550/20',
+  university: 'bg-purple-500/5 text-purple-650 dark:text-purple-400 border-purple-500/10 dark:border-purple-500/20',
 }
 
 const COUNTRIES = ['All', 'India', 'USA', 'Canada', 'United Kingdom', 'Germany', 'Ireland', 'Netherlands', 'France', 'Italy', 'Spain', 'Sweden', 'Switzerland', 'Australia', 'New Zealand', 'Singapore', 'Japan', 'South Korea', 'UAE']
@@ -233,10 +235,10 @@ export default function ScholarshipsPage() {
   const matchProbability = calculateMatchProb()
 
   const getMatchGrade = (prob: number) => {
-    if (prob >= 85) return { label: 'Highly Recommended', color: 'text-emerald-700 bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-500/20', dot: 'bg-emerald-500', barColor: 'bg-emerald-500' }
-    if (prob >= 70) return { label: 'Recommended', color: 'text-indigo-700 bg-indigo-50 border-indigo-100 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20', dot: 'bg-indigo-500', barColor: 'bg-indigo-500' }
-    if (prob >= 50) return { label: 'Competitive', color: 'text-amber-700 bg-amber-50 border-amber-100 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-500/20', dot: 'bg-amber-500', barColor: 'bg-amber-500' }
-    return { label: 'Stretch', color: 'text-rose-700 bg-rose-50 border-rose-100 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-500/20', dot: 'bg-rose-500', barColor: 'bg-rose-500' }
+    if (prob >= 85) return { label: 'Highly Recommended', color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/5 border-emerald-500/10 dark:border-emerald-500/20', dot: 'bg-emerald-500', barColor: 'bg-emerald-500' }
+    if (prob >= 70) return { label: 'Recommended', color: 'text-indigo-650 dark:text-indigo-400 bg-indigo-500/5 border-indigo-500/10 dark:border-indigo-500/20', dot: 'bg-indigo-500', barColor: 'bg-indigo-500' }
+    if (prob >= 50) return { label: 'Competitive', color: 'text-amber-600 dark:text-amber-500 bg-amber-500/5 border-amber-500/10 dark:border-amber-500/20', dot: 'bg-amber-500', barColor: 'bg-amber-500' }
+    return { label: 'Stretch', color: 'text-rose-600 dark:text-rose-400 bg-rose-500/5 border-rose-500/10 dark:border-rose-500/20', dot: 'bg-rose-500', barColor: 'bg-rose-500' }
   }
 
   const matchGrade = getMatchGrade(matchProbability)
@@ -300,26 +302,22 @@ export default function ScholarshipsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
+    <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
       {/* Title Header */}
-      <div>
-        <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
-          <Award className="w-6 h-6 text-indigo-600" />
-          AI Scholarship Intelligence
-        </h1>
-        <p className="text-xs text-muted-foreground mt-1">
-          Explore international funding schemes, evaluate eligibility grades, and sync application checklists.
-        </p>
-      </div>
+      <PageHeader
+        icon={Award}
+        title="AI Scholarship Intelligence"
+        subtitle="Explore international funding schemes, evaluate eligibility grades, and sync application checklists."
+      />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left Side: Directory & List */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4">
+        <div className="lg:col-span-7 space-y-5">
+          <div className="bg-card border border-border rounded-xl p-5 space-y-4 shadow-xs">
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="w-full flex items-center justify-between text-xs font-bold text-foreground uppercase tracking-wider cursor-pointer select-none outline-none"
+              className="w-full flex items-center justify-between text-xs font-semibold text-foreground uppercase tracking-wider cursor-pointer select-none outline-none"
             >
               <span className="flex items-center gap-1.5">
                 <Filter className="w-4 h-4 text-indigo-600" />
@@ -327,28 +325,28 @@ export default function ScholarshipsPage() {
               </span>
               <span className="text-muted-foreground flex items-center gap-2">
                 {!showFilters && (
-                  <span className="text-[10px] lowercase font-semibold text-indigo-650 bg-indigo-50/50 border border-indigo-100/50 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20 px-2.5 py-0.5 rounded-md">
+                  <span className="text-[10px] lowercase font-semibold text-indigo-650 bg-indigo-500/5 border border-indigo-500/10 dark:border-indigo-500/20 px-2.5 py-0.5 rounded-md">
                     {country} • {type === 'All' ? 'all classes' : TYPE_LABELS[type]}
                   </span>
                 )}
-                {showFilters ? <ChevronUp className="w-4 h-4 text-indigo-600" /> : <ChevronDown className="w-4 h-4 text-indigo-600" />}
+                {showFilters ? <ChevronUp className="w-4 h-4 text-indigo-600 animate-in duration-200" /> : <ChevronDown className="w-4 h-4 text-indigo-600 animate-in duration-200" />}
               </span>
             </button>
 
             {showFilters && (
-              <div className="space-y-4 pt-4 border-t border-border/40 animate-fade-in">
+              <div className="space-y-4 pt-4 border-t border-border/50 animate-in fade-in duration-200">
                 {/* Country Selector */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Country</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Country</label>
                   <div className="flex flex-wrap gap-1.5">
                     {COUNTRIES.map(c => (
                       <button
                         key={c}
                         onClick={() => setCountry(c)}
-                        className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
+                        className={`px-3 py-1.5 rounded-xl text-[11px] font-medium border transition-colors cursor-pointer ${
                           country === c
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                            : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                            : 'bg-card text-muted-foreground border-border hover:border-muted-foreground/25'
                         }`}
                       >
                         {c}
@@ -359,16 +357,16 @@ export default function ScholarshipsPage() {
 
                 {/* Type Selector */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Scholarship Class</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Scholarship Class</label>
                   <div className="flex flex-wrap gap-1.5">
                     {TYPES.map(t => (
                       <button
                         key={t}
                         onClick={() => setType(t)}
-                        className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
+                        className={`px-3 py-1.5 rounded-xl text-[11px] font-medium border transition-colors cursor-pointer ${
                           type === t
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                            : 'bg-card text-muted-foreground border-border hover:border-indigo-500/30'
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                            : 'bg-card text-muted-foreground border-border hover:border-muted-foreground/25'
                         }`}
                       >
                         {t === 'All' ? 'All Types' : TYPE_LABELS[t]}
@@ -383,24 +381,25 @@ export default function ScholarshipsPage() {
           {/* Results Listings */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-[11px] text-muted-foreground font-bold uppercase tracking-wider">
-                Available Programs ({filtered.length})
+              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+                Available Opportunities ({filtered.length})
               </p>
               {profile && (
-                <span className="text-[10px] font-semibold text-indigo-650 bg-indigo-50 border border-indigo-100 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-500/20 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-medium text-indigo-650 dark:text-indigo-400 bg-indigo-500/5 border border-indigo-550/10 px-2 py-0.5 rounded-full">
                   Profile CGPA: {profile.cgpa ?? 'None'}
                 </span>
               )}
             </div>
 
             {loading ? (
-              <div className="animate-pulse grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="bg-card border border-border rounded-2xl h-44" />
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
               </div>
             ) : filtered.length === 0 ? (
-              <div className="text-center py-12 bg-card border border-border/40 rounded-2xl">
+              <div className="text-center py-12 bg-card border border-border rounded-xl shadow-xs">
                 <p className="text-xs text-muted-foreground">No funding opportunities found for the selected filters.</p>
               </div>
             ) : (
@@ -414,48 +413,48 @@ export default function ScholarshipsPage() {
                     <div 
                       key={s.id} 
                       onClick={() => handleSelectScholarship(s)}
-                      className={`glass-card rounded-2xl p-5 border cursor-pointer transition-all duration-300 relative flex flex-col justify-between group ${
+                      className={`bg-card rounded-xl p-5 border cursor-pointer transition-all duration-200 relative flex flex-col justify-between group shadow-xs ${
                         isSelected 
-                          ? 'border-indigo-600 ring-2 ring-indigo-100 bg-indigo-50/20' 
-                          : 'border-border hover:border-indigo-500/30 bg-card'
+                          ? 'border-indigo-600 dark:border-indigo-500 bg-indigo-500/5 dark:bg-indigo-950/10 ring-1 ring-indigo-600/10' 
+                          : 'border-border hover:border-muted-foreground/30'
                       }`}
                     >
                       <div>
                         <div className="flex items-start justify-between gap-3 mb-2">
-                          <p className="text-xs font-bold text-foreground leading-snug group-hover:text-indigo-600 transition-colors">
+                          <p className="text-xs font-semibold text-foreground leading-snug group-hover:text-indigo-650 dark:group-hover:text-indigo-400 transition-colors">
                             {s.name}
                           </p>
-                          <span className={`shrink-0 text-[9px] font-bold px-2 py-0.5 rounded-full border ${TYPE_COLORS[s.type]}`}>
+                          <span className={`shrink-0 text-[9px] font-semibold px-2 py-0.5 rounded-full border ${TYPE_COLORS[s.type]}`}>
                             {TYPE_LABELS[s.type]}
                           </span>
                         </div>
 
                         {/* Country & AI status row */}
-                        <div className="flex items-center justify-between mb-3 text-[10px] font-semibold">
+                        <div className="flex items-center justify-between mb-3 text-[10px] font-medium">
                           <span className="text-muted-foreground uppercase tracking-wider">{s.country ?? 'International'}</span>
-                          <span className={`px-2 py-0.5 rounded font-black text-[9px] uppercase tracking-wider ${status.color}`}>
+                          <span className={`px-2 py-0.5 rounded text-[9px] uppercase tracking-wider ${status.color}`}>
                             {status.label}
                           </span>
                         </div>
 
                         {s.description && (
-                          <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed font-semibold">
+                          <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed font-normal">
                             {s.description}
                           </p>
                         )}
                       </div>
 
-                      <div className="space-y-3 pt-3 border-t border-border/40">
+                      <div className="space-y-3 pt-3 border-t border-border/50">
                         <div className="grid grid-cols-2 gap-2 text-[11px]">
                           <div>
-                            <span className="text-muted-foreground block font-medium">Value</span>
-                            <span className="font-bold text-foreground/80">
+                            <span className="text-muted-foreground block font-normal text-[10px]">Value</span>
+                            <span className="font-semibold text-foreground/80">
                               {s.is_fully_funded ? 'Fully Funded' : amtL ? `₹${amtL} Lakhs` : 'Varies'}
                             </span>
                           </div>
                           <div>
-                            <span className="text-muted-foreground block font-medium">Min CGPA</span>
-                            <span className="font-bold text-foreground/80">
+                            <span className="text-muted-foreground block font-normal text-[10px]">Min CGPA</span>
+                            <span className="font-semibold text-foreground/80">
                               {s.min_cgpa ? `${s.min_cgpa}/10` : 'None'}
                             </span>
                           </div>
@@ -468,7 +467,7 @@ export default function ScholarshipsPage() {
                               target="_blank" 
                               rel="noopener noreferrer"
                               onClick={e => e.stopPropagation()}
-                              className="text-[10px] font-bold text-indigo-600 flex items-center gap-1 hover:underline"
+                              className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 hover:underline cursor-pointer"
                             >
                               Details <ExternalLink className="w-3 h-3" />
                             </a>
@@ -476,7 +475,7 @@ export default function ScholarshipsPage() {
                             <span className="text-[10px] text-muted-foreground">Institutional Apply</span>
                           )}
                           
-                          <button className="text-[10px] font-bold text-muted-foreground group-hover:text-indigo-600 flex items-center gap-0.5">
+                          <button className="text-[10px] font-semibold text-muted-foreground group-hover:text-indigo-650 dark:group-hover:text-indigo-400 flex items-center gap-0.5 cursor-pointer">
                             Details & Calculator <ChevronRight className="w-3 h-3" />
                           </button>
                         </div>
@@ -493,29 +492,29 @@ export default function ScholarshipsPage() {
         <div className="lg:col-span-5 space-y-6">
           
           {/* Main Predictor Widget Card */}
-          <div className="glass-card rounded-2xl p-6 border border-border bg-card space-y-6">
+          <div className="bg-card border border-border rounded-xl p-6 space-y-6 shadow-xs">
             <div>
-              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <ShieldCheck className="w-4.5 h-4.5 text-indigo-600" />
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 AI Predictor & Calculator
               </h3>
-              <p className="text-[11px] text-muted-foreground mt-0.5 font-medium">
+              <p className="text-[11px] text-muted-foreground mt-0.5 font-normal">
                 Verify target academic fit and map remaining out-of-pocket costs.
               </p>
             </div>
 
             {/* Target Select Indicator */}
             {activeScholarship ? (
-              <div className="bg-muted border border-border rounded-xl p-3 flex flex-col gap-1">
-                <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Target Award</span>
-                <span className="text-xs font-bold text-foreground line-clamp-1">{activeScholarship.name}</span>
-                <div className="flex items-center justify-between text-[10px] text-muted-foreground mt-1">
+              <div className="bg-muted/40 border border-border/50 rounded-xl p-3 flex flex-col gap-1">
+                <span className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">Target Award</span>
+                <span className="text-xs font-semibold text-foreground line-clamp-1">{activeScholarship.name}</span>
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground mt-1 font-normal">
                   <span>Requirement: Min CGPA {activeScholarship.min_cgpa ?? 'Not Specified'}</span>
                   <span>Funding: {meta?.funding_percent ?? 50}%</span>
                 </div>
               </div>
             ) : (
-              <div className="bg-rose-50 border border-rose-100 rounded-xl p-3 text-xs text-rose-700">
+              <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-3 text-xs text-rose-600 dark:text-rose-400">
                 Select a scholarship from the list to get started.
               </div>
             )}
@@ -523,10 +522,10 @@ export default function ScholarshipsPage() {
             {/* Inputs sliders & inputs */}
             <div className="space-y-4">
               {/* Sliders for cost */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground font-bold">Annual Tuition Fee (USD)</span>
-                  <span className="text-indigo-600 font-bold">${tuitionFee.toLocaleString()} <span className="text-muted-foreground font-normal">({Math.round(tuitionFee*83/100000)}L INR)</span></span>
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs font-normal">
+                  <span className="text-muted-foreground">Annual Tuition Fee (USD)</span>
+                  <span className="text-indigo-650 dark:text-indigo-400 font-semibold">${tuitionFee.toLocaleString()} <span className="text-muted-foreground font-normal">({Math.round(tuitionFee*83/100000)}L INR)</span></span>
                 </div>
                 <input
                   type="range"
@@ -535,14 +534,14 @@ export default function ScholarshipsPage() {
                   step="1000"
                   value={tuitionFee}
                   onChange={e => setTuitionFee(Number(e.target.value))}
-                  className="w-full accent-indigo-600 cursor-pointer h-1.5 bg-muted rounded-lg appearance-none"
+                  className="w-full accent-indigo-600 cursor-pointer h-1 bg-muted rounded-lg appearance-none"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground font-bold">Annual Living Expenses (USD)</span>
-                  <span className="text-indigo-600 font-bold">${livingCost.toLocaleString()} <span className="text-muted-foreground font-normal">({Math.round(livingCost*83/100000)}L INR)</span></span>
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs font-normal">
+                  <span className="text-muted-foreground">Annual Living Expenses (USD)</span>
+                  <span className="text-indigo-650 dark:text-indigo-400 font-semibold">${livingCost.toLocaleString()} <span className="text-muted-foreground font-normal">({Math.round(livingCost*83/100000)}L INR)</span></span>
                 </div>
                 <input
                   type="range"
@@ -551,14 +550,14 @@ export default function ScholarshipsPage() {
                   step="500"
                   value={livingCost}
                   onChange={e => setLivingCost(Number(e.target.value))}
-                  className="w-full accent-indigo-600 cursor-pointer h-1.5 bg-muted rounded-lg appearance-none"
+                  className="w-full accent-indigo-600 cursor-pointer h-1 bg-muted rounded-lg appearance-none"
                 />
               </div>
 
               {/* Student scores parameters */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Your CGPA</label>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Your CGPA</label>
                   <input
                     type="number"
                     min="1"
@@ -566,11 +565,11 @@ export default function ScholarshipsPage() {
                     step="0.1"
                     value={studentCgpa}
                     onChange={e => setStudentCgpa(parseFloat(e.target.value) || 0)}
-                    className="w-full px-3 py-2 border border-border rounded-xl text-xs font-semibold focus:outline-indigo-500 text-foreground bg-card"
+                    className="w-full px-3.5 py-2 border border-border rounded-xl text-sm font-medium text-foreground bg-background focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 transition-shadow"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Your IELTS Score</label>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Your IELTS Score</label>
                   <input
                     type="number"
                     min="4"
@@ -578,44 +577,44 @@ export default function ScholarshipsPage() {
                     step="0.5"
                     value={studentIelts}
                     onChange={e => setStudentIelts(parseFloat(e.target.value) || 0)}
-                    className="w-full px-3 py-2 border border-border rounded-xl text-xs font-semibold focus:outline-indigo-500 text-foreground bg-card"
+                    className="w-full px-3.5 py-2 border border-border rounded-xl text-sm font-medium text-foreground bg-background focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 transition-shadow"
                   />
                 </div>
               </div>
             </div>
 
             {/* Calculations and predictions widgets */}
-            <div className="border-t border-border/40 pt-4 space-y-4">
+            <div className="border-t border-border/50 pt-4 space-y-4">
               
               {/* Match Probability Score */}
               {activeScholarship && (
-                <div className="bg-muted/50 border border-border/40 rounded-xl p-4 flex flex-col gap-4">
+                <div className="bg-muted/40 border border-border/50 rounded-xl p-4 flex flex-col gap-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">Predictor Grade</span>
-                      <span className="text-xs font-bold text-foreground/80">Overall profile evaluation</span>
+                      <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider block">Predictor Grade</span>
+                      <span className="text-xs font-semibold text-foreground/80">Overall profile evaluation</span>
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${matchGrade.color}`}>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${matchGrade.color}`}>
                       {matchGrade.label}
                     </span>
                   </div>
 
                   {/* Meter Bar */}
-                  <div className="space-y-1">
-                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                  <div className="space-y-2">
+                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                       <div 
                         className={`h-full ${matchGrade.barColor} transition-all duration-700 ease-out`}
                         style={{ width: `${matchProbability}%` }}
                       />
                     </div>
-                    <div className="flex justify-between text-[9px] text-muted-foreground font-bold">
+                    <div className="flex justify-between text-[9px] text-muted-foreground font-medium">
                       <span>{matchProbability}% Match Confidence</span>
                       {activeScholarship.min_cgpa && studentCgpa < activeScholarship.min_cgpa ? (
                         <span className="text-rose-500 flex items-center gap-0.5">
                           <AlertTriangle className="w-2.5 h-2.5" /> GPA below minimum
                         </span>
                       ) : (
-                        <span className="text-emerald-600 flex items-center gap-0.5">
+                        <span className="text-emerald-600 dark:text-emerald-450 flex items-center gap-0.5">
                           <CheckCircle className="w-2.5 h-2.5" /> Meets GPA cut
                         </span>
                       )}
@@ -623,31 +622,31 @@ export default function ScholarshipsPage() {
                   </div>
 
                   {/* Advanced Score Parameters (Eligibility Score, ROI, Visa) */}
-                  <div className="border-t border-border/40 pt-3.5 space-y-3">
+                  <div className="border-t border-border/50 pt-3.5 space-y-3">
                     <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-1.5">
-                        <Percent className="w-3.5 h-3.5 text-indigo-500" />
-                        <span className="text-muted-foreground font-semibold">Eligibility Score</span>
+                        <Percent className="w-4 h-4 text-muted-foreground/60" />
+                        <span className="text-muted-foreground font-normal">Eligibility Score</span>
                       </div>
-                      <span className="font-bold text-foreground">{eligibilityScore} / 100</span>
+                      <span className="font-semibold text-foreground">{eligibilityScore} / 100</span>
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-1.5">
-                        <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
-                        <span className="text-muted-foreground font-semibold">Estimated ROI</span>
+                        <TrendingUp className="w-4 h-4 text-muted-foreground/60" />
+                        <span className="text-muted-foreground font-normal">Estimated ROI</span>
                       </div>
-                      <span className="font-bold text-foreground text-right text-[11px] max-w-[200px] truncate" title={estimatedRoi}>
+                      <span className="font-semibold text-foreground text-right text-[11px] max-w-[200px] truncate" title={estimatedRoi}>
                         {estimatedRoi}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-1.5">
-                        <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
-                        <span className="text-muted-foreground font-semibold">Visa Compatibility</span>
+                        <ShieldCheck className="w-4 h-4 text-muted-foreground/60" />
+                        <span className="text-muted-foreground font-normal">Visa Compatibility</span>
                       </div>
-                      <span className="font-bold text-foreground text-right text-[11px] max-w-[200px] truncate" title={visaCompatibility}>
+                      <span className="font-semibold text-foreground text-right text-[11px] max-w-[200px] truncate" title={visaCompatibility}>
                         {visaCompatibility}
                       </span>
                     </div>
@@ -656,50 +655,50 @@ export default function ScholarshipsPage() {
               )}
 
               {/* Funding Breakdowns */}
-              <div className="space-y-2.5">
-                <h4 className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Funding Statement</h4>
+              <div className="space-y-3">
+                <h4 className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Funding Statement</h4>
 
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="bg-muted border border-border/40 rounded-xl p-3 text-center">
-                    <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider block">Gross Cost</span>
-                    <span className="text-xs font-bold text-foreground">${totalCost.toLocaleString()}</span>
+                  <div className="bg-muted/40 border border-border/50 rounded-xl p-3 text-center shadow-xs">
+                    <span className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider block">Gross Cost</span>
+                    <span className="text-xs font-semibold text-foreground">${totalCost.toLocaleString()}</span>
                     <span className="text-[9px] text-muted-foreground block mt-0.5">₹{Math.round(totalCostINR/100000)}L</span>
                   </div>
 
-                  <div className="bg-indigo-50/50 border border-indigo-100/40 rounded-xl p-3 text-center">
-                    <span className="text-[9px] text-indigo-400 font-bold uppercase tracking-wider block">Scholarship</span>
-                    <span className="text-xs font-bold text-indigo-750">-${scholarshipAmount.toLocaleString()}</span>
+                  <div className="bg-indigo-500/5 border border-indigo-500/10 rounded-xl p-3 text-center shadow-xs">
+                    <span className="text-[9px] text-indigo-400 font-medium uppercase tracking-wider block">Scholarship</span>
+                    <span className="text-xs font-semibold text-indigo-650 dark:text-indigo-400">-${scholarshipAmount.toLocaleString()}</span>
                     <span className="text-[9px] text-indigo-400 block mt-0.5">₹{Math.round(scholarshipAmountINR/100000)}L</span>
                   </div>
 
-                  <div className="bg-emerald-50 border border-emerald-100/40 rounded-xl p-3 text-center">
-                    <span className="text-[9px] text-emerald-500 font-bold uppercase tracking-wider block">Net Liability</span>
-                    <span className="text-xs font-bold text-emerald-700">${netGapVal.toLocaleString()}</span>
+                  <div className="bg-emerald-500/5 border border-emerald-500/10 dark:border-emerald-500/20 rounded-xl p-3 text-center shadow-xs">
+                    <span className="text-[9px] text-emerald-500 font-medium uppercase tracking-wider block">Net Liability</span>
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-450">${netGapVal.toLocaleString()}</span>
                     <span className="text-[9px] text-emerald-500 block mt-0.5">₹{Math.round(netGapINR/100000)}L</span>
                   </div>
                 </div>
 
                 {/* Net Cost Warning/Recommendation Alert */}
                 {profile && profile.budget_inr && (
-                  <div className={`border rounded-xl p-3 text-xs leading-relaxed flex gap-2.5 ${
+                  <div className={`border rounded-xl p-3.5 text-xs leading-relaxed flex gap-2.5 ${
                     netGapINR > profile.budget_inr
-                      ? 'bg-rose-50 border-rose-100 text-rose-800'
-                      : 'bg-emerald-50 border-emerald-100 text-emerald-800'
+                      ? 'bg-rose-500/5 border-rose-500/10 text-rose-800 dark:text-rose-300'
+                      : 'bg-emerald-500/5 border-emerald-500/10 text-emerald-800 dark:text-emerald-300'
                   }`}>
                     {netGapINR > profile.budget_inr ? (
                       <>
-                        <AlertTriangle className="w-4.5 h-4.5 text-rose-500 shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold">Estimated deficit of ₹{Math.round((netGapINR - profile.budget_inr)/100000)}L</p>
-                          <p className="text-[11px] mt-0.5 text-rose-600">The net cost exceeds your declared budget profile (₹{Math.round(profile.budget_inr/100000)}L). We recommend reviewing part-time job policies or need-based aid.</p>
+                          <p className="font-semibold">Estimated deficit of ₹{Math.round((netGapINR - profile.budget_inr)/100000)}L</p>
+                          <p className="text-[11px] mt-0.5 text-rose-700/90 dark:text-rose-400/90 font-normal">The net cost exceeds your declared budget profile (₹{Math.round(profile.budget_inr/100000)}L). We recommend reviewing part-time job policies or need-based aid.</p>
                         </div>
                       </>
                     ) : (
                       <>
-                        <CheckCircle className="w-4.5 h-4.5 text-emerald-500 shrink-0 mt-0.5" />
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold">Fits within budget profile</p>
-                          <p className="text-[11px] mt-0.5 text-emerald-600">The net out-of-pocket costs are within your target budget threshold of ₹{Math.round(profile.budget_inr/100000)}L.</p>
+                          <p className="font-semibold">Fits within budget profile</p>
+                          <p className="text-[11px] mt-0.5 text-emerald-700/90 dark:text-emerald-400/90 font-normal">The net out-of-pocket costs are within your target budget threshold of ₹{Math.round(profile.budget_inr/100000)}L.</p>
                         </div>
                       </>
                     )}
@@ -711,23 +710,23 @@ export default function ScholarshipsPage() {
 
           {/* New 3.0 Documents Required & Checklist section */}
           {activeScholarship && meta && (
-            <div className="glass-card rounded-2xl p-5 border border-border bg-card space-y-4">
+            <div className="bg-card border border-border rounded-xl p-5 space-y-4 shadow-xs">
               <div>
-                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                  <FileText className="w-4 h-4 text-indigo-600" />
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                  <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   Application Checklist & Docs
                 </h3>
-                <p className="text-[10px] text-muted-foreground mt-0.5 font-semibold">
-                  Deadline: <span className="text-indigo-600 dark:text-indigo-400 font-bold">{meta.deadline}</span>
+                <p className="text-[10px] text-muted-foreground mt-0.5 font-normal">
+                  Deadline: <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{meta.deadline}</span>
                 </p>
               </div>
 
               {/* Documents lists */}
-              <div className="space-y-1 text-xs">
-                <span className="text-[9px] uppercase font-bold text-muted-foreground block mb-1">Required Dossier Documents</span>
+              <div className="space-y-1.5 text-xs font-normal">
+                <span className="text-[9px] uppercase font-medium text-muted-foreground block mb-1">Required Dossier Documents</span>
                 <div className="flex flex-wrap gap-1.5">
                   {meta.documents_required.map(doc => (
-                    <span key={doc} className="px-2.5 py-1 bg-muted border border-border rounded-lg text-foreground font-semibold text-[10px]">
+                    <span key={doc} className="px-2.5 py-1 bg-muted/50 border border-border rounded-lg text-foreground font-medium text-[10px]">
                       {doc}
                     </span>
                   ))}
@@ -735,8 +734,8 @@ export default function ScholarshipsPage() {
               </div>
 
               {/* Checklist items */}
-              <div className="space-y-2.5 pt-2 border-t border-border/40">
-                <span className="text-[9px] uppercase font-bold text-muted-foreground block">Prep Tasks</span>
+              <div className="space-y-2.5 pt-2 border-t border-border/50">
+                <span className="text-[9px] uppercase font-medium text-muted-foreground block">Prep Tasks</span>
                 <div className="space-y-2">
                   {meta.checklist.map(item => {
                     const checkedList = checkedItems[activeScholarship.id] || []
@@ -745,7 +744,7 @@ export default function ScholarshipsPage() {
                       <button
                         key={item}
                         onClick={() => toggleChecklist(activeScholarship.id, item)}
-                        className="w-full text-left flex items-start gap-2 text-xs font-medium text-foreground hover:text-indigo-650 transition-colors group cursor-pointer"
+                        className="w-full text-left flex items-start gap-2 text-xs text-foreground hover:text-indigo-650 transition-colors group cursor-pointer"
                       >
                         <span className="shrink-0 text-indigo-600 dark:text-indigo-400 mt-0.5">
                           {checked ? (
@@ -754,7 +753,7 @@ export default function ScholarshipsPage() {
                             <Square className="w-4 h-4 text-muted-foreground/60 group-hover:text-indigo-500" />
                           )}
                         </span>
-                        <span className={checked ? 'line-through text-muted-foreground' : 'text-foreground/80'}>
+                        <span className={checked ? 'line-through text-muted-foreground' : 'text-foreground/80 font-normal'}>
                           {item}
                         </span>
                       </button>
@@ -770,9 +769,9 @@ export default function ScholarshipsPage() {
                   alert(`Auto-reminder registered! You will receive email alerts 15 days before the ${activeScholarship.name} deadline (${meta.deadline}).`)
                 }}
                 disabled={reminderSet}
-                className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 border cursor-pointer ${
+                className={`w-full py-2.5 rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 border cursor-pointer ${
                   reminderSet 
-                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20' 
+                    ? 'bg-emerald-500/5 text-emerald-650 dark:text-emerald-400 border-emerald-500/10 dark:border-emerald-500/20' 
                     : 'bg-card text-foreground border-border hover:bg-muted'
                 }`}
               >
@@ -784,15 +783,15 @@ export default function ScholarshipsPage() {
           )}
 
           {/* Differentiator / Transparency Insights Box */}
-          <div className="glass-card rounded-2xl p-5 border border-border space-y-3 bg-amber-50/40 text-amber-800 dark:bg-amber-950/20 dark:text-amber-300">
-            <h4 className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-              <TrendingDown className="w-4.5 h-4.5 text-amber-600 dark:text-amber-500" />
+          <div className="bg-amber-500/5 border border-amber-500/10 dark:border-amber-500/20 rounded-xl p-5 text-amber-800 dark:text-amber-300 space-y-3">
+            <h4 className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <TrendingDown className="w-4 h-4 text-amber-600 dark:text-amber-500" />
               Agent Transparency Insight
             </h4>
-            <p className="text-xs leading-relaxed text-amber-700/95 dark:text-amber-300/95 font-medium">
+            <p className="text-xs leading-relaxed text-amber-800/80 dark:text-amber-300/80 font-normal">
               Study abroad consultancies frequently hide the actual costs of living or push you to universities without scholarship incentives because they collect direct referral commissions (often 10-20% of your tuition fees). 
             </p>
-            <p className="text-xs leading-relaxed text-amber-700/90 dark:text-amber-300/80">
+            <p className="text-xs leading-relaxed text-amber-850/70 dark:text-amber-300/70">
               Always plan your funding applications at least <strong>9 months</strong> before enrollment. Check if target countries permit student part-time jobs (e.g. Germany permits 140 full days per year) to cover your living costs.
             </p>
           </div>

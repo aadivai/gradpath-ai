@@ -81,30 +81,28 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative flex items-center justify-center p-6">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-20 pointer-events-none" />
-      
-      <div className="w-full max-w-md relative z-10">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/">
-            <h1 className="text-2xl font-black tracking-tight text-foreground">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
               Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
             </h1>
           </Link>
-          <p className="text-xs text-muted-foreground mt-2 font-medium">
-            Join the Study Abroad AI Operating System
+          <p className="text-sm text-muted-foreground mt-2">
+            Create your free account
           </p>
         </div>
 
-        <div className="glass-card bg-card border border-border/80 rounded-2xl p-8 shadow-xl space-y-6">
+        <div className="bg-card border border-border rounded-xl p-8 shadow-sm space-y-6">
           {success ? (
             <div className="text-center space-y-4 py-6">
-              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
-                <ShieldCheck className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/30 flex items-center justify-center mx-auto">
+                <ShieldCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">Check your email</h2>
-                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed font-semibold">
+                <h2 className="text-lg font-semibold text-foreground">Check your email</h2>
+                <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
                   We sent a confirmation link to <strong className="text-foreground">{email}</strong>.
                   Please check your inbox and verify your email to unlock GradPath AI.
                 </p>
@@ -112,7 +110,7 @@ export default function SignupPage() {
               <div className="pt-2">
                 <Link
                   href="/login"
-                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs inline-flex items-center gap-1 shadow-md shadow-indigo-500/10 cursor-pointer"
+                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg text-xs inline-flex items-center gap-1 cursor-pointer"
                 >
                   Return to Sign In <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -121,9 +119,9 @@ export default function SignupPage() {
           ) : (
             <>
               <div>
-                <h2 className="text-lg font-bold text-foreground">Get started free</h2>
-                <p className="text-xs text-muted-foreground mt-1 font-semibold">
-                  Create your profile and start planning your abroad journey today.
+                <h2 className="text-lg font-semibold text-foreground">Get started free</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Create your profile and start planning.
                 </p>
               </div>
 
@@ -138,7 +136,7 @@ export default function SignupPage() {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => handleOAuthLogin('google')}
-                  className="py-2.5 px-4 bg-muted/40 hover:bg-muted/70 border border-border/60 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer text-foreground"
+                  className="py-2.5 px-4 bg-muted/50 hover:bg-muted border border-border rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer text-foreground"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -150,7 +148,7 @@ export default function SignupPage() {
                 </button>
                 <button
                   onClick={() => handleOAuthLogin('github')}
-                  className="py-2.5 px-4 bg-muted/40 hover:bg-muted/70 border border-border/60 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer text-foreground"
+                  className="py-2.5 px-4 bg-muted/50 hover:bg-muted border border-border rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer text-foreground"
                 >
                   <svg className="w-4 h-4 text-foreground fill-current" viewBox="0 0 24 24">
                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
@@ -159,16 +157,16 @@ export default function SignupPage() {
                 </button>
               </div>
 
-              <div className="relative flex py-2 items-center text-xs text-muted-foreground font-semibold">
-                <div className="flex-grow border-t border-border/40"></div>
+              <div className="relative flex py-2 items-center text-xs text-muted-foreground">
+                <div className="flex-grow border-t border-border"></div>
                 <span className="flex-shrink mx-3 uppercase tracking-wider text-[10px]">Or register with email</span>
-                <div className="flex-grow border-t border-border/40"></div>
+                <div className="flex-grow border-t border-border"></div>
               </div>
 
               {/* Signup Form */}
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider block">
+                  <label className="text-xs font-medium text-muted-foreground block">
                     Full Name
                   </label>
                   <div className="relative">
@@ -178,14 +176,14 @@ export default function SignupPage() {
                       placeholder="Aditya Sharma"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-xl text-xs font-semibold bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-colors"
                     />
                     <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider block">
+                  <label className="text-xs font-medium text-muted-foreground block">
                     Email Address
                   </label>
                   <div className="relative">
@@ -195,14 +193,14 @@ export default function SignupPage() {
                       placeholder="name@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-xl text-xs font-semibold bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-colors"
                     />
                     <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider block">
+                  <label className="text-xs font-medium text-muted-foreground block">
                     Password
                   </label>
                   <div className="relative">
@@ -212,7 +210,7 @@ export default function SignupPage() {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-xl text-xs font-semibold bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-600 transition-colors"
                     />
                     <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   </div>
@@ -235,18 +233,18 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-indigo-500/10 cursor-pointer disabled:opacity-75 pt-2"
+                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg text-sm flex items-center justify-center gap-1.5 transition-colors cursor-pointer disabled:opacity-75 pt-2"
                 >
                   {loading ? 'Creating account...' : 'Create Account'}
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </form>
 
-              <p className="text-center text-xs text-muted-foreground mt-4 font-semibold">
+              <p className="text-center text-sm text-muted-foreground mt-4">
                 Already have an account?{' '}
                 <Link
                   href="/login"
-                  className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
+                  className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
                 >
                   Sign in
                 </Link>

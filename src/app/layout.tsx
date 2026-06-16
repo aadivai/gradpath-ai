@@ -16,7 +16,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <SupabaseAuthProvider>
-      <html lang="en" className={geist.variable} suppressHydrationWarning>
+      <html lang="en" className={`${geist.variable} scroll-smooth`} suppressHydrationWarning>
+        <head>
+          <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+          <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+        </head>
         <body className="min-h-full flex flex-col font-sans">
           <ThemeProvider
             attribute="class"

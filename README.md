@@ -1,299 +1,212 @@
 # 🎓 GradPath AI
 
-> **AI-Powered Study Abroad Planning Platform**
-> Discover universities, explore scholarships, generate AI-powered Statements of Purpose, and manage your complete study abroad journey in one place.
+> **The Open-Source Study Abroad OS for Indian Students.**  
+> Streamline your international education journey: discover universities, explore matching scholarships, draft statements of purpose, simulate embassy interviews, and build chronological timelines — all in a unified, premium UI.
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![React](https://img.shields.io/badge/React-19-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8)
-![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E)
-![Clerk](https://img.shields.io/badge/Clerk-Authentication-purple)
-![Gemini AI](https://img.shields.io/badge/Gemini-AI-orange)
-![Vercel](https://img.shields.io/badge/Deployment-Vercel-black)
-
-## 🌐 Live Demo
-
-**Live Application:** https://gradpath-ai.vercel.app
-
-**GitHub Repository:** https://github.com/aadivai/gradpath-ai
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.0_App_Router-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19.0-blue?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript 5](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Supabase DB](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-2.5_Flash-orange?style=flat-square&logo=google-gemini)](https://deepmind.google/technologies/gemini/)
+[![Vercel Deployed](https://img.shields.io/badge/Vercel-Production-black?style=flat-square&logo=vercel)](https://vercel.com/)
+[![License MIT](https://img.shields.io/badge/License-MIT-emerald?style=flat-square)](LICENSE)
 
 ---
 
-# 📖 Overview
+## 🌐 Showcase & Links
 
-GradPath AI is a modern full-stack web application designed to simplify the entire study abroad planning process.
-
-Instead of switching between multiple websites for university research, scholarship discovery, SOP writing, and application tracking, students can manage everything from a single AI-powered platform.
-
----
-
-# ✨ Key Features
-
-### 🎯 AI University Recommendations
-
-Receive personalized university suggestions based on:
-
-* CGPA
-* Test Scores (IELTS/GRE/TOEFL)
-* Budget
-* Preferred Countries
-* Academic Background
-
-Recommendations are categorized into:
-
-* ✅ Safe
-* ⚡ Moderate
-* 🚀 Ambitious
+*   **Live Application:** [https://gradpath-ai.vercel.app](https://gradpath-ai.vercel.app)
+*   **GitHub Repository:** [https://github.com/aadivai/gradpath-ai](https://github.com/aadivai/gradpath-ai)
 
 ---
 
-### 💰 Scholarship Explorer
+## ✨ Core Features
 
-Search scholarships using intelligent filters:
-
-* Country
-* Scholarship Type
-* Degree Level
-* Minimum CGPA
-* Funding Amount
-
----
-
-### ✍️ AI SOP Generator
-
-Generate personalized Statements of Purpose using **Google Gemini AI**.
-
-Features include:
-
-* University-specific SOPs
-* Country-specific customization
-* Academic background integration
-* Career goal alignment
+*   🎯 **AI University Recommendations:** Predicts admission match tiers (Safe, Moderate, Ambitious, Dream) based on your target intake, branch, CGPA, IELTS, GRE, and budget constraints.
+*   💰 **Scholarship Discovery:** Tracks and predicts funding fit across government, merit-based, and university-specific international scholarship databases.
+*   🛂 **Visa Intelligence:** Detailed country sheets, required documents checksheets, embassy interview credibility tips, and an AI Visa simulator prep tool.
+*   ✍️ **SOP & LOR Studio:** Leverages Gemini 2.5 Flash to automatically draft version-controlled, customized Statements of Purpose and Letters of Recommendation matching your chosen country.
+*   🔮 **AI Counsellor:** Performs comprehensive profile health audits, provides cost analysis, structures target timelines, and outlines strengths/gap diagnostics.
+*   📅 **Timeline Planner:** Chronological, month-by-month Kanban roadmap mapping your path from language preparation to pre-departure flights.
+*   🔐 **Secure Authentication:** Managed via Supabase Auth (Sign-in, Sign-up, Password Recovery) with Row-Level Security (RLS) policies protecting all profile data.
 
 ---
 
-### 📅 Application Timeline
+## 📸 Screenshots
 
-Track every important milestone:
+| Landing Page | Dashboard Overview |
+| :--- | :--- |
+| ![Landing Page Preview](/public/screenshots/landing.png) | ![Dashboard Overview](/public/screenshots/dashboard.png) |
 
-* IELTS Preparation
-* SOP Writing
-* Recommendation Letters
-* University Applications
-* Visa Process
-* Accommodation
-* Flight Booking
+| University Matcher | Scholarship Explorer |
+| :--- | :--- |
+| ![University Recommendations](/public/screenshots/universities.png) | ![Scholarships Engine](/public/screenshots/scholarships.png) |
 
-Includes progress tracking and timeline visualization.
-
----
-
-### ❤️ Saved Universities
-
-Users can:
-
-* Save universities
-* Track application status
-* Add personal notes
-* Estimate yearly expenses
+| Profile Setup | SOP Assistant |
+| :--- | :--- |
+| ![Student Profile Setup](/public/screenshots/profile.png) | ![AI SOP Studio](/public/screenshots/sop.png) |
 
 ---
 
-### 🔐 Secure Authentication
+## 🏛 System Architecture
 
-Powered by Clerk Authentication.
+```mermaid
+flowchart TD
+    User([Student Client]) <-->|Browser UI / Responsive Theme| NextJS[Next.js 15 App Router]
+    
+    subgraph Vercel Cloud Platform
+        NextJS <-->|Server Actions & API Routes| API[Next.js API Route Handlers]
+        API <-->|Authentication Checks| AuthProvider[Supabase Auth Context]
+    end
 
-* Sign Up
-* Sign In
-* Protected Dashboard
-* Secure Session Management
+    subgraph External AI Layer
+        API <-->|Generative Prompt & Schema Validation| Gemini[Google Gemini 2.5 API]
+    end
 
----
-
-# 🛠 Tech Stack
-
-## Frontend
-
-* Next.js 16 (App Router)
-* React 19
-* TypeScript
-* Tailwind CSS 4
-* shadcn/ui
-
-## Backend
-
-* Next.js API Routes
-
-## Database
-
-* Supabase PostgreSQL
-
-## Authentication
-
-* Clerk
-
-## AI Integration
-
-* Google Gemini API
-
-## Deployment
-
-* Vercel
-
----
-
-# 📂 Project Structure
-
-```
-src/
-│
-├── app/
-│   ├── (auth)/
-│   ├── (dashboard)/
-│   ├── api/
-│   └── layout.tsx
-│
-├── components/
-├── lib/
-├── types/
-└── public/
+    subgraph Supabase Database Cluster
+        API <-->|REST & RPC Commands| DB[(PostgreSQL Database)]
+        DB <-->|Row Level Security RLS| ProfilesTable[public.profiles]
+        DB <-->|Database Functions| RPC[recommend_universities RPC]
+    end
+    
+    RPC -->|Calculates Match Score & Tier| DB
 ```
 
 ---
 
-# 🚀 Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/aadivai/gradpath-ai.git
-
-cd gradpath-ai
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Run locally
-
-```bash
-npm run dev
-```
-
-Open:
+## 📂 Folder Directory
 
 ```
-http://localhost:3000
+gradpath-ai/
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # GitHub Actions continuous integration pipeline
+├── docs/                      # Core system & architectural documentation
+│   ├── architecture.md        # Technical design & layout strategy
+│   ├── database.md            # Entity relationships, tables, & policies
+│   ├── api.md                 # Complete API endpoint dictionary
+│   ├── deployment.md          # Cloud build & setup steps
+│   └── security.md            # Row Level Security (RLS) & auth verification
+├── public/                    # Static assets & public images
+│   ├── screenshots/           # Application screenshots for GitHub
+│   ├── robots.txt             # Search crawler controls
+│   └── sitemap.xml            # Search indexing sitemap
+├── src/
+│   ├── app/                   # Next.js App Router (pages, APIs, layouts)
+│   │   ├── (auth)/            # Sign-in, Sign-up, reset password modules
+│   │   ├── (dashboard)/       # Main student dashboard & tools
+│   │   ├── api/               # API route handlers
+│   │   └── layout.tsx         # Global html wrapper
+│   ├── components/            # Reusable UI widgets & providers
+│   │   ├── ui/                # UI design component blocks
+│   │   └── providers/         # Global state/auth providers
+│   ├── lib/                   # Integrations & client wrappers
+│   │   ├── ai/                # Gemini client utilities
+│   │   ├── serverSupabase.ts  # Server-side Supabase client
+│   │   └── recommender.ts     # Recommendation RPC wrappers
+│   ├── types/                 # Unified TypeScript interfaces
+│   └── utils/                 # Utility parsers & helper scripts
+├── tests/                     # Playwright E2E browser tests
+├── package.json               # Package dependencies & script commands
+├── tailwind.config.js         # Styling configurations
+└── tsconfig.json              # TypeScript compilation rules
 ```
 
 ---
 
-# 🔑 Environment Variables
+## 💾 Database Schema
 
-Create a `.env.local` file.
+The database relies on a PostgreSQL schema hosted on Supabase:
+
+*   **`profiles`**: Stores student academic history, target intakes, work experience metrics, and preferred countries. Secured via RLS (only user can read/write their own row).
+*   **`universities`**: Static reference catalog of 2000+ worldwide universities, qs rankings, tuition costs, and eligibility scores.
+*   **`scholarships`**: Metadata for merit, need-based, and government-specific student funding opportunities.
+*   **`saved_universities`**: Junction table mapping student profiles to their saved universities (including tracking status and notes).
+*   **`timeline_tasks`**: Tasks and checklist items representing application milestones.
+*   **`visa_requirements`**: Structured parameters for study visas (financial proof, processing times, required documents).
+
+---
+
+## 🔑 Environment Variables
+
+To configure GradPath AI locally, create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-CLERK_SECRET_KEY=
-
-NEXT_PUBLIC_SUPABASE_URL=
-
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-
-GEMINI_API_KEY=
+# Google Gemini AI API Configuration
+GEMINI_API_KEY=your-google-gemini-api-key
 ```
 
 ---
 
-# 📸 Screenshots
+## 🛠 Local Setup
 
-Add screenshots here for a better portfolio presentation.
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/aadivai/gradpath-ai.git
+    cd gradpath-ai
+    ```
 
-```
-screenshots/
-│
-├── landing-page.png
-├── dashboard.png
-├── universities.png
-├── scholarships.png
-├── sop-generator.png
-└── timeline.png
-```
+2.  **Install Project Dependencies:**
+    ```bash
+    npm install
+    ```
 
----
+3.  **Run the Development Server:**
+    ```bash
+    npm run dev
+    ```
 
-# 🎯 Learning Outcomes
-
-This project demonstrates:
-
-* Full Stack Development
-* Authentication & Authorization
-* AI Integration
-* REST API Development
-* Database Design
-* TypeScript
-* Modern React
-* Next.js App Router
-* Production Deployment
-* Responsive UI Design
+4.  **Access the Application:**
+    Open [http://localhost:3000](http://localhost:3000) on your web browser.
 
 ---
 
-# 🚀 Future Enhancements
+## 🚀 Cloud Deployment
 
-* Resume Analyzer
-* AI Study Abroad Chatbot
-* University Comparison Tool
-* Email Notifications
-* Cost Calculator
-* Dark Mode
-* Mobile App Support
-* Analytics Dashboard
+### 1. Database (Supabase)
+*   Deploy a new PostgreSQL project on [Supabase](https://supabase.com/).
+*   Apply the schemas for `profiles`, `universities`, `scholarships`, `saved_universities`, `timeline_tasks`, and `visa_requirements`.
+*   Establish RLS policies ensuring all student data is partition-bound (`auth.uid() = clerk_user_id` or similar profile ID mapping).
 
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a new feature branch
-3. Commit your changes
-4. Open a Pull Request
+### 2. Frontend & API (Vercel)
+*   Connect your GitHub repository to [Vercel](https://vercel.com/).
+*   Import the project and configure the environment variables defined in `.env.local`.
+*   Deploy! Vercel handles all SSR and serverless function routing automatically.
 
 ---
 
-# 👨‍💻 Author
+## 🗺 Platform Roadmap
 
-**Aditya Kumar**
+### Current Version (v1.0 Production Release)
+*   [x] Database-level matching algorithm via PostgreSQL RPCs.
+*   [x] Gemini AI-driven explanation generators for university matches.
+*   [x] Dynamic checklists, ATS audit scores, and PDF exports for Statements of Purpose.
+*   [x] Interactive Visa preparation simulators and credibility checklists.
+*   [x] Premium fluid layout designs with responsive mobile adaptations.
 
-B.Tech Information Technology
-Madan Mohan Malaviya University of Technology, Gorakhpur
-
-### Interests
-
-* Full Stack Development
-* Artificial Intelligence
-* Cloud Computing
-* Software Engineering
-
-GitHub: https://github.com/aadivai
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
+### Future Targets
+*   [ ] Real-time document translation (transcripts to standard english).
+*   [ ] Peer mentoring networking rooms with active university alumni.
+*   [ ] Automated visa slot alerts and notification tracking.
+*   [ ] Direct university application processing portals.
 
 ---
 
-# ⭐ Support
+## 🤝 Contributing
 
-If you found this project useful, consider giving it a ⭐ on GitHub.
+Contributions are welcome! Please follow these guidelines:
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
-Your support helps improve the project and motivates future development.
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for details.

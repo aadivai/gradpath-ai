@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { Send, Bot, User, Sparkles, MessageSquare, ChevronRight, Info } from 'lucide-react'
+import { PageHeader } from '@/components/ui/page-header'
 
 type Message = {
   id: string
@@ -85,52 +86,48 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 space-y-6 flex flex-col h-[calc(100vh-4rem)]">
+    <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 flex flex-col h-[calc(100vh-4rem)]">
       
       {/* Header */}
-      <div className="shrink-0 flex items-center gap-3 border-b border-border/40 pb-4">
-        <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-          <MessageSquare className="w-5 h-5" />
-        </div>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">AI Chat Counselor</h1>
-          <p className="text-xs text-muted-foreground">Instant answers referenced from target country policies and university databases.</p>
-        </div>
-        {syncMessage && (
-          <div className="animate-fade-in px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 rounded-xl text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse text-emerald-600 dark:text-emerald-450" />
+      <PageHeader
+        icon={MessageSquare}
+        title="AI Chat Counselor"
+        subtitle="Instant answers referenced from target country policies and university databases."
+        badge={syncMessage && (
+          <div className="animate-in fade-in slide-in-from-top-1 duration-200 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-lg text-[10px] font-semibold tracking-wider flex items-center gap-1.5 shadow-sm">
+            <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-450" />
             {syncMessage}
           </div>
         )}
-      </div>
+      />
 
       {/* Split-screen Chat Workspace Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 overflow-hidden items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 overflow-hidden items-stretch">
         
         {/* Left pane: Messages and chat input (col-span-8) */}
-        <div className="lg:col-span-8 flex flex-col justify-between bg-card border border-border rounded-2xl p-5 shadow-sm overflow-hidden h-full">
+        <div className="lg:col-span-8 flex flex-col justify-between bg-card border border-border rounded-xl p-5 shadow-sm overflow-hidden h-full">
           
           {/* Scrollable message container */}
           <div className="flex-1 overflow-y-auto space-y-4 pr-2 mb-4 scrollbar-thin">
             {messages.map((m) => {
               const isBot = m.role === 'assistant'
               return (
-                <div key={m.id} className={`flex gap-3 animate-fade-in ${isBot ? 'justify-start' : 'justify-end'}`}>
+                <div key={m.id} className={`flex gap-3 animate-in fade-in duration-200 ${isBot ? 'justify-start' : 'justify-end'}`}>
                   {isBot && (
-                    <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                      <Bot className="w-4.5 h-4.5" />
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-100/50 dark:border-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                      <Bot className="w-4 h-4" />
                     </div>
                   )}
-                  <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed transition-all ${
+                  <div className={`max-w-[80%] rounded-xl px-4 py-2.5 text-sm leading-relaxed transition-all ${
                     isBot 
-                      ? 'bg-muted border border-stone-250/30 text-foreground' 
-                      : 'bg-indigo-600 text-white shadow-sm shadow-indigo-100'
+                      ? 'bg-muted/50 border border-border/80 text-foreground' 
+                      : 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/5'
                   }`}>
-                    <p className="whitespace-pre-wrap font-medium">{m.content}</p>
+                    <p className="whitespace-pre-wrap font-normal">{m.content}</p>
                   </div>
                   {!isBot && (
-                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-sm">
-                      <User className="w-4.5 h-4.5" />
+                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-sm shadow-indigo-600/10">
+                      <User className="w-4 h-4" />
                     </div>
                   )}
                 </div>
@@ -139,14 +136,14 @@ export default function ChatPage() {
             
             {/* Typing Loader Indicator */}
             {loading && (
-              <div className="flex gap-3 justify-start animate-pulse">
-                <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                  <Bot className="w-4.5 h-4.5 animate-spin" />
+              <div className="flex gap-3 justify-start">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-100/50 dark:border-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <Bot className="w-4 h-4" />
                 </div>
-                <div className="bg-muted border border-stone-250/30 rounded-2xl px-4 py-3 shadow-xs flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-300 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-300 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-300 animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="bg-muted/50 border border-border/80 rounded-xl px-4 py-3 shadow-xs flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-muted-foreground/45 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-muted-foreground/45 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-muted-foreground/45 animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -154,50 +151,50 @@ export default function ChatPage() {
           </div>
 
           {/* Form input row */}
-          <div className="flex gap-2.5 shrink-0 pt-2 border-t border-border/40">
+          <div className="flex gap-2.5 shrink-0 pt-3 border-t border-border/50">
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') handleSend() }}
               placeholder="Ask about blocked accounts, visa processing time, IELTS waiver policies..."
-              className="flex-1 bg-card border border-border rounded-xl px-4 py-3 text-xs font-semibold text-foreground focus:outline-indigo-500 focus:ring-1 focus:ring-indigo-100"
+              className="flex-1 bg-background border border-border rounded-xl px-4 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-550 focus-visible:border-indigo-550 placeholder:text-muted-foreground/60 transition-shadow"
             />
             <button 
               onClick={() => handleSend()}
               disabled={loading || !input.trim()}
-              className="px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm hover:shadow-indigo-100 transition-all flex items-center justify-center disabled:opacity-50 cursor-pointer"
+              className="px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm transition-colors flex items-center justify-center disabled:opacity-50 cursor-pointer"
             >
-              <Send className="w-4.5 h-4.5" />
+              <Send className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* Right pane: Glassmorphic Suggested Shortcuts (col-span-4) */}
-        <div className="lg:col-span-4 flex flex-col gap-6 overflow-y-auto">
+        {/* Right pane: Suggested Shortcuts (col-span-4) */}
+        <div className="lg:col-span-4 flex flex-col gap-5 overflow-y-auto">
           
           {/* Shortcuts sidebar */}
-          <div className="glass-card rounded-2xl p-5 border border-border space-y-4">
+          <div className="bg-card border border-border rounded-xl p-5 space-y-4">
             <div>
-              <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-indigo-600 animate-pulse" />
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-indigo-600" />
                 Suggested Inquiries
               </h3>
-              <p className="text-[10px] text-muted-foreground mt-0.5 font-medium">Click to ask the counselor instantly</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5 font-normal">Click to ask the counselor instantly</p>
             </div>
 
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               {FAQ_SHORTCUTS.map(f => (
                 <button
                   key={f.text}
                   onClick={() => handleSend(f.text)}
-                  className="w-full text-left bg-card hover:bg-indigo-50/20 border border-border hover:border-indigo-500/30 rounded-xl px-3.5 py-2.5 text-xs font-bold text-foreground/90 flex flex-col gap-1 shadow-xs transition-all duration-200 group"
+                  className="w-full text-left bg-card hover:bg-muted/40 border border-border hover:border-muted-foreground/20 rounded-xl px-3.5 py-2.5 text-xs font-normal text-foreground/90 flex flex-col gap-1 transition-all duration-200 group cursor-pointer"
                 >
-                  <span className="text-[9px] font-black uppercase text-indigo-600 tracking-wider">
+                  <span className="text-[9px] font-semibold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">
                     {f.category}
                   </span>
-                  <span className="group-hover:text-indigo-650 transition-colors flex items-center justify-between">
+                  <span className="flex items-center justify-between text-foreground/80 group-hover:text-foreground transition-colors">
                     {f.text}
-                    <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50 group-hover:text-indigo-500 shrink-0" />
+                    <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-muted-foreground/80 shrink-0 ml-1 transition-colors" />
                   </span>
                 </button>
               ))}
@@ -205,15 +202,15 @@ export default function ChatPage() {
           </div>
 
           {/* Differentiator counselor audit notes */}
-          <div className="glass-card rounded-2xl p-5 border border-border bg-amber-50/40 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 space-y-3">
-            <h4 className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-              <Info className="w-4.5 h-4.5 text-amber-600 dark:text-amber-500 shrink-0" />
+          <div className="bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/10 dark:border-amber-500/20 rounded-xl p-5 text-amber-800 dark:text-amber-300 space-y-3">
+            <h4 className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <Info className="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0" />
               Counselor Transparency Audit
             </h4>
-            <p className="text-xs leading-relaxed text-amber-700/95 dark:text-amber-300/90 font-medium">
+            <p className="text-xs leading-relaxed text-amber-800/80 dark:text-amber-300/80 font-normal">
               Study abroad agents usually give advice based on the universities that reward them with the highest commissions. They might recommend expensive private colleges in Canada or UK even if your profile is a perfect fit for tuition-free public universities in Germany.
             </p>
-            <p className="text-xs leading-relaxed text-amber-700/90 dark:text-amber-300/80">
+            <p className="text-xs leading-relaxed text-amber-800/70 dark:text-amber-300/70">
               Our AI counselor evaluates choices based purely on admissions probability, cost thresholds, and visa success ratios.
             </p>
           </div>

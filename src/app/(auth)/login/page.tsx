@@ -95,11 +95,11 @@ function LoginForm() {
   }
 
   return (
-    <div className="glass-card bg-card border border-border/80 rounded-2xl p-8 shadow-xl space-y-6">
+    <div className="glass-card bg-card border border-border rounded-xl p-8 shadow-sm space-y-6">
       <div>
-        <h2 className="text-lg font-bold text-foreground">Welcome back</h2>
-        <p className="text-xs text-muted-foreground mt-1 font-semibold">
-          Sign in to manage your applications and roadmap.
+        <h2 className="text-lg font-semibold text-foreground">Welcome back</h2>
+        <p className="text-sm text-muted-foreground mt-1">
+          Sign in to manage your applications.
         </p>
       </div>
 
@@ -230,26 +230,23 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground relative flex items-center justify-center p-6">
-      {/* Mesh grid backdrop */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-20 pointer-events-none" />
-      
-      <div className="w-full max-w-md relative z-10">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <h1 className="text-2xl font-black tracking-tight text-foreground">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
               Grad<span className="text-indigo-600 dark:text-indigo-400">Path</span> AI
             </h1>
           </Link>
-          <p className="text-xs text-muted-foreground mt-2 font-medium">
-            AI Study Abroad Operating System
+          <p className="text-sm text-muted-foreground mt-2">
+            AI Study Abroad Platform
           </p>
         </div>
 
         <Suspense fallback={
-          <div className="glass-card bg-card border border-border/80 rounded-2xl p-8 shadow-xl text-center flex flex-col items-center justify-center h-80">
+          <div className="bg-card border border-border rounded-xl p-8 shadow-sm text-center flex flex-col items-center justify-center h-80">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600" />
-            <p className="text-xs text-muted-foreground mt-2 font-medium">Loading session...</p>
+            <p className="text-sm text-muted-foreground mt-2">Loading...</p>
           </div>
         }>
           <LoginForm />
