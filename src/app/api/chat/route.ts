@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     // Fetch context data (Student profile, Universities, Visas, Scholarships)
     const [profileRes, universitiesRes, visasRes, scholarshipsRes] = await Promise.all([
-      supabase.from('profiles').select('*').eq('clerk_user_id', userId).single(),
+      supabase.from('profiles').select('*').eq('clerk_user_id', userId).maybeSingle(),
       supabase.from('universities').select('*'),
       supabase.from('visa_requirements').select('*'),
       supabase.from('scholarships').select('*')

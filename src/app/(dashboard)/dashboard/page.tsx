@@ -60,7 +60,7 @@ export default function DashboardPage() {
         .from('profiles')
         .select('*')
         .eq('clerk_user_id', user!.id)
-        .single()
+        .maybeSingle()
 
       setProfile(prof ? parseProfile(prof) : null)
 

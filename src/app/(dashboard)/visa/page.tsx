@@ -96,7 +96,7 @@ export default function VisaPage() {
       setVisas(map)
 
       if (profId) {
-        const { data: prof } = await supabase.from('profiles').select('*').eq('id', profId).single()
+        const { data: prof } = await supabase.from('profiles').select('*').eq('id', profId).maybeSingle()
         if (prof) setProfile(parseProfile(prof))
       }
       setLoading(false)

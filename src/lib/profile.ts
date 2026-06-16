@@ -6,7 +6,7 @@ export async function getProfileId(clerkUserId: string): Promise<string | null> 
     .from('profiles')
     .select('id')
     .eq('clerk_user_id', clerkUserId)
-    .single()
+    .maybeSingle()
   return data?.id ?? null
 }
 
@@ -15,7 +15,7 @@ export async function verifyAdmin(clerkUserId: string): Promise<boolean> {
     .from('profiles')
     .select('full_name')
     .eq('clerk_user_id', clerkUserId)
-    .single()
+    .maybeSingle()
   if (!data) return false
   const parsed = parseProfile(data)
   return parsed.role === 'admin' || parsed.role === 'super_admin'

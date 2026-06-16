@@ -42,7 +42,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
             .from('profiles')
             .select('full_name')
             .eq('clerk_user_id', activeUser.id)
-            .single()
+            .maybeSingle()
             
           if (mounted && profile?.full_name && profile.full_name.includes('|||')) {
             try {
@@ -73,7 +73,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
           .from('profiles')
           .select('full_name')
           .eq('clerk_user_id', activeUser.id)
-          .single()
+          .maybeSingle()
           
         if (mounted && profile?.full_name && profile.full_name.includes('|||')) {
           try {
