@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useUser } from '@/components/providers/SupabaseAuthProvider'
 import { supabase } from '@/lib/supabase'
 import { getProfileId } from '@/lib/profile'
+import { Heart } from 'lucide-react'
 
 type Props = {
   universityId: string
@@ -66,13 +67,21 @@ export default function SaveButton({ universityId, universityName }: Props) {
       onClick={handleSave}
       disabled={loading}
       title={saved ? 'Remove from saved' : `Save ${universityName}`}
-      className={`text-xs px-2.5 py-1 rounded-lg border transition-colors font-medium ${
+      className={`group flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-full border transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
         saved
-          ? 'bg-indigo-600 text-white border-indigo-600'
-          : 'bg-white text-gray-500 border-gray-200 hover:border-indigo-300 hover:text-indigo-600'
+          ? 'bg-rose-500/10 text-rose-600 border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-400 dark:border-rose-500/40 hover:bg-rose-500/20'
+          : 'bg-muted/40 text-muted-foreground border-border/80 hover:bg-muted/80 hover:text-foreground hover:border-muted-foreground/30 dark:bg-muted/20 dark:hover:bg-muted/50'
       }`}
     >
-      {loading ? '...' : saved ? '♥ Saved' : '♡ Save'}
+      <Heart
+        className={`w-3.5 h-3.5 transition-transform duration-200 group-hover:scale-110 ${
+          saved
+            ? 'fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400'
+            : 'text-muted-foreground group-hover:text-rose-500'
+        }`}
+      />
+      <span>{loading ? '...' : saved ? 'Saved' : 'Save'}</span>
     </button>
   )
 }
+
