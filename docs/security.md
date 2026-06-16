@@ -31,9 +31,9 @@ Authentication is powered by **Supabase Auth** using cookies to handle session p
 ## 2. Row-Level Security (RLS)
 
 All user tables in the database have RLS enabled. Supabase enforces these policies directly at the SQL engine level:
-*   **`profiles`**: A user can only access their own profile. The security constraint is defined as:
+*   **`profiles`**: A user can access and modify their own profile, with administrative overrides for auditing and config. The security constraint is defined as:
     ```sql
-    clerk_user_id = auth.uid()
+    clerk_user_id = auth.uid()::text
     ```
 *   **Junction Tables (`saved_universities`, `timeline_tasks`)**: Access is validated by checking if the referenced profile belongs to the calling user:
     ```sql

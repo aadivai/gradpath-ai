@@ -156,8 +156,10 @@ To ensure sub-100ms querying speeds, the database enforces these indexes:
 All tables exposed to public endpoints enforce RLS. Examples:
 
 1.  **`profiles`**:
-    *   `Enable read for users matching uid`: `auth.uid() = clerk_user_id`
-    *   `Enable update for users matching uid`: `auth.uid() = clerk_user_id`
+    *   `Enable read access for profiles`: `auth.uid()::text = clerk_user_id::text OR public.is_admin(auth.uid()) OR clerk_user_id IN ('system_config', 'system_audit_logs')`
+    *   `Enable insert access for profiles`: `auth.uid()::text = clerk_user_id::text OR public.is_admin(auth.uid()) OR (auth.uid() IS NOT NULL AND clerk_user_id IN ('system_config', 'system_audit_logs'))`
+    *   `Enable update access for profiles`: `auth.uid()::text = clerk_user_id::text OR public.is_admin(auth.uid())`
+    *   `Enable delete access for profiles`: `auth.uid()::text = clerk_user_id::text OR public.is_admin(auth.uid())`
 
 2.  **`saved_universities`**:
     *   `Enable read for owners`: `profile_id IN (SELECT id FROM profiles WHERE clerk_user_id = auth.uid())`
