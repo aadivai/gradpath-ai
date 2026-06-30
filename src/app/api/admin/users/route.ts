@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     const supabase = await getSupabaseServer()
     const { data: { user } } = await supabase.auth.getUser()
     const userId = user?.id
-    if (!userId || !(await verifyAdmin(userId))) {
+    if (!userId || !(await verifyAdmin(userId, supabase))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     const supabase = await getSupabaseServer()
     const { data: { user } } = await supabase.auth.getUser()
     const userId = user?.id
-    if (!userId || !(await verifyAdmin(userId))) {
+    if (!userId || !(await verifyAdmin(userId, supabase))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 

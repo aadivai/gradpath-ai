@@ -1,8 +1,10 @@
-import { supabase } from './supabase'
+import { supabase as defaultSupabase } from './supabase'
 import { parseProfile } from '@/utils/profileMetadata'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
-export async function getProfileId(clerkUserId: string): Promise<string | null> {
-  const { data } = await supabase
+export async function getProfileId(clerkUserId: string, client?: SupabaseClient): Promise<string | null> {
+  const supabaseClient = client || defaultSupabase
+  const { data } = await supabaseClient
     .from('profiles')
     .select('id')
     .eq('clerk_user_id', clerkUserId)
@@ -10,8 +12,9 @@ export async function getProfileId(clerkUserId: string): Promise<string | null> 
   return data?.id ?? null
 }
 
-export async function verifyAdmin(clerkUserId: string): Promise<boolean> {
-  const { data } = await supabase
+export async function verifyAdmin(clerkUserId: string, client?: SupabaseClient): Promise<boolean> {
+  const supabaseClient = client || defaultSupabase
+  const { data } = await supabaseClient
     .from('profiles')
     .select('full_name')
     .eq('clerk_user_id', clerkUserId)
@@ -19,4 +22,4 @@ export async function verifyAdmin(clerkUserId: string): Promise<boolean> {
   if (!data) return false
   const parsed = parseProfile(data)
   return parsed.role === 'admin' || parsed.role === 'super_admin'
-}
+}

@@ -22,12 +22,15 @@ export default function SaveButton({ universityId, universityName }: Props) {
     ;(async () => {
       const profileId = await getProfileId(user.id)
       if (!profileId) { setChecked(true); return }
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('saved_universities')
         .select('id')
         .eq('profile_id', profileId)
         .eq('university_id', universityId)
         .single()
+      if (error && error.code !== 'PGRST116') {
+        console.error('[SaveButton] Error checking saved status:', error)
+      }
       setSaved(!!data)
       setChecked(true)
     })()
@@ -38,23 +41,36 @@ export default function SaveButton({ universityId, universityName }: Props) {
     setLoading(true)
     try {
       const profileId = await getProfileId(user.id)
-      if (!profileId) return
+      if (!profileId) {
+        console.error('[SaveButton] Profile ID not found for user:', user.id)
+        return
+      }
 
       if (saved) {
-        await supabase
+        const { error } = await supabase
           .from('saved_universities')
           .delete()
           .eq('profile_id', profileId)
           .eq('university_id', universityId)
-        setSaved(false)
+        if (error) {
+          console.error('[SaveButton] Error deleting saved university:', error)
+        } else {
+          setSaved(false)
+        }
       } else {
-        await supabase.from('saved_universities').insert({
+        const { error } = await supabase.from('saved_universities').insert({
           profile_id:    profileId,
           university_id: universityId,
           status:        'shortlisted',
         })
-        setSaved(true)
+        if (error) {
+          console.error('[SaveButton] Error saving university:', error)
+        } else {
+          setSaved(true)
+        }
       }
+    } catch (err) {
+      console.error('[SaveButton] Exception in handleSave:', err)
     } finally {
       setLoading(false)
     }
